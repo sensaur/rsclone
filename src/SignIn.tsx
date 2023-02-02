@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { signIn } from '../src/redux/ac/user.ac';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signIn } from './redux/ac/user.ac';
 
 function SignIn() {
-  // const loader = useSelector((state) => state.loader);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialState = {
     email: '',
     password: '',
@@ -28,7 +27,8 @@ function SignIn() {
       // @ts-ignore
       payload = Object.fromEntries(payload);
       console.log(payload);
-      // dispatch(signIn(payload, navigate));
+      // @ts-ignore
+      dispatch(signIn(payload, navigate));
     }
   };
 
