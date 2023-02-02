@@ -4,6 +4,7 @@ import { setUserSlice } from '../slices/userSlice';
 
 // eslint-disable-next-line import/prefer-default-export,consistent-return
 export const signIn = (payload: any, navigate: any) => async (dispatch: any) => {
+  console.log('222', endPoints.signIn());
   const response = await fetch(endPoints.signIn(), {
     method: 'POST',
     headers: {
