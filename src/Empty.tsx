@@ -5,10 +5,9 @@ function Empty() {
     document.title = 'RS Clone';
   }, []);
   return (
-    <>
+    <div className="container">
       <h1>Трелло клон</h1>
-      <h2>111</h2>
-    </>
+    </div>
   );
 }
 

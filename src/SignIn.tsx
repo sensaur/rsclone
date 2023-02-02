@@ -46,6 +46,7 @@ function SignIn() {
           value={toSend.email}
           aria-describedby="emailHelp"
           placeholder={toSend.email}
+          autoComplete="email"
         />
       </div>
       <div className="mb-3">
@@ -58,6 +59,7 @@ function SignIn() {
           name="password"
           onChange={handleChange}
           value={toSend.password}
+          autoComplete="password"
         />
       </div>
       <button type="submit" className="btn btn-primary">Войти</button>
