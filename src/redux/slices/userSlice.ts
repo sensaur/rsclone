@@ -1,21 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IState } from '../../types/IState';
+import { IUser } from '../../types/IUser';
+import { signIn } from '../ac/user.ac';
 import getInitState from '../initState';
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: getInitState().user,
+  initialState: getInitState() as IState,
   reducers: {
-    setUserSlice(state, action) {
-      // eslint-disable-next-line no-return-assign,no-param-reassign
-      return (state = action.payload);
+    setUserSlice: (state, action) => ({ ...state, ...action.payload }),
+    deleteUserSlice: (state) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = null;
     },
-    deleteUserSlice(state) {
-      // eslint-disable-next-line max-len
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-param-reassign,no-return-assign
-      return (state = null);
+  },
+  extraReducers: {
+    [signIn.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+    },
+    [signIn.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [signIn.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
 
-export const { setUserSlice } = userSlice.actions;
+export const { setUserSlice, deleteUserSlice } = userSlice.actions;
 export default userSlice.reducer;

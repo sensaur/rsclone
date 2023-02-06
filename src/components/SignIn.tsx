@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react';
+import {
+  ChangeEvent, FormEvent, useEffect, useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { signIn } from './redux/ac/user.ac';
+import Swal from 'sweetalert2';
+import { signIn } from '../redux/ac/user.ac';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 function SignIn() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { error } = useAppSelector((state) => state.userSlice);
+
   const navigate = useNavigate();
   const initialState = {
     email: '',
@@ -16,19 +21,19 @@ function SignIn() {
     // eslint-disable-next-line
   }, []);
 
-  const handleChange = (e: any) => {
-    setToSend({ ...toSend, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setToSend({ ...toSend, [e.target.name]: e.target.value.trim() });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    let payload = Object.entries(toSend).filter((el) => (el[1] ? el[1].trim() : el[1]));
-    if (payload.length) {
-      // @ts-ignore
-      payload = Object.fromEntries(payload);
-      console.log(payload);
-      // @ts-ignore
-      dispatch(signIn(payload, navigate));
+    if (Object.entries(toSend).length) {
+      await dispatch(signIn(toSend));
+      if (error) {
+        Swal.fire(error || 'Неправильный логин / пароль');
+      } else {
+        navigate('/');
+      }
     }
   };
 
