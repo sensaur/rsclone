@@ -1,11 +1,17 @@
-const initState = {
+import { IState } from '../types/IState';
+
+const initState: IState = {
   user: null,
+  isLoading: false,
+  error: null,
 };
 
 const getInitState = () => {
-  // @ts-ignore
-  const stateFromLS = JSON.parse(window.localStorage.getItem('redux'));
-  return stateFromLS || initState;
+  const stateFromLS = window.localStorage.getItem('redux');
+  if (typeof stateFromLS === 'string') {
+    return JSON.parse(stateFromLS);
+  }
+  return initState;
 };
 
 export default getInitState;

@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import Empty from './Empty';
-import SignIn from './SignIn';
-import NavBarStart from './NavBarStart';
+import { useAppSelector } from './hooks/redux';
+import Empty from './components/Empty';
+import SignIn from './components/SignIn';
+import NavBarStart from './components/NavBarStart';
 
 function App() {
-  const dispatch = useDispatch();
-  // @ts-ignore
-  const user = useSelector((state) => state.user);
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(() => {});
-    // eslint-disable-next-line
-  }, []);
+  const { user } = useAppSelector((state) => state.userSlice);
+
   return (
     <>
       {!user ? <NavBarStart /> : null}
