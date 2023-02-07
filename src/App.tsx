@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './hooks/redux';
 import Empty from './components/Empty';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import NavBarStart from './components/NavBarStart';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Empty />} />
         <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </>
   );

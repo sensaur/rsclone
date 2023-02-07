@@ -24,6 +24,9 @@ function NavBarStart() {
             <div className="navbar-nav">
               <Link className="nav-link active" aria-current="page" to="login">Войти</Link>
             </div>
+            <div className="navbar-nav">
+              <Link className="nav-link active" aria-current="page" to="signup">Зарегистрироваться</Link>
+            </div>
           </div>
         </div>
       </nav>

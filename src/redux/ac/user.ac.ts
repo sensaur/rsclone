@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 import * as endPoints from '../../config/endPoints';
 import { IUserInfo } from '../../types/IUser';
 
-export const signIn = createAsyncThunk(
+const signIn = createAsyncThunk(
   'user/fetchAll',
   async (payload: IUserInfo, thunkAPI) => {
     try {
@@ -21,4 +22,28 @@ export const signIn = createAsyncThunk(
   },
 );
 
-export default signIn;
+const signUp = createAsyncThunk(
+  'user/createNew',
+  async (payload: IUserInfo, thunkAPI) => {
+    try {
+      const res = await fetch(endPoints.signUp(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        const result = await res.json();
+        await Swal.fire(result);
+        return result;
+      }
+      return await Swal.fire(res.statusText);
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Что-то пошло не так');
+    }
+  },
+);
+
+export { signIn, signUp };

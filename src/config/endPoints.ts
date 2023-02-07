@@ -1,7 +1,7 @@
 const { REACT_APP_HOST: host } = process.env;
 
-export function signIn() {
-  return `${host}/api/v1/auth/signin`;
-}
+const signIn = () => `${host}/api/v1/auth/signin`;
 
-export default signIn;
+const signUp = () => `${host}/api/v1/auth/signup`;
+
+export { signIn, signUp };
