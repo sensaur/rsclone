@@ -32,7 +32,7 @@ function SignIn() {
       if (error) {
         Swal.fire(error || 'Неправильный логин / пароль');
       } else {
-        navigate('/');
+        navigate('/alldesks');
       }
     }
   };
