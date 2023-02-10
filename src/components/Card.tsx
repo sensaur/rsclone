@@ -19,9 +19,9 @@ function Card({ title, index, card }: ICardProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className="p-3 bg-orange-400 border"
+          className="py-3 px-3 bg-color3 rounded-md mt-4 "
         >
-          {title}
+          <h3>{title}</h3>
         </div>
       )}
     </Draggable>
