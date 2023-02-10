@@ -6,39 +6,35 @@ function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light">
-      <div className="container-fluid">
-        <img id="logoNavBar" src={logo} alt="" className="navbar-brand mx-3" />
+    <nav>
+      <div>
+        <img id="logoNavBar" src={logo} alt="" />
         <button
-          className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <span />
         </button>
         <div
-          className="collapse navbar-collapse d-flex-lg justify-content-around"
           id="navbarNavAltMarkup"
         >
-          <div className="navbar-nav">
-            <Link className="nav-link" aria-current="page" to="/alldesks">Все доски</Link>
+          <div>
+            <Link to="/alldesks">
+              Все
+              доски
+            </Link>
           </div>
-          <div className="navbar-nav">
-            <Link className="nav-link" aria-current="page" to="/">Создать доску</Link>
+          <div>
+            <Link aria-current="page" to="/">Создать доску</Link>
           </div>
-          <div className="navbar-nav">
-            <Link className="nav-link" aria-current="page" to="/">Редактировать профиль</Link>
+          <div>
+            <Link aria-current="page" to="/">Редактировать профиль</Link>
           </div>
-          <div className="badge bg-secondary">
+          <div>
             Вы вошли как
             {` ${user?.name}`}
           </div>
-          <div className="navbar-nav">
-            <Link className="nav-link" aria-current="page" to="logout">Выйти</Link>
+          <div>
+            <Link to="logout">Выйти</Link>
           </div>
         </div>
       </div>

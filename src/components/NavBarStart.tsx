@@ -4,28 +4,20 @@ import logo from '../images/logo.svg';
 function NavBarStart() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-light">
-        <div className="container-fluid">
+      <nav>
+        <div>
           <Link to="/">
-            <img id="logoNavBar" src={logo} alt="logo" className="navbar-brand mx-3" />
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
+            <img id="logoNavBar" src={logo} alt="logo" />
+            <button type="button">
+              <span />
             </button>
           </Link>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <Link className="nav-link active" aria-current="page" to="login">Войти</Link>
+          <div id="navbarNavAltMarkup">
+            <div>
+              <Link to="login">Войти</Link>
             </div>
-            <div className="navbar-nav">
-              <Link className="nav-link active" aria-current="page" to="signup">Зарегистрироваться</Link>
+            <div>
+              <Link to="signup">Зарегистрироваться</Link>
             </div>
           </div>
         </div>

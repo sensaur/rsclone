@@ -45,11 +45,11 @@ function SignUp() {
   };
 
   return (
-    <div className="container">
+    <div>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+        <div>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="userName" className="form-label">ФИО</label>
+          <label htmlFor="userName">ФИО</label>
           <input
             type="name"
             className="form-control"
@@ -59,17 +59,15 @@ function SignUp() {
             value={toSend.userName}
           />
         </div>
-        <div className="mb-3">
+        <div>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="Email" className="form-label">Email</label>
+          <label htmlFor="Email">Email</label>
           <input
             type="email"
-            className="form-control"
             id="Email"
             name="email"
             onChange={handleChange}
             value={toSend.email}
-            aria-describedby="emailHelp"
           />
         </div>
         <div className="mb-3">
