@@ -2,13 +2,15 @@ export interface ICard {
   id: number
   title: string
   isDone: boolean
+  order: number
+  columnId: number
 }
 
 export interface IColumn {
   id: number
   title: string
   order: number
-  items: ICard[]
+  cards: ICard[]
 }
 
 export interface IColumnProps {

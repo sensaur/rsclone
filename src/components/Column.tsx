@@ -1,66 +1,69 @@
-import React, { useState } from 'react';
-import { IColumnProps } from '../types/IColumn';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-shadow */
+import React from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { IColumn } from '../types/IColumn';
+import Card from './Card';
 
-function Column({
-  title,
-  column,
-  drop,
-  end,
-  leave,
-  over,
-  start,
-  children,
-}: IColumnProps) {
-  const [flag, setflag] = useState(false);
+interface INewProps {
+  column: IColumn,
+  setColumns: (e: IColumn[]) => void
+  index: number
+}
 
+function New({ index, column, setColumns }: INewProps) {
+  const cards = column.cards
+    .map((card, index) => <Card key={card.id} index={index} card={card} title={card.title} />);
+  // console.log(index);
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        width: '100%',
-        border: `${flag ? '2px solid red' : '1px solid gray'}`,
-        cursor: 'grab',
-      }}
-      draggable
-      onDragStart={(e) => start(e, column)}
-      onDragLeave={(e) => {
-        setflag(false);
-        leave(e);
-      }}
-      onDragOver={(e) => {
-        setflag(true);
-        over(e);
-      }}
-      onDragEnd={(e) => {
-        setflag(false);
-        end(e);
-      }}
-      onDrop={(e) => {
-        setflag(false);
-        drop(e, column);
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          padding: '5px',
-          width: '100%',
-          justifyContent: 'space-between',
-          border: '1px solid gray',
-        }}
-      >
-        <h2>{title}</h2>
-        <span>...</span>
-      </div>
-      <div>
-        {children}
-      </div>
-      <button type="button">add card</button>
-    </div>
+    <Draggable draggableId={column.id.toString()} index={index}>
+      {
+        (provided) => (
+          <div
+            ref={provided.innerRef}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...provided.draggableProps}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...provided.dragHandleProps}
+          >
+            <div style={{ background: 'gray' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '15px',
+                  marginBottom: '20px',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  border: '1px solid red',
+                }}
+              >
+                <h2>{column.title}</h2>
+                <span>...</span>
+              </div>
+              <Droppable droppableId={column.id.toString() + column.title} type="cards">
+                {
+                  // eslint-disable-next-line @typescript-eslint/no-shadow
+                  (provided) => (
+                    <div
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className="bg-blue-500 p-4"
+                    >
+                      {cards}
+                      {provided.placeholder}
+                    </div>
+                  )
+                }
+              </Droppable>
+              <button type="button" onClick={() => setColumns([column])}>add card</button>
+            </div>
+          </div>
+        )
+      }
+    </Draggable>
   );
 }
 
-export default Column;
+export default New;

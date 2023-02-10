@@ -13,10 +13,8 @@ function AddColumn({ columns, setColumns }: IAddcolumnProps) {
   const handleAdd = () => {
     if (columnName.length > 0) {
       setModalShow(false);
-      // eslint-disable-next-line no-alert
-      alert('я бы добавил, но потом');
       setColumns([...columns, {
-        id: Number(new Date()), title: columnName, items: [], order: columns.length + 1,
+        id: Number(new Date()), title: columnName, cards: [], order: columns.length + 1,
       }]);
     }
   };
