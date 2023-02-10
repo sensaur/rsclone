@@ -15,12 +15,14 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": ["./tsconfig.json"]
+    "project": ["./tsconfig.json", ".config.js"],
+    "excluded": ["./config.js"]
   },
   "plugins": [
     "react",
     "@typescript-eslint"
   ],
+  "ignorePatterns": [".config.js"],
   "rules": {
     "react/jsx-filename-extension": [
       "warn",
