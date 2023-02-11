@@ -6,8 +6,8 @@ function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
 
   return (
-    <nav className='my-0 mx-auto  bg-color5 px-10 py-3'>
-      <div className='flex justify-between'>
+    <nav className="my-0 mx-auto  bg-color5 px-10 py-3">
+      <div className="flex justify-between">
         <img id="logoNavBar" src={logo} alt="" />
         <button
           type="button"
@@ -15,26 +15,26 @@ function NavBarLogged() {
           <span />
         </button>
         <div
-          className='flex gap-7'
+          className="flex gap-7"
           id="navbarNavAltMarkup"
         >
-          <div className='flex items-center'>
-            <Link className='btn' to="/alldesks">
+          <div className="flex items-center">
+            <Link className="btn" to="/alldesks">
               All boards
             </Link>
           </div>
-          <div className='flex items-center'>
-            <Link className='btn' aria-current="page" to="/">Create board</Link>
+          <div className="flex items-center">
+            <Link className="btn" aria-current="page" to="/">Create board</Link>
           </div>
-          <div className='flex items-center'>
-            <Link className='btn' aria-current="page" to="/">Edit profile</Link>
+          <div className="flex items-center">
+            <Link className="btn" aria-current="page" to="/">Edit profile</Link>
           </div>
-          <div className='flex items-center'>
+          <div className="flex items-center">
             Вы вошли как
             {` ${user?.name}`}
           </div>
-          <div className='flex items-center'>
-            <Link className='btn' to="logout">Sing out</Link>
+          <div className="flex items-center">
+            <Link className="btn" to="logout">Sing out</Link>
           </div>
         </div>
       </div>

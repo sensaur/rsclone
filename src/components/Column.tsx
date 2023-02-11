@@ -26,8 +26,8 @@ function New({ index, column, setColumns }: INewProps) {
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...provided.dragHandleProps}
           >
-            <div className='bg-color5 rounded-md flex flex-col gap-3 py-2 px-2'>
-              <div className='flex justify-between px-2'>
+            <div className="bg-color5 rounded-md flex flex-col gap-3 py-2 px-2">
+              <div className="flex justify-between px-2">
                 <h2>{column.title}</h2>
                 <span>...</span>
               </div>
@@ -46,8 +46,8 @@ function New({ index, column, setColumns }: INewProps) {
                   )
                 }
               </Droppable>
-              <div className='text-center'>
-                <button className='btn grow-0' type="button" onClick={() => setColumns([column])}>Add card</button>
+              <div className="text-center">
+                <button className="btn grow-0" type="button" onClick={() => setColumns([column])}>Add card</button>
               </div>
             </div>
           </div>
