@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { IColumn } from '../types/IColumn';
+import { ICard, IColumn } from '../types/IColumn';
 import { updateCardsInColumns, changeListOrder } from '../utils/updateCardsInColumns';
 import AddColumn from './AddColumn';
 import ColumnsWraper from './ColumnsWraper';
-import New from './Column';
+import Column from './Column';
 
 const columnsArr = [
   {
@@ -66,6 +66,28 @@ const columnsArr = [
 function Columns() {
   const [columns, setColumns] = useState<IColumn[]>(columnsArr);
 
+  const removeColumn = (column: IColumn) => {
+    setColumns((prev): IColumn[] => {
+      const colsArr = [...prev];
+      const colIndex = colsArr.indexOf(column);
+      colsArr.splice(colIndex, 1);
+      return colsArr;
+    });
+  };
+
+  const addCard = (column: IColumn, card: ICard) => {
+    setColumns((prev): IColumn[] => {
+      const prevArr = [...prev];
+      const colIndex = prevArr.indexOf(column);
+      prevArr[colIndex].cards = [
+        ...prevArr[colIndex].cards,
+        { ...card, order: prevArr[colIndex].cards.length - 1 },
+      ];
+      return prevArr;
+    });
+    console.log(columns);
+  };
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
     if (!destination) return;
@@ -74,13 +96,18 @@ function Columns() {
     }
     if (type === 'column') {
       // const initialColumns = [...columns];
-      const reorderedColumns = changeListOrder(columns, source, destination);
+      const reorderedColumns = changeListOrder(columns, source, destination)
+        .map((elem, index) => ({
+          ...elem, order: index,
+        }))
+        .sort((a, b) => a.order - b.order);
       setColumns(reorderedColumns);
     }
+    console.table(columns);
   };
 
   const renderColumns = columns.map((col, index) => (
-    <New key={col.id} index={index} column={col} setColumns={setColumns} />
+    <Column key={col.id} index={index} column={col} removeColumn={removeColumn} addCard={addCard} />
   ));
 
   return (

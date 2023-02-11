@@ -16,6 +16,7 @@ function AddColumn({ columns, setColumns }: IAddcolumnProps) {
       setColumns([...columns, {
         id: Number(new Date()), title: columnName, cards: [], order: columns.length + 1,
       }]);
+      setColumnName(() => '');
     }
   };
 
