@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-import { IColumn } from '../types/IColumn';
+import { IColumn } from '../../types/IColumn';
 
 interface IAddcolumnProps {
-  columns: IColumn[]
-  setColumns: (e: IColumn[]) => void
+  setColumns: (value: React.SetStateAction<IColumn[]>) => void
 }
 
-function AddColumn({ columns, setColumns }: IAddcolumnProps) {
+function AddColumn({ setColumns }: IAddcolumnProps) {
   const [modalShow, setModalShow] = useState(false);
   const [columnName, setColumnName] = useState('');
 
   const handleAdd = () => {
     if (columnName.length > 0) {
       setModalShow(false);
-      setColumns([...columns, {
-        id: Number(new Date()), title: columnName, cards: [], order: columns.length + 1,
+      setColumns((prev) => [...prev, {
+        id: Number(new Date()), title: columnName, cards: [], order: prev.length + 1,
       }]);
       setColumnName(() => '');
     }

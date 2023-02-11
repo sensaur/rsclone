@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { ICard, IColumn } from '../types/IColumn';
-import { updateCardsInColumns, changeListOrder } from '../utils/updateCardsInColumns';
+import { ICard, IColumn } from '../../types/IColumn';
+import { updateCardsInColumns, changeListOrder } from '../../utils/updateCardsInColumns';
 import AddColumn from './AddColumn';
 import ColumnsWraper from './ColumnsWraper';
 import Column from './Column';
@@ -57,15 +57,11 @@ const columnsArr = [
   },
 ];
 
-// interface IColumnsListProps {
-// columns: IColumn[]
-// setColumns: (e: IColumn[]) => void
-// { columns, setColumns }: IColumnsListProps
-// }
-
 function Columns() {
   const [columns, setColumns] = useState<IColumn[]>(columnsArr);
-
+  useEffect(() => {
+    console.log('COLUMNS', columns);
+  }, [columns]);
   const removeColumn = (column: IColumn) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
@@ -85,7 +81,6 @@ function Columns() {
       ];
       return prevArr;
     });
-    console.log(columns);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -103,16 +98,22 @@ function Columns() {
         .sort((a, b) => a.order - b.order);
       setColumns(reorderedColumns);
     }
-    console.table(columns);
   };
 
   const renderColumns = columns.map((col, index) => (
-    <Column key={col.id} index={index} column={col} removeColumn={removeColumn} addCard={addCard} />
+    <Column
+      key={col.id}
+      index={index}
+      column={col}
+      removeColumn={removeColumn}
+      setColumns={setColumns}
+      addCard={addCard}
+    />
   ));
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <AddColumn columns={columns} setColumns={setColumns} />
+      <AddColumn setColumns={setColumns} />
       <ColumnsWraper>
         {renderColumns}
       </ColumnsWraper>

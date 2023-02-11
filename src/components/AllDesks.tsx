@@ -1,4 +1,4 @@
-import Columns from './Columns';
+import Columns from './Columns/Columns';
 
 function AllDesks() {
   return (
