@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { IColumn } from '../types/IColumn';
-import { updateCardsInColumns, changeListOrder } from '../utils/updateCardsInColumns';
+import { ICard, IColumn } from '../../types/IColumn';
+import { updateCardsInColumns, changeListOrder } from '../../utils/updateCardsInColumns';
 import AddColumn from './AddColumn';
 import ColumnsWraper from './ColumnsWraper';
-import New from './Column';
+import Column from './Column';
 
 const columnsArr = [
   {
@@ -57,14 +57,31 @@ const columnsArr = [
   },
 ];
 
-// interface IColumnsListProps {
-// columns: IColumn[]
-// setColumns: (e: IColumn[]) => void
-// { columns, setColumns }: IColumnsListProps
-// }
-
 function Columns() {
   const [columns, setColumns] = useState<IColumn[]>(columnsArr);
+  useEffect(() => {
+    console.log('COLUMNS', columns);
+  }, [columns]);
+  const removeColumn = (column: IColumn) => {
+    setColumns((prev): IColumn[] => {
+      const colsArr = [...prev];
+      const colIndex = colsArr.indexOf(column);
+      colsArr.splice(colIndex, 1);
+      return colsArr;
+    });
+  };
+
+  const addCard = (column: IColumn, card: ICard) => {
+    setColumns((prev): IColumn[] => {
+      const prevArr = [...prev];
+      const colIndex = prevArr.indexOf(column);
+      prevArr[colIndex].cards = [
+        ...prevArr[colIndex].cards,
+        { ...card, order: prevArr[colIndex].cards.length - 1 },
+      ];
+      return prevArr;
+    });
+  };
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
@@ -74,18 +91,29 @@ function Columns() {
     }
     if (type === 'column') {
       // const initialColumns = [...columns];
-      const reorderedColumns = changeListOrder(columns, source, destination);
+      const reorderedColumns = changeListOrder(columns, source, destination)
+        .map((elem, index) => ({
+          ...elem, order: index,
+        }))
+        .sort((a, b) => a.order - b.order);
       setColumns(reorderedColumns);
     }
   };
 
   const renderColumns = columns.map((col, index) => (
-    <New key={col.id} index={index} column={col} setColumns={setColumns} />
+    <Column
+      key={col.id}
+      index={index}
+      column={col}
+      removeColumn={removeColumn}
+      setColumns={setColumns}
+      addCard={addCard}
+    />
   ));
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <AddColumn columns={columns} setColumns={setColumns} />
+      <AddColumn setColumns={setColumns} />
       <ColumnsWraper>
         {renderColumns}
       </ColumnsWraper>
