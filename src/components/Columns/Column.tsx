@@ -6,7 +6,7 @@ import CardModal from '../Card/CardModal';
 import Confirm from '../Modals/Confirm';
 import EditTitle from './EditTitle';
 
-interface INewProps {
+interface IColumnProps {
   column: IColumn,
   removeColumn: (e: IColumn) => void
   setColumns: (value: React.SetStateAction<IColumn[]>) => void
@@ -15,16 +15,28 @@ interface INewProps {
 
 function Column({
   index, column, removeColumn, setColumns,
-}: INewProps) {
+}: IColumnProps) {
   const [isColumnModal, setIsColumnModal] = useState(false);
   const [isAddCardModal, setIsAddCardModal] = useState(false);
 
   const removeCard = (card: ICard) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
-      const colIndex = colsArr[card.columnId - 1];
-      colIndex.cards.splice(card.order - 1, 1);
-      colIndex.cards.map((cardItem, cardIndex) => ({ ...cardItem, order: cardIndex + 1 }));
+      colsArr[index].cards.splice(card.order, 1);
+      colsArr[index].cards = colsArr[index].cards
+        .map((cardItem, cardIndex) => ({ ...cardItem, order: cardIndex }));
+      return [...colsArr];
+    });
+  };
+
+  const editCard = (editInfo: ICard) => {
+    setColumns((prev): IColumn[] => {
+      const colsArr = [...prev];
+      const cardsArr = colsArr[index].cards;
+      colsArr[index].cards = cardsArr
+        .map((elem) => (elem.order === editInfo.order
+          ? { ...elem, title: editInfo.title, description: editInfo.description }
+          : elem));
       return [...colsArr];
     });
   };
@@ -37,6 +49,7 @@ function Column({
         card={card}
         title={card.title}
         removeCard={removeCard}
+        editCard={editCard}
       />
     ));
 
@@ -53,8 +66,8 @@ function Column({
         ...newCardInfo,
         columnId: column.id,
         order: column.cards.length > 0
-          ? column.cards.length - 1
-          : 1,
+          ? column.cards.length
+          : 0,
       };
       prev[index].cards = [...column.cards, newCard];
       return [...prev];
@@ -87,6 +100,7 @@ function Column({
                     // eslint-disable-next-line @typescript-eslint/no-shadow
                     (provided) => (
                       <div
+                        className="py-2"
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         {...provided.droppableProps}
                         ref={provided.innerRef}
@@ -105,8 +119,17 @@ function Column({
           )
         }
       </Draggable>
-      {isColumnModal && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="column" title={column.title} />)}
-      {isAddCardModal && (<CardModal onClose={setIsAddCardModal} addCard={addCard} />)}
+      {isColumnModal
+        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="column" title={column.title} />)}
+      {isAddCardModal
+        && (
+        <CardModal
+          mode={false}
+          card={column.cards[0]}
+          onClose={setIsAddCardModal}
+          setCard={addCard}
+        />
+        )}
     </>
   );
 }

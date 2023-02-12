@@ -13,13 +13,13 @@ const columnsArr = [
     title: 'Первая колонка',
     cards: [
       {
-        id: 1, order: 1, columnId: 1, title: 'Задание 1 из первой колонки', isDone: false, description: 'default',
+        id: 1, order: 0, columnId: 1, title: 'Задание 1 из первой колонки', isDone: false, description: 'default',
       },
       {
-        id: 2, order: 2, columnId: 1, title: 'Задание 2 из первой колонки', isDone: false, description: 'default',
+        id: 2, order: 1, columnId: 1, title: 'Задание 2 из первой колонки', isDone: false, description: 'default',
       },
       {
-        id: 3, order: 3, columnId: 1, title: 'Задание 3 из первой колонки', isDone: false, description: 'default',
+        id: 3, order: 2, columnId: 1, title: 'Задание 3 из первой колонки', isDone: false, description: 'default',
       },
     ],
   },
@@ -29,13 +29,13 @@ const columnsArr = [
     title: 'Вторая колонка',
     cards: [
       {
-        id: 4, order: 1, columnId: 2, title: 'Задание 1 из второй колонки', isDone: false, description: 'default',
+        id: 4, order: 0, columnId: 2, title: 'Задание 1 из второй колонки', isDone: false, description: 'default',
       },
       {
-        id: 5, order: 2, columnId: 2, title: 'Задание 2 из второй колонки', isDone: false, description: 'default',
+        id: 5, order: 1, columnId: 2, title: 'Задание 2 из второй колонки', isDone: false, description: 'default',
       },
       {
-        id: 6, order: 3, columnId: 2, title: 'Задание 3 из второй колонки', isDone: false, description: 'default',
+        id: 6, order: 2, columnId: 2, title: 'Задание 3 из второй колонки', isDone: false, description: 'default',
       },
     ],
   },
@@ -45,13 +45,13 @@ const columnsArr = [
     title: 'Третья колонка',
     cards: [
       {
-        id: 7, order: 1, columnId: 3, title: 'Задание 1 из третей колонки', isDone: false, description: 'default',
+        id: 7, order: 0, columnId: 3, title: 'Задание 1 из третей колонки', isDone: false, description: 'default',
       },
       {
-        id: 8, order: 2, columnId: 3, title: 'Задание 2 из третей колонки', isDone: false, description: 'default',
+        id: 8, order: 1, columnId: 3, title: 'Задание 2 из третей колонки', isDone: false, description: 'default',
       },
       {
-        id: 9, order: 3, columnId: 3, title: 'Задание 3 из третей колонки', isDone: false, description: 'default',
+        id: 9, order: 2, columnId: 3, title: 'Задание 3 из третей колонки', isDone: false, description: 'default',
       },
     ],
   },
