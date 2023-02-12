@@ -12,7 +12,7 @@ function ColumnsWraper(props: Tprops) {
     <Droppable droppableId="columns" direction="horizontal" type="column">
       {(provided) => (
         <div
-          className="flex flex-wrap w-full gap-4"
+          className="flex gap-4 overflow-x-auto"
           {...provided.droppableProps}
           ref={provided.innerRef}
         >

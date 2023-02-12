@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { ICard, IColumn } from '../../types/IColumn';
+import { IColumn } from '../../types/IColumn';
 import { updateCardsInColumns, changeListOrder } from '../../utils/updateCardsInColumns';
 import AddColumn from './AddColumn';
 import ColumnsWraper from './ColumnsWraper';
@@ -13,13 +13,13 @@ const columnsArr = [
     title: 'Первая колонка',
     cards: [
       {
-        id: 1, order: 1, columnId: 1, title: 'Задание 1 из первой колонки', isDone: false,
+        id: 1, order: 1, columnId: 1, title: 'Задание 1 из первой колонки', isDone: false, description: 'default',
       },
       {
-        id: 2, order: 2, columnId: 1, title: 'Задание 2 из первой колонки', isDone: false,
+        id: 2, order: 2, columnId: 1, title: 'Задание 2 из первой колонки', isDone: false, description: 'default',
       },
       {
-        id: 3, order: 3, columnId: 1, title: 'Задание 3 из первой колонки', isDone: false,
+        id: 3, order: 3, columnId: 1, title: 'Задание 3 из первой колонки', isDone: false, description: 'default',
       },
     ],
   },
@@ -29,13 +29,13 @@ const columnsArr = [
     title: 'Вторая колонка',
     cards: [
       {
-        id: 4, order: 1, columnId: 2, title: 'Задание 1 из второй колонки', isDone: false,
+        id: 4, order: 1, columnId: 2, title: 'Задание 1 из второй колонки', isDone: false, description: 'default',
       },
       {
-        id: 5, order: 2, columnId: 2, title: 'Задание 2 из второй колонки', isDone: false,
+        id: 5, order: 2, columnId: 2, title: 'Задание 2 из второй колонки', isDone: false, description: 'default',
       },
       {
-        id: 6, order: 3, columnId: 2, title: 'Задание 3 из второй колонки', isDone: false,
+        id: 6, order: 3, columnId: 2, title: 'Задание 3 из второй колонки', isDone: false, description: 'default',
       },
     ],
   },
@@ -45,13 +45,13 @@ const columnsArr = [
     title: 'Третья колонка',
     cards: [
       {
-        id: 7, order: 1, columnId: 3, title: 'Задание 1 из третей колонки', isDone: false,
+        id: 7, order: 1, columnId: 3, title: 'Задание 1 из третей колонки', isDone: false, description: 'default',
       },
       {
-        id: 8, order: 2, columnId: 3, title: 'Задание 2 из третей колонки', isDone: false,
+        id: 8, order: 2, columnId: 3, title: 'Задание 2 из третей колонки', isDone: false, description: 'default',
       },
       {
-        id: 9, order: 3, columnId: 3, title: 'Задание 3 из третей колонки', isDone: false,
+        id: 9, order: 3, columnId: 3, title: 'Задание 3 из третей колонки', isDone: false, description: 'default',
       },
     ],
   },
@@ -59,27 +59,12 @@ const columnsArr = [
 
 function Columns() {
   const [columns, setColumns] = useState<IColumn[]>(columnsArr);
-  useEffect(() => {
-    console.log('COLUMNS', columns);
-  }, [columns]);
   const removeColumn = (column: IColumn) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
       const colIndex = colsArr.indexOf(column);
       colsArr.splice(colIndex, 1);
       return colsArr;
-    });
-  };
-
-  const addCard = (column: IColumn, card: ICard) => {
-    setColumns((prev): IColumn[] => {
-      const prevArr = [...prev];
-      const colIndex = prevArr.indexOf(column);
-      prevArr[colIndex].cards = [
-        ...prevArr[colIndex].cards,
-        { ...card, order: prevArr[colIndex].cards.length - 1 },
-      ];
-      return prevArr;
     });
   };
 
@@ -107,7 +92,6 @@ function Columns() {
       column={col}
       removeColumn={removeColumn}
       setColumns={setColumns}
-      addCard={addCard}
     />
   ));
 

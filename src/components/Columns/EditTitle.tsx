@@ -35,7 +35,6 @@ function EditTitle({ title, updateTitle }: IEditTitle) {
     return (
       <input
         ref={inputRef}
-        // className={classes}
         onBlur={save}
         onKeyDown={onKeyDown}
         defaultValue={title}

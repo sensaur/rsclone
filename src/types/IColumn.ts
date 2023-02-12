@@ -1,6 +1,7 @@
 export interface ICard {
   id: number
   title: string
+  description: string
   isDone: boolean
   order: number
   columnId: number
