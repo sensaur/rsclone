@@ -22,9 +22,9 @@ function Column({
   const removeCard = (card: ICard) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
-      const colIndex = colsArr[card.columnId - 1]
+      const colIndex = colsArr[card.columnId - 1];
       colIndex.cards.splice(card.order - 1, 1);
-      colIndex.cards.map((card, index) => { card.order = index + 1 })
+      colIndex.cards.map((cardItem, cardIndex) => ({ ...cardItem, order: cardIndex + 1 }));
       return [...colsArr];
     });
   };
@@ -60,9 +60,6 @@ function Column({
       return [...prev];
     });
   };
-
-
-
 
   const handleConfirm = () => removeColumn(column);
   const handleClose = () => setIsColumnModal(false);

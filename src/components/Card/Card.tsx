@@ -14,16 +14,14 @@ interface ICardProps {
   removeCard: (e: ICard) => void
 }
 
-
-
-function Card({ title, index, card, removeCard }: ICardProps) {
+function Card({
+  title, index, card, removeCard,
+}: ICardProps) {
   const { id } = card;
   const [isCardModal, setIsCardModal] = useState(false);
 
   const handleConfirm = () => removeCard(card);
   const handleClose = () => setIsCardModal(false);
-
-
 
   return (
     <>
