@@ -30,7 +30,7 @@ function NavBarLogged() {
             <Link className="btn" aria-current="page" to="/">Edit profile</Link>
           </div>
           <div className="flex items-center">
-            Вы вошли как
+            Logged as
             {` ${user?.name}`}
           </div>
           <div className="flex items-center">

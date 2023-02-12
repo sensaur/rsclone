@@ -17,7 +17,7 @@ function SignIn() {
   };
   const [toSend, setToSend] = useState(initialState);
   useEffect(() => {
-    document.title = 'Войти';
+    document.title = 'Sign in';
     // eslint-disable-next-line
   }, []);
 
@@ -30,7 +30,7 @@ function SignIn() {
     if (Object.entries(toSend).length) {
       await dispatch(signIn(toSend));
       if (error) {
-        Swal.fire(error || 'Неправильный логин / пароль');
+        Swal.fire(error || 'Wrong login / password');
       } else {
         navigate('/alldesks');
       }
@@ -38,37 +38,60 @@ function SignIn() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="container">
-      <div className="mb-3">
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleInputEmail1"
-          name="email"
-          onChange={handleChange}
-          value={toSend.email}
-          aria-describedby="emailHelp"
-          placeholder={toSend.email}
-          autoComplete="email"
-        />
-      </div>
-      <div className="mb-3">
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="exampleInputPassword1" className="form-label">Пароль</label>
-        <input
-          type="password"
-          className="form-control"
-          id="exampleInputPassword1"
-          name="password"
-          onChange={handleChange}
-          value={toSend.password}
-          autoComplete="password"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">Войти</button>
-    </form>
+    <div className="w-1/2 py-4 m-auto">
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <div className="mb-4">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            name="email"
+            type="text"
+            placeholder="Email"
+            autoComplete="email"
+            onChange={handleChange}
+            value={toSend.email}
+          />
+        </div>
+        <div className="mb-6">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="******************"
+            onChange={handleChange}
+            value={toSend.password}
+          />
+          <p className="text-red-500 text-xs italic">Please enter a password.</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="btn btn-primary"
+            type="submit"
+          >
+            Sign In
+          </button>
+          <a
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            href="/"
+          >
+            Forgot Password?
+          </a>
+        </div>
+      </form>
+      <p className="text-center text-gray-500 text-xs">
+        &copy;2023 RS School. All rights reserved.
+      </p>
+    </div>
   );
 }
 

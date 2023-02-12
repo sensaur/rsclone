@@ -18,17 +18,17 @@ function SignUp() {
   const [toSend, setToSend] = useState(initialState);
   const navigate = useNavigate();
   useEffect(() => {
-    document.title = 'Зарегистрироваться';
+    document.title = 'Sign Up';
   }, []);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (Object.entries(toSend).length) {
       if (toSend.password !== toSend.password2) {
-        Swal.fire('пароли не совпадают');
+        await Swal.fire('Passwords are not equal');
       } else {
         await dispatch(signUp(toSend));
         if (error) {
-          Swal.fire(error || 'Неправильный логин / пароль');
+          await Swal.fire(error || 'Wrong login / password');
         } else {
           // Swal.fire('Пользователь создан');
           navigate('/login');
@@ -45,57 +45,89 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="w-1/2 py-4 m-auto">
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="userName">ФИО</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userName">
+            User name
+          </label>
           <input
-            type="name"
-            className="form-control"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="userName"
             name="userName"
+            type="text"
+            placeholder="Name"
+            autoComplete="userName"
             onChange={handleChange}
             value={toSend.userName}
           />
         </div>
-        <div>
+        <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="Email">Email</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Email
+          </label>
           <input
-            type="email"
-            id="Email"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
             name="email"
+            type="text"
+            placeholder="Email"
+            autoComplete="email"
             onChange={handleChange}
             value={toSend.email}
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-6">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="password" className="form-label">Пароль</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
           <input
-            type="new-password"
-            className="form-control"
+            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             name="password"
+            type="password"
+            placeholder="******************"
+            autoComplete="new-password"
             onChange={handleChange}
             value={toSend.password}
           />
-        </div>
-        <div className="mb-3">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="password2" className="form-label">Пароль еще раз</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
+            Password one more time
+          </label>
           <input
-            type="new-password"
-            className="form-control"
+            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password2"
             name="password2"
+            type="password"
+            placeholder="******************"
+            autoComplete="new-password"
             onChange={handleChange}
             value={toSend.password2}
           />
+          <p className="text-red-500 text-xs italic">Please enter a password.</p>
         </div>
-        <button type="submit" className="btn btn-primary">Зарегистрироваться</button>
+        <div className="flex items-center justify-between">
+          <button
+            className="btn btn-primary"
+            type="submit"
+          >
+            Sign Up
+          </button>
+          <a
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            href="/"
+          >
+            Forgot Password?
+          </a>
+        </div>
       </form>
+      <p className="text-center text-gray-500 text-xs">
+        &copy;2023 RS School. All rights reserved.
+      </p>
     </div>
   );
 }
