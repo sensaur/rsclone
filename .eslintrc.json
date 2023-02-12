@@ -15,8 +15,7 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": ["./tsconfig.json", ".config.js"],
-    "excluded": ["./config.js"]
+    "project": "tsconfig.json"
   },
   "plugins": [
     "react",
