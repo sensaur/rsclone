@@ -3,24 +3,28 @@ import { ICard } from '../../types/IColumn';
 
 interface ICardModalProps {
   onClose: (e: boolean) => void
-  addCard: (e: ICard) => void
+  setCard: (e: ICard) => void
+  mode: boolean
+  card: ICard
 }
 
-function CardModal({ addCard, onClose }: ICardModalProps) {
-  const [cardTitle, setCardTitle] = useState('');
-  const [cardDescr, setCardDescr] = useState('');
+function CardModal({
+  setCard, onClose, mode, card,
+}: ICardModalProps) {
+  const [cardTitle, setCardTitle] = useState(mode ? card.title : '');
+  const [cardDescr, setCardDescr] = useState(mode ? card.description : '');
 
   const handleAdd = () => {
     onClose(false);
-    const newCardInfo = {
-      id: Number(new Date()),
-      order: 1,
+    const cardInfo = {
+      id: mode ? card.id : Number(new Date()),
+      order: mode ? card.order : 0,
       title: cardTitle.trim(),
       description: cardDescr.trim(),
-      isDone: false,
-      columnId: 1,
+      isDone: mode ? card.isDone : false,
+      columnId: mode ? card.columnId : 1,
     };
-    addCard(newCardInfo);
+    setCard(cardInfo);
     setCardTitle('');
     setCardDescr('');
   };
@@ -76,7 +80,7 @@ function CardModal({ addCard, onClose }: ICardModalProps) {
             type="button"
             onClick={() => handleAdd()}
           >
-            Add card
+            {mode ? 'Edit card' : 'Add card'}
           </button>
         </div>
       </div>

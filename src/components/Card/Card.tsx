@@ -4,26 +4,30 @@ import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { ICard, IColumn } from '../../types/IColumn';
+import { ICard } from '../../types/IColumn';
 import Confirm from '../Modals/Confirm';
+import CardModal from './CardModal';
 
 interface ICardProps {
   title: string
   index: number
   card: ICard
+  editCard: (e: ICard) => void
   removeCard: (e: ICard) => void
 }
 
-
-
-function Card({ title, index, card, removeCard }: ICardProps) {
+function Card({
+  title, index, card, removeCard, editCard,
+}: ICardProps) {
   const { id } = card;
   const [isCardModal, setIsCardModal] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
 
-  const handleConfirm = () => removeCard(card);
+  const handleConfirm = () => {
+    setIsCardModal(false);
+    removeCard(card);
+  };
   const handleClose = () => setIsCardModal(false);
-
-
 
   return (
     <>
@@ -38,7 +42,7 @@ function Card({ title, index, card, removeCard }: ICardProps) {
             <div className="flex justify-between w-full items-center">
               <h3 className="font-semibold text-xl">{title}</h3>
               <div className="flex justify-between items-center">
-                <button className="mr-3" type="button">
+                <button className="mr-3" type="button" onClick={() => setIsEditModal(true)}>
                   <AiFillEdit />
                 </button>
                 <button type="button" onClick={() => setIsCardModal(true)}>
@@ -50,7 +54,10 @@ function Card({ title, index, card, removeCard }: ICardProps) {
           </div>
         )}
       </Draggable>
-      {isCardModal && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={card.title} />)}
+      {isCardModal
+        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={card.title} />)}
+      {isEditModal
+        && (<CardModal onClose={setIsEditModal} mode card={card} setCard={editCard} />)}
     </>
   );
 }
