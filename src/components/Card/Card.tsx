@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { ICard } from '../../types/IColumn';
 
