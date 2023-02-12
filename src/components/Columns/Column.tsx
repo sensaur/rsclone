@@ -18,6 +18,17 @@ function Column({
 }: INewProps) {
   const [isColumnModal, setIsColumnModal] = useState(false);
   const [isAddCardModal, setIsAddCardModal] = useState(false);
+
+  const removeCard = (card: ICard) => {
+    setColumns((prev): IColumn[] => {
+      const colsArr = [...prev];
+      const colIndex = colsArr[card.columnId - 1]
+      colIndex.cards.splice(card.order - 1, 1);
+      colIndex.cards.map((card, index) => { card.order = index + 1 })
+      return [...colsArr];
+    });
+  };
+
   const cards = column.cards
     .map((card, cardIndex) => (
       <Card
@@ -25,6 +36,7 @@ function Column({
         index={cardIndex}
         card={card}
         title={card.title}
+        removeCard={removeCard}
       />
     ));
 
@@ -48,6 +60,9 @@ function Column({
       return [...prev];
     });
   };
+
+
+
 
   const handleConfirm = () => removeColumn(column);
   const handleClose = () => setIsColumnModal(false);
