@@ -3,7 +3,7 @@ import logo from '../images/logo.svg';
 
 function NavBarStart() {
   return (
-    <div className="my-0 mx-auto  bg-color5 px-10 py-3">
+    <div className="bg-color5 px-10 py-3">
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">

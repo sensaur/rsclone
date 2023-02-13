@@ -10,26 +10,30 @@ import NavBarStart from './components/NavBarStart';
 import NavBarLogged from './components/NavBarLogged';
 import ProtectedRoute from './components/ProtectedRoute';
 import AllDesks from './components/AllDesks';
+import Footer from './components/Footer';
 
 function App() {
   const { user } = useAppSelector((state) => state.userSlice);
   return (
     <>
       {!user ? <NavBarStart /> : <NavBarLogged />}
-      <Routes>
-        <Route path="/" element={<StartPageEmpty />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/logout" element={<SignOut />} />
-        <Route
-          path="/alldesks"
-          element={(
-            <ProtectedRoute>
-              <AllDesks />
-            </ProtectedRoute>
-          )}
-        />
-      </Routes>
+      <div className='flex-auto px-10 py-4'>
+        <Routes>
+          <Route path="/" element={<StartPageEmpty />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/logout" element={<SignOut />} />
+          <Route
+            path="/alldesks"
+            element={(
+              <ProtectedRoute>
+                <AllDesks />
+              </ProtectedRoute>
+            )}
+          />
+        </Routes>
+      </div>
+      <Footer />
     </>
   );
 }

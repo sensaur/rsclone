@@ -6,7 +6,7 @@ function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
 
   return (
-    <nav className="my-0 mx-auto  bg-color5 px-10 py-3">
+    <nav className="bg-color5 px-10 py-3">
       <div className="flex justify-between">
         <img id="logoNavBar" src={logo} alt="" />
         <button
