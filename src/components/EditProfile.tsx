@@ -6,6 +6,17 @@ import { editUser } from '../redux/ac/user.ac';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 function EditProfile() {
+  const formData = new FormData();
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    if (target && file) {
+      // console.log(formData);
+      formData.append('file', file);
+    }
+  };
+
   const dispatch = useAppDispatch();
   const { error, user } = useAppSelector((state) => state.userSlice);
   console.log(user);
@@ -73,6 +84,17 @@ function EditProfile() {
             value={toSend.email}
           />
         </div>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="avatar">
+          Avatar
+        </label>
+        <input
+          type="file"
+          name="file"
+          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          aria-label="Upload"
+          onChange={onFileChange}
+        />
         <div className="flex items-center justify-center">
           <button
             className="btn btn-primary w-1/4"

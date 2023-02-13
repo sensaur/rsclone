@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.svg';
+import logo2 from '../images/add-file.svg';
 
 function NavBarStart() {
   return (
@@ -7,7 +7,7 @@ function NavBarStart() {
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">
-            <img id="logoNavBar" src={logo} alt="logo" />
+            <img id="logoNavBar" src={logo2} alt="logo" />
             <button type="button">
               <span />
             </button>
