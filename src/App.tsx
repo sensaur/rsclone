@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       {!user ? <NavBarStart /> : <NavBarLogged />}
-      <div className='flex-auto px-10 py-4'>
+      <div className="flex-auto px-10 py-4">
         <Routes>
           <Route path="/" element={<StartPageEmpty />} />
           <Route path="/login" element={<SignIn />} />
