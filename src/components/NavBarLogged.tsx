@@ -15,7 +15,7 @@ function NavBarLogged() {
           <span />
         </button>
         <div
-          className="flex gap-7"
+          className="flex md:gap-7 gap-3"
           id="navbarNavAltMarkup"
         >
           <div className="flex items-center">
@@ -29,7 +29,7 @@ function NavBarLogged() {
           <div className="flex items-center">
             <Link className="btn" aria-current="page" to="/">Edit profile</Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center md:text-base text-xs">
             Logged as
             {` ${user?.name}`}
           </div>
