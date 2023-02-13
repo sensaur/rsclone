@@ -32,21 +32,21 @@ function Card({
   return (
     <>
       <Draggable draggableId={id.toString() + card.title} index={index}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className="py-3 px-3 bg-color3 rounded-md mt-4 "
+            className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}
           >
             <div className="flex justify-between w-full items-center">
               <h3 className="font-semibold text-xl">{title}</h3>
               <div className="flex justify-between items-center">
                 <button className="mr-3" type="button" onClick={() => setIsEditModal(true)}>
-                  <AiFillEdit />
+                  <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
                 <button type="button" onClick={() => setIsCardModal(true)}>
-                  <AiFillDelete />
+                  <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
               </div>
             </div>

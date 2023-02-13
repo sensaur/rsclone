@@ -82,7 +82,7 @@ function Column({
     <>
       <Draggable draggableId={column.id.toString()} index={index}>
         {
-          (provided) => (
+          (provided, snapshot) => (
             <div
               ref={provided.innerRef}
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -90,7 +90,7 @@ function Column({
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...provided.dragHandleProps}
             >
-              <div className="bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2">
+              <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
                 <div className="flex justify-between px-2">
                   <EditTitle title={column.title} updateTitle={updateColumnTitle} />
                   <button type="button" className="text-lg text-black" onClick={() => setIsColumnModal(true)}>x</button>
@@ -98,9 +98,9 @@ function Column({
                 <Droppable droppableId={column.id.toString() + column.title} type="cards">
                   {
                     // eslint-disable-next-line @typescript-eslint/no-shadow
-                    (provided) => (
+                    (provided, snapshot) => (
                       <div
-                        className="py-2"
+                        className={`py-2 rounded ${snapshot.isDraggingOver ? 'bg-color2' : ''}`}
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         {...provided.droppableProps}
                         ref={provided.innerRef}
