@@ -6,7 +6,7 @@ function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
 
   return (
-    <nav className="my-0 mx-auto  bg-color5 px-10 py-3">
+    <nav className="bg-color5 px-10 py-3">
       <div className="flex justify-between">
         <img id="logoNavBar" src={logo} alt="" />
         <button
@@ -15,7 +15,7 @@ function NavBarLogged() {
           <span />
         </button>
         <div
-          className="flex gap-7"
+          className="flex md:gap-7 gap-3"
           id="navbarNavAltMarkup"
         >
           <div className="flex items-center">
@@ -29,7 +29,7 @@ function NavBarLogged() {
           <div className="flex items-center">
             <Link className="btn" aria-current="page" to="/editprofile">Edit profile</Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center md:text-base text-xs">
             Logged as
             {` ${user?.userName}`}
           </div>
