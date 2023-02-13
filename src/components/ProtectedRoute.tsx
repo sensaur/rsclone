@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 function ProtectedRoute({ children }) {
   // @ts-ignore
   const { user } = useSelector((state) => state.userSlice);
-  if (user?.user === null || !user) {
+  if (user?.userName === null || !user) {
     return <Navigate to="/" replace />;
   }
   return children;

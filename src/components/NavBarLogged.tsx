@@ -27,11 +27,11 @@ function NavBarLogged() {
             <Link className="btn" aria-current="page" to="/">Create board</Link>
           </div>
           <div className="flex items-center">
-            <Link className="btn" aria-current="page" to="/">Edit profile</Link>
+            <Link className="btn" aria-current="page" to="/editprofile">Edit profile</Link>
           </div>
           <div className="flex items-center">
             Logged as
-            {` ${user?.name}`}
+            {` ${user?.userName}`}
           </div>
           <div className="flex items-center">
             <Link className="btn" to="logout">Sing out</Link>

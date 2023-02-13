@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import * as endPoints from '../../config/endPoints';
-import { IUserInfo } from '../../types/IUser';
+import { IUserInfo, IUserInfoUpdate } from '../../types/IUser';
 
 const signIn = createAsyncThunk(
   'user/fetchAll',
@@ -46,4 +46,28 @@ const signUp = createAsyncThunk(
   },
 );
 
-export { signIn, signUp };
+const editUser = createAsyncThunk(
+  'user/editUser',
+  async (payload: IUserInfoUpdate, thunkAPI) => {
+    try {
+      const res = await fetch(endPoints.editUser() + payload.id, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        const result = await res.json();
+        await Swal.fire(result);
+        return result;
+      }
+      return await Swal.fire(res.statusText);
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Что-то пошло не так');
+    }
+  },
+);
+
+export { signIn, signUp, editUser };

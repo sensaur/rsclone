@@ -10,6 +10,7 @@ import NavBarStart from './components/NavBarStart';
 import NavBarLogged from './components/NavBarLogged';
 import ProtectedRoute from './components/ProtectedRoute';
 import AllDesks from './components/AllDesks';
+import EditProfile from './components/EditProfile';
 
 function App() {
   const { user } = useAppSelector((state) => state.userSlice);
@@ -26,6 +27,14 @@ function App() {
           element={(
             <ProtectedRoute>
               <AllDesks />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/editprofile"
+          element={(
+            <ProtectedRoute>
+              <EditProfile />
             </ProtectedRoute>
           )}
         />

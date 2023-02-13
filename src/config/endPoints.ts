@@ -4,4 +4,6 @@ const signIn = () => `${host}/api/v1/auth/signin`;
 
 const signUp = () => `${host}/api/v1/auth/signup`;
 
-export { signIn, signUp };
+const editUser = () => `${host}/api/v1/users/`;
+
+export { signIn, signUp, editUser };
