@@ -8,7 +8,7 @@ module.exports = {
         color2: '#9FEDD7',
         color3: '#FEF9C7',
         color4: '#FCE181',
-        color5: '#EDEAE5'
+        color5: '#EDEAE5',
       }
     },
   },
