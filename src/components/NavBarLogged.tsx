@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.svg';
+import logo2 from '../images/add-file.svg';
+import ava from '../images/avaDefault.jpg';
 import { useAppSelector } from '../hooks/redux';
 
 function NavBarLogged() {
@@ -8,14 +9,14 @@ function NavBarLogged() {
   return (
     <nav className="bg-color5 px-10 py-3">
       <div className="flex justify-between">
-        <img id="logoNavBar" src={logo} alt="" />
+        <img id="logoNavBar" src={logo2} alt="" />
         <button
           type="button"
         >
           <span />
         </button>
         <div
-          className="flex gap-7"
+          className="flex md:gap-7 gap-3"
           id="navbarNavAltMarkup"
         >
           <div className="flex items-center">
@@ -27,11 +28,14 @@ function NavBarLogged() {
             <Link className="btn" aria-current="page" to="/">Create board</Link>
           </div>
           <div className="flex items-center">
-            <Link className="btn" aria-current="page" to="/">Edit profile</Link>
+            <Link className="btn" aria-current="page" to="/editprofile">Edit profile</Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center md:text-base text-xs">
             Logged as
-            {` ${user?.name}`}
+            {` ${user?.userName}`}
+          </div>
+          <div>
+            <img id="avatar" src={ava} alt="" />
           </div>
           <div className="flex items-center">
             <Link className="btn" to="logout">Sing out</Link>

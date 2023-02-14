@@ -3,3 +3,8 @@
 #logoNavBar {
   width: 50px;
 }
+
+#avatar {
+  width: 50px;
+  border-radius: 50%;
+}

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.svg';
+import logo2 from '../images/add-file.svg';
 
 function NavBarStart() {
   return (
-    <div className="bg-color5 px-10 py-3">
+    <div className="my-0 mx-auto  bg-color5 px-10 py-3">
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">
-            <img id="logoNavBar" src={logo} alt="logo" />
+            <img id="logoNavBar" src={logo2} alt="logo" />
             <button type="button">
               <span />
             </button>
