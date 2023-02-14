@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
 import ava from '../images/avaDefault.jpg';
@@ -5,6 +6,10 @@ import { useAppSelector } from '../hooks/redux';
 
 function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <nav className="bg-color5 px-10 py-3">

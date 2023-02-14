@@ -61,7 +61,7 @@ const editUser = createAsyncThunk(
       if (res.ok) {
         const result = await res.json();
         await Swal.fire(result);
-        return result;
+        return payload;
       }
       return await Swal.fire(res.statusText);
     } catch (error) {

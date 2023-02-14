@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IState } from '../../types/IState';
 import { IUser } from '../../types/IUser';
-import { signIn } from '../ac/user.ac';
+import { editUser, signIn } from '../ac/user.ac';
 import getInitState from '../initState';
 
 const userSlice = createSlice({
@@ -25,6 +25,18 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [signIn.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [editUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+    },
+    [editUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [editUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
