@@ -38,7 +38,7 @@ function App() {
                 <ProtectedRoute>
                   <AllBoards />
                 </ProtectedRoute>
-                )}
+              )}
             />
             <Route
               path="/editprofile"

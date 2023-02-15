@@ -5,11 +5,11 @@ import ava from '../images/avaDefault.jpg';
 import { useAppSelector } from '../hooks/redux';
 
 function activateBurger() {
-  let burgerBtn = document.getElementById('burger') as HTMLButtonElement;
-  let burgerMenu = document.getElementById('navbarNavAltMarkup') as HTMLButtonElement;
+  const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
+  const burgerMenu = document.getElementById('navbarNavAltMarkup') as HTMLButtonElement;
   burgerBtn.classList.toggle('_active');
   burgerMenu.classList.toggle('menu-active');
-};
+}
 
 function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
@@ -23,21 +23,19 @@ function NavBarLogged() {
       <div className="flex justify-between items-center">
         <img id="logoNavBar" src={logo2} alt="" />
         <button
-          className='md:hidden menu-icon'
+          className="md:hidden menu-icon"
           type="button"
-          id='burger'
+          id="burger"
           onClick={() => activateBurger()}
         >
-          <span>
-
-          </span>
+          <span />
         </button>
         <div
           className="flex md:gap-7 md:flex-row md:bg-color5 md:px-0 md:py-0 gap-3 md:static  md:translate-x-0 absolute flex-col  bg-color3 px-5 py-5 top-1 right-1 rounded-md duration-500 menu"
           id="navbarNavAltMarkup"
         >
           <div className="flex items-center">
-            <Link className="btn" to="/allboards">
+            <Link className="btn" to="/boards">
               All boards
             </Link>
           </div>
