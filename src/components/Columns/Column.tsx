@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { AiOutlineClose } from 'react-icons/ai';
 import { ICard, IColumn } from '../../types/IColumn';
 import Card from '../Card/Card';
 import CardModal from '../Card/CardModal';
@@ -93,7 +94,9 @@ function Column({
               <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
                 <div className="flex justify-between px-2">
                   <EditTitle title={column.title} updateTitle={updateColumnTitle} />
-                  <button type="button" className="text-lg text-black" onClick={() => setIsColumnModal(true)}>x</button>
+                  <button type="button" className="text-lg text-black" onClick={() => setIsColumnModal(true)}>
+                    <AiOutlineClose />
+                  </button>
                 </div>
                 <Droppable droppableId={column.id.toString() + column.title} type="cards">
                   {

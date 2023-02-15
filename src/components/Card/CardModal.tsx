@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 import React, { useEffect, useRef, useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
+
 import { ICard } from '../../types/IColumn';
 
 interface ICardModalProps {
@@ -65,7 +67,7 @@ function CardModal({
             type="button"
             onClick={() => handleClose(false)}
           >
-            x
+            <AiOutlineClose />
           </button>
         </div>
         <hr />
