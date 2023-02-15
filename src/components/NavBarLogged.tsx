@@ -25,7 +25,7 @@ function NavBarLogged() {
           id="navbarNavAltMarkup"
         >
           <div className="flex items-center">
-            <Link className="btn" to="/alldesks">
+            <Link className="btn" to="/allboards">
               All boards
             </Link>
           </div>
