@@ -33,7 +33,7 @@ function App() {
             <Route path="/logout" element={<SignOut />} />
             <Route path="/boards/:id" element={<Board />} />
             <Route
-              path="/allboards"
+              path="/boards"
               element={(
                 <ProtectedRoute>
                   <AllBoards />
