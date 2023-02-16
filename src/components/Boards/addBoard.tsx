@@ -1,24 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useGlobalContext } from '../../context';
+import TInputTextArea from '../../types/Modals';
 
 function AddBoard() {
   const [modalShow, setModalShow] = useState(false);
   const [boardName, setBoardName] = useState('');
+  const [errorTitle, setErrorTitle] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
   const { boards, setBoards } = useGlobalContext();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleAdd = () => {
-    if (boardName.length > 0) {
-      setBoards([...boards, {
-        boardId: boards.length,
-        boardTitle: boardName,
-        boardColumns: [],
-        order: boards.length,
-      }]);
-      setBoardName(() => '');
+  const handleInput = (event: TInputTextArea) => {
+    const { value } = event.target;
+    setBoardName(value);
+    setErrorTitle('');
+    if (value.trim() === '') {
+      setErrorTitle('Enter board title to continue');
     }
+  };
+
+  const formValidate = () => {
+    if (boardName) {
+      return true;
+    }
+    setErrorTitle('Enter board title to continue');
+    return false;
   };
 
   useEffect(() => {
@@ -26,16 +34,36 @@ function AddBoard() {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     });
+    inputRef.current?.focus();
   }, [modalShow]);
 
-  const close = (flag: boolean) => {
+  const close = () => {
     modal.current?.classList.add('opacity-0');
     modalContent.current?.classList.add('-translate-y-10');
 
     setTimeout(() => {
-      if (flag) handleAdd();
+      setErrorTitle('');
       setModalShow(false);
     }, 300);
+  };
+
+  const handleAdd = () => {
+    if (formValidate()) {
+      setBoards([...boards, {
+        boardId: boards.length,
+        boardTitle: boardName,
+        boardColumns: [],
+        order: boards.length,
+      }]);
+      setBoardName(() => '');
+      close();
+    }
+  };
+
+  const handleKeyDown = ({ key }: React.KeyboardEvent) => {
+    if (key === 'Escape') {
+      close();
+    }
   };
 
   return (
@@ -61,7 +89,7 @@ function AddBoard() {
               <button
                 className="px-1 text-gray-400 text-3xl self-end"
                 type="button"
-                onClick={() => close(false)}
+                onClick={() => close()}
               >
                 <AiOutlineClose />
               </button>
@@ -73,20 +101,24 @@ function AddBoard() {
                 <input
                   type="text"
                   id="board-name"
+                  name="board-name"
                   placeholder="Board title"
                   className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   required
                   value={boardName}
-                  onChange={(e) => setBoardName(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  ref={inputRef}
+                  onChange={handleInput}
                 />
               </label>
+              <p className="text-red-500 text-center mt-2 mb-3">{errorTitle}</p>
             </form>
             <hr />
             <div className="self-end">
               <button
                 className="rounded-lg text-purple-100 text-2xl font-semibold bg-blue-500 my-3 p-3 block transition-colors hover:text-black hover:bg-blue-300 duration-300 active:bg-blue-800 active:text-white"
                 type="button"
-                onClick={() => close(true)}
+                onClick={() => handleAdd()}
               >
                 Add board
               </button>
