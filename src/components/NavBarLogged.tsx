@@ -30,11 +30,8 @@ function NavBarLogged() {
         >
           <span />
         </button>
-        <div className='menu-container menu' id="navbarNavAltMarkup">
-          <div
-            className="menu-content"
-
-          >
+        <div className='menu-container menu md:translate-x-0' id="navbarNavAltMarkup">
+          <div className="menu-content">
             <div className="flex items-center">
               <Link className="btn" to="/boards">
                 All boards
