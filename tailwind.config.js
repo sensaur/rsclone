@@ -9,6 +9,7 @@ module.exports = {
         color3: '#FEF9C7',
         color4: '#FCE181',
         color5: '#EDEAE5',
+        color6: '#00000050',
       }
     },
   },

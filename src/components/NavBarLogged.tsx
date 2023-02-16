@@ -30,30 +30,32 @@ function NavBarLogged() {
         >
           <span />
         </button>
-        <div
-          className="flex md:gap-7 md:flex-row md:bg-color5 md:px-0 md:py-0 gap-3 md:static  md:translate-x-0 absolute flex-col  bg-color3 px-5 py-5 top-1 right-1 rounded-md duration-500 menu"
-          id="navbarNavAltMarkup"
-        >
-          <div className="flex items-center">
-            <Link className="btn" to="/boards">
-              All boards
-            </Link>
-          </div>
-          <div className="flex items-center">
-            <Link className="btn" aria-current="page" to="/">Create board</Link>
-          </div>
-          <div className="flex items-center">
-            <Link className="btn" aria-current="page" to="/editprofile">Edit profile</Link>
-          </div>
-          <div className="flex items-center md:text-base text-xs">
-            Logged as
-            {` ${user?.userName}`}
-          </div>
-          <div>
-            <img id="avatar" src={ava} alt="" />
-          </div>
-          <div className="flex items-center">
-            <Link className="btn" to="logout">Sing out</Link>
+        <div className='menu-container menu' id="navbarNavAltMarkup">
+          <div
+            className="menu-content"
+
+          >
+            <div className="flex items-center">
+              <Link className="btn" to="/boards">
+                All boards
+              </Link>
+            </div>
+            <div className="flex items-center">
+              <Link className="btn" aria-current="page" to="/">Create board</Link>
+            </div>
+            <div className="flex items-center">
+              <Link className="btn" aria-current="page" to="/editprofile">Edit profile</Link>
+            </div>
+            <div className="flex items-center md:text-base text-xs">
+              Logged as
+              {` ${user?.userName}`}
+            </div>
+            <div>
+              <img id="avatar" src={ava} alt="" />
+            </div>
+            <div className="flex items-center">
+              <Link className="btn" to="logout">Sing out</Link>
+            </div>
           </div>
         </div>
       </div>
