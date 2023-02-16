@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { IColumn } from '../../types/IColumn';
@@ -11,6 +13,7 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
   const [columnName, setColumnName] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleAdd = () => {
     if (columnName.length > 0) {
@@ -26,6 +29,7 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     });
+    inputRef.current?.focus();
   }, [modalShow]);
 
   const close = (flag: boolean) => {
@@ -36,6 +40,12 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
       if (flag) handleAdd();
       setModalShow(false);
     }, 300);
+  };
+
+  const hendleKeyDown = ({ key }: React.KeyboardEvent) => {
+    if (key === 'Escape') {
+      close(false);
+    }
   };
 
   return (
@@ -77,6 +87,8 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
                   className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   required
                   value={columnName}
+                  onKeyDown={hendleKeyDown}
+                  ref={inputRef}
                   onChange={(e) => setColumnName(e.target.value)}
                 />
               </label>

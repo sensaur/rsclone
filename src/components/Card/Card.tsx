@@ -42,10 +42,10 @@ function Card({
             <div className="flex justify-between w-full items-center">
               <h3 className="font-semibold text-xl">{title}</h3>
               <div className="flex justify-between items-center">
-                <button className="mr-3" type="button" onClick={() => setIsEditModal(true)}>
+                <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
                   <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
-                <button type="button" onClick={() => setIsCardModal(true)}>
+                <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsCardModal(true)}>
                   <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
               </div>

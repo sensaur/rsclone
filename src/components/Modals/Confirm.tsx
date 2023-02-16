@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef } from 'react';
 
 interface IConfirmProps {
@@ -13,12 +14,14 @@ function Confirm({
 }: IConfirmProps) {
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
+  const closeBtn = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     setTimeout(() => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     });
+    closeBtn.current?.focus();
   }, []);
 
   const close = (fn: () => void) => {
@@ -29,9 +32,16 @@ function Confirm({
     }, 300);
   };
 
+  const hendleKeyDown = ({ key }: React.KeyboardEvent) => {
+    if (key === 'Escape') {
+      close(onClose);
+    }
+  };
+
   return (
     <div
       ref={modal}
+      onKeyDown={hendleKeyDown}
       className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300"
     >
       <div
@@ -65,6 +75,7 @@ function Confirm({
           </button>
           <button
             type="button"
+            ref={closeBtn}
             className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             onClick={() => close(onClose)}
           >

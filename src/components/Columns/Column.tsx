@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -78,7 +80,6 @@ function Column({
   const handleConfirm = () => removeColumn(column);
   const handleClose = () => setIsColumnModal(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return (
     <>
       <Draggable draggableId={column.id.toString()} index={index}>
@@ -86,25 +87,21 @@ function Column({
           (provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...provided.draggableProps}
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...provided.dragHandleProps}
             >
               <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
                 <div className="flex justify-between px-2">
                   <EditTitle title={column.title} updateTitle={updateColumnTitle} />
-                  <button type="button" className="text-lg text-black" onClick={() => setIsColumnModal(true)}>
+                  <button type="button" className="text-xl text-black hover:text-color1 transition-colors duration-300" title="Delete column" aria-label="Delete column" onClick={() => setIsColumnModal(true)}>
                     <AiOutlineClose />
                   </button>
                 </div>
                 <Droppable droppableId={column.id.toString() + column.title} type="cards">
                   {
-                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     (provided, snapshot) => (
                       <div
                         className={`py-2 rounded ${snapshot.isDraggingOver ? 'bg-color2' : ''}`}
-                        // eslint-disable-next-line react/jsx-props-no-spreading
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >

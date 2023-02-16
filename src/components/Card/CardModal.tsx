@@ -18,12 +18,14 @@ function CardModal({
   const [cardDescr, setCardDescr] = useState(mode ? card.description : '');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
+  const inputTitle = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setTimeout(() => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     });
+    inputTitle.current?.focus();
   }, []);
 
   const handleAdd = () => {
@@ -49,9 +51,16 @@ function CardModal({
     }, 300);
   };
 
+  const hendleKeyDown = ({ key }: React.KeyboardEvent) => {
+    if (key === 'Escape') {
+      handleClose(false);
+    }
+  };
+
   return (
     <div
       ref={modal}
+      onKeyDownCapture={hendleKeyDown}
       className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300"
     >
       <div
@@ -78,6 +87,7 @@ function CardModal({
               <input
                 type="text"
                 id="column-name"
+                ref={inputTitle}
                 placeholder="Card title"
                 className="w-full bg-gray-200 text-lg text-gray-700 border-gray-200 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                 required
