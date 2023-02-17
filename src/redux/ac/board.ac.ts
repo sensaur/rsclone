@@ -16,7 +16,7 @@ const getAllBoards = createAsyncThunk(
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так');
+      return thunkAPI.rejectWithValue('Что-то пошло не так при получении всех бордов');
     }
   },
 );
@@ -34,13 +34,13 @@ const getBoardById = createAsyncThunk(
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так');
+      return thunkAPI.rejectWithValue('Что-то пошло не так при получении 1го борда');
     }
   },
 );
 
 const createBoard = createAsyncThunk(
-  'boards/fetchOne',
+  'boards/create',
   async (payload: ICreateBoard, thunkAPI) => {
     try {
       const res = await fetch(endPoints.getAllBoards(), {
@@ -58,17 +58,17 @@ const createBoard = createAsyncThunk(
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так');
+      return thunkAPI.rejectWithValue('Что-то пошло не так при созадании борды');
     }
   },
 );
 
 const updateBoard = createAsyncThunk(
-  'boards/fetchOne',
+  'boards/update',
   async (payload: IBoardAPI, thunkAPI) => {
     try {
       const res = await fetch(endPoints.getAllBoards() + payload.boardUUID, {
-        method: 'PACTH',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -82,7 +82,7 @@ const updateBoard = createAsyncThunk(
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так');
+      return thunkAPI.rejectWithValue('Что-то пошло не так при редактировании');
     }
   },
 );
