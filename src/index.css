@@ -8,13 +8,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+html {
+  overflow: hidden;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 @layer components {
   .btn {
     @apply px-3 py-1 bg-color2 rounded-md hover:bg-color1 hover:text-color3 text-color1 duration-500;
+  }
+  .menu-container {
+    @apply flex md:static md:translate-x-0 md:bg-color5 absolute duration-500 bg-color6 top-0 right-0 w-full h-full justify-end;
+  }
+  .menu-content {
+    @apply flex md:gap-6 md:flex-row md:bg-color5 md:px-0 md:py-0 gap-3 flex-col bg-color3 px-5 py-5 top-1 right-1 rounded-md;
   }
 }
 .swiper-button-prev::after,
