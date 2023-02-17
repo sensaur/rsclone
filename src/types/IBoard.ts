@@ -13,6 +13,13 @@ export interface IBoard {
   order: number
 }
 
+export interface ICreateBoard {
+  boardTitle: string,
+  color: string,
+  order: number,
+  // columns: []
+}
+
 export interface IBoardAPI {
   order: number
   color: string
