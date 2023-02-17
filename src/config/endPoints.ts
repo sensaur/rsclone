@@ -6,4 +6,8 @@ const signUp = () => `${host}/api/v1/auth/signup`;
 
 const editUser = () => `${host}/api/v1/users/`;
 
-export { signIn, signUp, editUser };
+const getAllBoards = () => `${host}/api/v1/boards/`;
+
+export {
+  signIn, signUp, editUser, getAllBoards,
+};
