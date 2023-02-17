@@ -1,10 +1,11 @@
 // import { useGlobalContext } from '../context';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import getAllBoards from '../redux/ac/board.ac';
+// import { useAppSelector } from '../hooks/redux';
+import { getAllBoards } from '../redux/ac/board.ac';
 import AddBoard from './Boards/addBoard';
 import BoardHeader from './Boards/BoardHeader';
-// import BoardItem from './Boards/BoardItem';
+import BoardItem from './Boards/BoardItem';
 
 function AllBoards() {
   // const { boards } = useGlobalContext();
@@ -14,13 +15,13 @@ function AllBoards() {
     dispatch(getAllBoards());
   }, []);
   console.log('boards=', boards, 'errors', error);
-  const renderedBoards = '123';
-  // const renderedBoards = boards.map((board) => (
-  //   <BoardItem
-  //     key={board.boardId}
-  //     boardId={board.boardId}
-  //   />
-  // ));
+
+  const renderedBoards = boards.map((board) => (
+    <BoardItem
+      key={board.boardTitle}
+      board={board}
+    />
+  ));
   return (
     <div className="container mx-auto px-6">
       <BoardHeader>

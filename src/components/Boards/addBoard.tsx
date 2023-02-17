@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useGlobalContext } from '../../context';
+// import { useGlobalContext } from '../../context';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createBoard } from '../../redux/ac/board.ac';
 import TInputTextArea from '../../types/Modals';
 
 function AddBoard() {
+  const dispatch = useAppDispatch();
+  const { boards } = useAppSelector((state) => state.boardSlice);
   const [modalShow, setModalShow] = useState(false);
   const [boardName, setBoardName] = useState('');
   const [errorTitle, setErrorTitle] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
-  const { boards, setBoards } = useGlobalContext();
+  // const { boards, setBoards } = useGlobalContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (event: TInputTextArea) => {
@@ -49,12 +53,11 @@ function AddBoard() {
 
   const handleAdd = () => {
     if (formValidate()) {
-      setBoards([...boards, {
-        boardId: boards.length,
+      dispatch(createBoard({
         boardTitle: boardName,
-        boardColumns: [],
+        color: 'dedede',
         order: boards.length,
-      }]);
+      }));
       setBoardName(() => '');
       close();
     }

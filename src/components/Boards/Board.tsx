@@ -7,7 +7,7 @@ import { updateCardsInColumns, changeListOrder } from '../../utils/updateCardsIn
 import AddColumn from '../Columns/AddColumn';
 import ColumnsWraper from '../Columns/ColumnsWraper';
 import Column from '../Columns/Column';
-import { useGlobalContext } from '../../context';
+import { useAppSelector } from '../../hooks/redux';
 
 // const columnsArr = [
 //   {
@@ -66,11 +66,11 @@ interface UserItemPageParams {
 
 function Board() {
   // const [columns, setColumns] = useState<IColumn[]>(columnsArr);
+  const { boards } = useAppSelector((state) => state.boardSlice);
   const params = useParams<UserItemPageParams>();
-  const { boards } = useGlobalContext();
-  const { boardColumns, boardTitle } = boards[Number(params.id)];
+  const { boardTitle } = boards.filter((el) => el.boardUUID === params.id)[0];
 
-  const [columns, setColumns] = useState<IColumn[]>(boardColumns);
+  const [columns, setColumns] = useState<IColumn[]>([]);
   const removeColumn = (column: IColumn) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
