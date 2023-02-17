@@ -22,15 +22,15 @@ function BoardItem({ board }: IBoardItemProps) {
   };
   return (
     // <div className={`p-5 rounded border border-color1 cursor-pointer hover
-    // :bg-color1 hover:text-white transition-colors duration-300 ${board.color}`}>
-    <div className={`p-5 rounded border border-color1 cursor-pointer ${board.color}`}>
-      <h2 className="text-2xl">{board.boardTitle}</h2>
-      <div className="flex justify-between items-center">
-        <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
-          <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
+    // :bg-color1 hover:text-white transition-colors duration-500 ${board.color}`}>
+    <div className={`rounded border h-52 relative border-color1 flex flex-col justify-between group cursor-pointer overflow-hidden ${board.color}`}>
+      <h2 className="p-5 text-2xl w-full h-14 text-ellipsis">{board.boardTitle}</h2>
+      <div className="flex  px-5 pt-8 pb-8 justify-between items-center translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all group-hover:bg-color1 duration-500">
+        <button className="mr-3 absolute right-2 text-white transition-all cursor-pointer opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110 hover:text-color4 duration-500" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
+          <AiFillEdit className="w-6 h-6" />
         </button>
-        <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsDeleteModal(true)}>
-          <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
+        <button className="absolute cursor-pointer text-white transition-all opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110 hover:text-color4 duration-500" type="button" title="delete card" aria-label="Delete card" onClick={() => setIsDeleteModal(true)}>
+          <AiFillDelete className="w-6 h-6" />
         </button>
       </div>
       {isEditeModal
