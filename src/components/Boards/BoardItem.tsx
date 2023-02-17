@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-// import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux';
+import { deleteBoard } from '../../redux/ac/board.ac';
 import { IBoardAPI } from '../../types/IBoard';
 import Confirm from '../Modals/Confirm';
 import BoardModal from './BoardModal';
@@ -12,13 +13,13 @@ interface IBoardItemProps {
 }
 
 function BoardItem({ board }: IBoardItemProps) {
+  const dispatch = useAppDispatch();
   const [isEditeModal, setIsEditModal] = useState<boolean>(false);
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
 
   const handleConfirm = () => {
-    console.log('куку давай удалять');
+    dispatch(deleteBoard(board));
   };
-  // const navigate = useNavigate();
   return (
     // <div className={`p-5 rounded border border-color1 cursor-pointer hover
     // :bg-color1 hover:text-white transition-colors duration-300 ${board.color}`}>

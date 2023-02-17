@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBoadsState, IBoardAPI } from '../../types/IBoard';
 import {
-  createBoard, getAllBoards, getBoardById, updateBoard,
+  createBoard, deleteBoard, getAllBoards, getBoardById, updateBoard,
 } from '../ac/board.ac';
 
 const initialState: IBoadsState = {
@@ -65,6 +65,19 @@ const boardSlice = createSlice({
       state.isLoading = true;
     },
     [updateBoard.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [deleteBoard.fulfilled.type]: (state, action: PayloadAction<IBoardAPI>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.boards = [...state.boards]
+        .filter((board) => (board.boardUUID !== action.payload.boardUUID));
+    },
+    [deleteBoard.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteBoard.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },

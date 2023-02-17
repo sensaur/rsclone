@@ -87,6 +87,26 @@ const updateBoard = createAsyncThunk(
   },
 );
 
+const deleteBoard = createAsyncThunk(
+  'boards/delete',
+  async (payload: IBoardAPI, thunkAPI) => {
+    try {
+      const res = await fetch(endPoints.getAllBoards() + payload.boardUUID, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if (res.ok) {
+        const result = await res.json();
+        await Swal.fire(result);
+        return payload;
+      }
+      return await Swal.fire(res.statusText);
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Что-то пошло не так при удалении');
+    }
+  },
+);
+
 export {
-  getAllBoards, getBoardById, createBoard, updateBoard,
+  getAllBoards, getBoardById, createBoard, updateBoard, deleteBoard,
 };
