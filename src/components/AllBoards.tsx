@@ -1,14 +1,15 @@
 // import { useGlobalContext } from '../context';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 // import { useAppSelector } from '../hooks/redux';
 import { getAllBoards } from '../redux/ac/board.ac';
-import AddBoard from './Boards/addBoard';
 import BoardHeader from './Boards/BoardHeader';
 import BoardItem from './Boards/BoardItem';
+import BoardModal from './Boards/BoardModal';
 
 function AllBoards() {
   // const { boards } = useGlobalContext();
+  const [isModalShow, setIsModalShow] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { boards, error } = useAppSelector((store) => store.boardSlice);
   useEffect(() => {
@@ -25,7 +26,14 @@ function AllBoards() {
   return (
     <div className="container mx-auto px-6">
       <BoardHeader>
-        <AddBoard />
+        <button
+          className="btn sm:px-4 sm:py-3 font-semibold"
+          type="button"
+          onClick={() => setIsModalShow(true)}
+        >
+          + Add a new board
+        </button>
+        {isModalShow && <BoardModal board={null} onClose={() => setIsModalShow(false)} mode="create" />}
       </BoardHeader>
       <hr />
       {boards.length === 0

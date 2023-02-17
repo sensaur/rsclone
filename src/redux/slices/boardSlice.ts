@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBoadsState, IBoardAPI } from '../../types/IBoard';
-import { createBoard, getAllBoards, getBoardById } from '../ac/board.ac';
+import {
+  createBoard, getAllBoards, getBoardById, updateBoard,
+} from '../ac/board.ac';
 
 const initialState: IBoadsState = {
   boards: [],
@@ -48,6 +50,21 @@ const boardSlice = createSlice({
       state.isLoading = true;
     },
     [createBoard.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [updateBoard.fulfilled.type]: (state, action: PayloadAction<IBoardAPI>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.boards = [...state.boards]
+        .map((board) => (board.boardUUID === action.payload.boardUUID
+          ? action.payload
+          : board));
+    },
+    [updateBoard.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [updateBoard.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
