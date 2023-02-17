@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import * as endPoints from '../../config/endPoints';
-import { ICreateBoard } from '../../types/IBoard';
+import { IBoardAPI, ICreateBoard } from '../../types/IBoard';
 
 const getAllBoards = createAsyncThunk(
   'boards/fetchAll',
@@ -63,4 +63,30 @@ const createBoard = createAsyncThunk(
   },
 );
 
-export { getAllBoards, getBoardById, createBoard };
+const updateBoard = createAsyncThunk(
+  'boards/fetchOne',
+  async (payload: IBoardAPI, thunkAPI) => {
+    try {
+      const res = await fetch(endPoints.getAllBoards() + payload.boardUUID, {
+        method: 'PACTH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        const result = await res.json();
+        await Swal.fire(result);
+        return payload;
+      }
+      return await Swal.fire(res.statusText);
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Что-то пошло не так');
+    }
+  },
+);
+
+export {
+  getAllBoards, getBoardById, createBoard, updateBoard,
+};
