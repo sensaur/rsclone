@@ -23,7 +23,7 @@ export interface ICreateCard {
 export interface ICardAPI {
   order: number
   color: string
-  cardUUID: string
+  id: string
   cardTitle: string
   User: {
     userName: string

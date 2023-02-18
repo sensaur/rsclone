@@ -68,7 +68,7 @@ function Card() {
   // const [columns, setColumns] = useState<IColumn[]>(columnsArr);
   const { cards } = useAppSelector((state) => state.cardSlice);
   const params = useParams<UserItemPageParams>();
-  const { cardTitle } = cards.filter((el) => el.cardUUID === params.id)[0];
+  const { cardTitle } = cards.filter((el) => el.id === params.id)[0];
 
   const [columns, setColumns] = useState<IColumn[]>([]);
   const removeColumn = (column: IColumn) => {

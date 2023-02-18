@@ -31,7 +31,7 @@ const cardSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       const cardIndex = state.cards
-        .findIndex((card) => card.cardUUID === action.payload.cardUUID);
+        .findIndex((card) => card.id === action.payload.id);
       state.cards[cardIndex] = action.payload;
     },
     [getCardById.pending.type]: (state) => {
@@ -57,7 +57,7 @@ const cardSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       state.cards = [...state.cards]
-        .map((card) => (card.cardUUID === action.payload.cardUUID
+        .map((card) => (card.id === action.payload.id
           ? action.payload
           : card));
     },
@@ -72,7 +72,7 @@ const cardSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       state.cards = [...state.cards]
-        .filter((card) => (card.cardUUID !== action.payload.cardUUID));
+        .filter((card) => (card.id !== action.payload.id));
     },
     [deleteCard.pending.type]: (state) => {
       state.isLoading = true;

@@ -67,7 +67,7 @@ const updateCard = createAsyncThunk(
   'cards/update',
   async (payload: ICardAPI, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllCards() + payload.cardUUID, {
+      const res = await fetch(endPoints.getAllCards() + payload.id, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const deleteCard = createAsyncThunk(
   'cards/delete',
   async (payload: ICardAPI, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllCards() + payload.cardUUID, {
+      const res = await fetch(endPoints.getAllCards() + payload.id, {
         method: 'DELETE',
         credentials: 'include',
       });
