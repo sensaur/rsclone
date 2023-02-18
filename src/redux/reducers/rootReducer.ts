@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import userSlice from '../slices/userSlice';
-import boardSlice from '../slices/boardSlice';
+import cardSlice from '../slices/cardSlice';
 
 const rootReducer = combineReducers({
   userSlice,
-  boardSlice,
+  cardSlice,
 });
 
 export default rootReducer;

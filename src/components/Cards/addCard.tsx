@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 // import { useGlobalContext } from '../../context';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createBoard } from '../../redux/ac/board.ac';
+import { createBoard } from '../../redux/ac/card.ac';
 import TInputTextArea from '../../types/Modals';
 
 function AddBoard() {

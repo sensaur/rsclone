@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import * as endPoints from '../../config/endPoints';
-import { IBoardAPI, ICreateBoard } from '../../types/IBoard';
+import { ICardAPI, ICreateCard } from '../../types/ICard';
 
-const getAllBoards = createAsyncThunk(
+const getAllCards = createAsyncThunk(
   'boards/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllBoards(), {
+      const res = await fetch(endPoints.getAllCards(), {
         credentials: 'include',
       });
       if (res.ok) {
@@ -21,11 +21,11 @@ const getAllBoards = createAsyncThunk(
   },
 );
 
-const getBoardById = createAsyncThunk(
-  'boards/fetchOne',
+const getCardById = createAsyncThunk(
+  'cards/fetchOne',
   async (payload, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllBoards() + payload, {
+      const res = await fetch(endPoints.getAllCards() + payload, {
         credentials: 'include',
       });
       if (res.ok) {
@@ -39,11 +39,11 @@ const getBoardById = createAsyncThunk(
   },
 );
 
-const createBoard = createAsyncThunk(
-  'boards/create',
-  async (payload: ICreateBoard, thunkAPI) => {
+const createCard = createAsyncThunk(
+  'cards/create',
+  async (payload: ICreateCard, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllBoards(), {
+      const res = await fetch(endPoints.getAllCards(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,11 +63,11 @@ const createBoard = createAsyncThunk(
   },
 );
 
-const updateBoard = createAsyncThunk(
-  'boards/update',
-  async (payload: IBoardAPI, thunkAPI) => {
+const updateCard = createAsyncThunk(
+  'cards/update',
+  async (payload: ICardAPI, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllBoards() + payload.boardUUID, {
+      const res = await fetch(endPoints.getAllCards() + payload.cardUUID, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -87,11 +87,11 @@ const updateBoard = createAsyncThunk(
   },
 );
 
-const deleteBoard = createAsyncThunk(
-  'boards/delete',
-  async (payload: IBoardAPI, thunkAPI) => {
+const deleteCard = createAsyncThunk(
+  'cards/delete',
+  async (payload: ICardAPI, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.getAllBoards() + payload.boardUUID, {
+      const res = await fetch(endPoints.getAllCards() + payload.cardUUID, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -108,5 +108,5 @@ const deleteBoard = createAsyncThunk(
 );
 
 export {
-  getAllBoards, getBoardById, createBoard, updateBoard, deleteBoard,
+  getAllCards, getCardById, createCard, updateCard, deleteCard,
 };

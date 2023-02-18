@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { IBoard } from '../types/IBoard';
+import { IBoard } from '../types/ICard';
 
 export type GlobalContext = {
   boards: IBoard[]

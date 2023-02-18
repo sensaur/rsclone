@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ICard, IColumn } from '../../types/IColumn';
-import Card from '../Card/Card';
-import CardModal from '../Card/CardModal';
+import { ITask, IColumn } from '../../types/IColumn';
+import Task from '../Task/Task';
+import TaskModal from '../Task/TaskModal';
 import Confirm from '../Modals/Confirm';
 import EditTitle from './EditTitle';
 
@@ -20,23 +20,23 @@ function Column({
   index, column, removeColumn, setColumns,
 }: IColumnProps) {
   const [isColumnModal, setIsColumnModal] = useState(false);
-  const [isAddCardModal, setIsAddCardModal] = useState(false);
+  const [isAddTaskModal, setIsAddTaskModal] = useState(false);
 
-  const removeCard = (card: ICard) => {
+  const removeTask = (task: ITask) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
-      colsArr[index].cards.splice(card.order, 1);
-      colsArr[index].cards = colsArr[index].cards
-        .map((cardItem, cardIndex) => ({ ...cardItem, order: cardIndex }));
+      colsArr[index].tasks.splice(task.order, 1);
+      colsArr[index].tasks = colsArr[index].tasks
+        .map((taskItem, taskIndex) => ({ ...taskItem, order: taskIndex }));
       return [...colsArr];
     });
   };
 
-  const editCard = (editInfo: ICard) => {
+  const editTask = (editInfo: ITask) => {
     setColumns((prev): IColumn[] => {
       const colsArr = [...prev];
-      const cardsArr = colsArr[index].cards;
-      colsArr[index].cards = cardsArr
+      const tasksArr = colsArr[index].tasks;
+      colsArr[index].tasks = tasksArr
         .map((elem) => (elem.order === editInfo.order
           ? { ...elem, title: editInfo.title, description: editInfo.description }
           : elem));
@@ -44,15 +44,15 @@ function Column({
     });
   };
 
-  const cards = column.cards
-    .map((card, cardIndex) => (
-      <Card
-        key={card.id}
-        index={cardIndex}
-        card={card}
-        title={card.title}
-        removeCard={removeCard}
-        editCard={editCard}
+  const tasks = column.tasks
+    .map((task, taskIndex) => (
+      <Task
+        key={task.id}
+        index={taskIndex}
+        task={task}
+        title={task.title}
+        removeTask={removeTask}
+        editTask={editTask}
       />
     ));
 
@@ -63,16 +63,16 @@ function Column({
     });
   };
 
-  const addCard = (newCardInfo: ICard) => {
+  const addTask = (newTaskInfo: ITask) => {
     setColumns((prev): IColumn[] => {
-      const newCard = {
-        ...newCardInfo,
+      const newTask = {
+        ...newTaskInfo,
         columnId: column.id,
-        order: column.cards.length > 0
-          ? column.cards.length
+        order: column.tasks.length > 0
+          ? column.tasks.length
           : 0,
       };
-      prev[index].cards = [...column.cards, newCard];
+      prev[index].tasks = [...column.tasks, newTask];
       return [...prev];
     });
   };
@@ -97,7 +97,7 @@ function Column({
                     <AiOutlineClose />
                   </button>
                 </div>
-                <Droppable droppableId={column.id.toString() + column.title} type="cards">
+                <Droppable droppableId={column.id.toString() + column.title} type="tasks">
                   {
                     (provided, snapshot) => (
                       <div
@@ -105,14 +105,14 @@ function Column({
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
-                        {cards}
+                        {tasks}
                         {provided.placeholder}
                       </div>
                     )
                   }
                 </Droppable>
                 <div className="text-center">
-                  <button className="btn grow-0" type="button" onClick={() => setIsAddCardModal(true)}>Add card</button>
+                  <button className="btn grow-0" type="button" onClick={() => setIsAddTaskModal(true)}>Add task</button>
                 </div>
               </div>
             </div>
@@ -121,13 +121,13 @@ function Column({
       </Draggable>
       {isColumnModal
         && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="column" title={column.title} />)}
-      {isAddCardModal
+      {isAddTaskModal
         && (
-        <CardModal
+        <TaskModal
           mode={false}
-          card={column.cards[0]}
-          onClose={setIsAddCardModal}
-          setCard={addCard}
+          task={column.tasks[0]}
+          onClose={setIsAddTaskModal}
+          setTask={addTask}
         />
         )}
     </>
