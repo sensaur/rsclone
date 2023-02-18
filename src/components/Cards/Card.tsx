@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import { IColumn } from '../../types/IColumn';
-import { updateCardsInColumns, changeListOrder } from '../../utils/updateCardsInColumns';
+import { updateTasksInColumns, changeListOrder } from '../../utils/updateTasksInColumns';
 import AddColumn from '../Columns/AddColumn';
 import ColumnsWraper from '../Columns/ColumnsWraper';
 import Column from '../Columns/Column';
@@ -64,11 +64,11 @@ interface UserItemPageParams {
   [n: string]: string;
 }
 
-function Board() {
+function Card() {
   // const [columns, setColumns] = useState<IColumn[]>(columnsArr);
-  const { boards } = useAppSelector((state) => state.boardSlice);
+  const { cards } = useAppSelector((state) => state.cardSlice);
   const params = useParams<UserItemPageParams>();
-  const { boardTitle } = boards.filter((el) => el.boardUUID === params.id)[0];
+  const { cardTitle } = cards.filter((el) => el.cardUUID === params.id)[0];
 
   const [columns, setColumns] = useState<IColumn[]>([]);
   const removeColumn = (column: IColumn) => {
@@ -83,8 +83,8 @@ function Board() {
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
     if (!destination) return;
-    if (type === 'cards') {
-      setColumns(updateCardsInColumns(columns, source, destination));
+    if (type === 'tasks') {
+      setColumns(updateTasksInColumns(columns, source, destination));
     }
     if (type === 'column') {
       // const initialColumns = [...columns];
@@ -110,7 +110,7 @@ function Board() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex justify-between items-center py-5">
-        <h2 className="text-3xl">{boardTitle}</h2>
+        <h2 className="text-3xl">{cardTitle}</h2>
         <AddColumn setColumns={setColumns} />
       </div>
       <ColumnsWraper>
@@ -120,4 +120,4 @@ function Board() {
   );
 }
 
-export default Board;
+export default Card;

@@ -2,21 +2,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import { ICard } from '../../types/IColumn';
+import { ITask } from '../../types/IColumn';
 import TInputTextArea from '../../types/Modals';
 
-interface ICardModalProps {
+interface ITaskModalProps {
   onClose: (e: boolean) => void
-  setCard: (e: ICard) => void
+  setTask: (e: ITask) => void
   mode: boolean
-  card: ICard
+  task: ITask
 }
 
-function CardModal({
-  setCard, onClose, mode, card,
-}: ICardModalProps) {
-  const [cardTitle, setCardTitle] = useState(mode ? card.title : '');
-  const [cardDescr, setCardDescr] = useState(mode ? card.description : '');
+function TaskModal({
+  setTask, onClose, mode, task,
+}: ITaskModalProps) {
+  const [taskTitle, setTaskTitle] = useState(mode ? task.title : '');
+  const [taskDescr, setTaskDescr] = useState(mode ? task.description : '');
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescr, setErrorDescr] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
@@ -33,31 +33,31 @@ function CardModal({
 
   const handleInput = (event: TInputTextArea) => {
     const { name, value } = event.target;
-    if (name === 'card-title') {
-      setCardTitle(value);
+    if (name === 'task-title') {
+      setTaskTitle(value);
       setErrorTitle('');
     }
-    if (name === 'card-title' && value.trim() === '') {
-      setErrorTitle('Enter card title to continue');
+    if (name === 'task-title' && value.trim() === '') {
+      setErrorTitle('Enter task title to continue');
     }
-    if (name === 'card-descr') {
-      setCardDescr(value);
+    if (name === 'task-descr') {
+      setTaskDescr(value);
       setErrorDescr('');
     }
-    if (name === 'card-descr' && value.trim() === '') {
-      setErrorDescr('Enter card descr to continue');
+    if (name === 'task-descr' && value.trim() === '') {
+      setErrorDescr('Enter task descr to continue');
     }
   };
 
   const formValidate = () => {
-    if (cardTitle && cardDescr) {
+    if (taskTitle && taskDescr) {
       return true;
     }
-    if (!cardTitle) {
-      setErrorTitle('Enter card title to continue');
+    if (!taskTitle) {
+      setErrorTitle('Enter task title to continue');
     }
-    if (!cardDescr) {
-      setErrorDescr('Enter card descr to continue');
+    if (!taskDescr) {
+      setErrorDescr('Enter task descr to continue');
     }
     return false;
   };
@@ -74,18 +74,18 @@ function CardModal({
 
   const handleAdd = () => {
     if (formValidate()) {
-      const cardInfo = {
-        id: mode ? card.id : Number(new Date()),
-        order: mode ? card.order : 0,
-        title: cardTitle.trim(),
-        description: cardDescr.trim(),
-        isDone: mode ? card.isDone : false,
-        columnId: mode ? card.columnId : 1,
+      const taskInfo = {
+        id: mode ? task.id : Number(new Date()),
+        order: mode ? task.order : 0,
+        title: taskTitle.trim(),
+        description: taskDescr.trim(),
+        isDone: mode ? task.isDone : false,
+        columnId: mode ? task.columnId : 1,
       };
-      setCard(cardInfo);
+      setTask(taskInfo);
       handleClose();
-      setCardTitle('');
-      setCardDescr('');
+      setTaskTitle('');
+      setTaskDescr('');
     }
   };
 
@@ -107,7 +107,7 @@ function CardModal({
       >
         <div className="flex flex-col-reverse justify-between items-center pb-4">
           <h3 className="text-3xl font-semibold self-start">
-            {mode ? 'Edit the card' : 'Add a new card'}
+            {mode ? 'Edit the task' : 'Add a new task'}
           </h3>
           <button
             className="px-1 text-gray-400 text-3xl self-end"
@@ -120,33 +120,33 @@ function CardModal({
         <hr />
         <form className="py-4">
           <div>
-            <label htmlFor="card-title" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
-              {"Card's title"}
+            <label htmlFor="task-title" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
+              Task title
               <input
                 type="text"
-                id="card-title"
-                name="card-title"
+                id="task-title"
+                name="task-title"
                 ref={inputTitle}
-                placeholder="Card title"
+                placeholder="Task title"
                 className="w-full bg-gray-200 text-lg text-gray-700 border-gray-200 border rounded py-3 px-4 mt-2 leading-tight focus:outline-none focus:bg-white"
                 required
-                value={cardTitle}
+                value={taskTitle}
                 onChange={handleInput}
               />
             </label>
             <p className="text-red-500 text-center mt-2 mb-3">{errorTitle}</p>
           </div>
           <div>
-            <label htmlFor="card-descr" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
-              {"Card's description"}
+            <label htmlFor="task-descr" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
+              Task description
               <textarea
-                id="card-descr"
-                name="card-descr"
-                placeholder="Card description"
+                id="task-descr"
+                name="task-descr"
+                placeholder="Task description"
                 className="w-full bg-gray-200 text-lg text-gray-700 border-gray-200 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                 rows={5}
                 required
-                value={cardDescr}
+                value={taskDescr}
                 onChange={handleInput}
               />
             </label>
@@ -160,7 +160,7 @@ function CardModal({
             type="button"
             onClick={() => handleAdd()}
           >
-            {mode ? 'Edit card' : 'Add card'}
+            {mode ? 'Edit task' : 'Add task'}
           </button>
         </div>
       </div>
@@ -168,4 +168,4 @@ function CardModal({
   );
 }
 
-export default CardModal;
+export default TaskModal;

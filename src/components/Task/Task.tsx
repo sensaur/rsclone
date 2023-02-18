@@ -4,34 +4,34 @@ import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { ICard } from '../../types/IColumn';
+import { ITask } from '../../types/IColumn';
 import Confirm from '../Modals/Confirm';
-import CardModal from './CardModal';
+import TaskModal from './TaskModal';
 
-interface ICardProps {
+interface ITaskProps {
   title: string
   index: number
-  card: ICard
-  editCard: (e: ICard) => void
-  removeCard: (e: ICard) => void
+  task: ITask
+  editTask: (e: ITask) => void
+  removeTask: (e: ITask) => void
 }
 
 function Card({
-  title, index, card, removeCard, editCard,
-}: ICardProps) {
-  const { id } = card;
-  const [isCardModal, setIsCardModal] = useState(false);
+  title, index, task, removeTask, editTask,
+}: ITaskProps) {
+  const { id } = task;
+  const [isTaskModal, setIsTaskModal] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
 
   const handleConfirm = () => {
-    setIsCardModal(false);
-    removeCard(card);
+    setIsTaskModal(false);
+    removeTask(task);
   };
-  const handleClose = () => setIsCardModal(false);
+  const handleClose = () => setIsTaskModal(false);
 
   return (
     <>
-      <Draggable draggableId={id.toString() + card.title} index={index}>
+      <Draggable draggableId={id.toString() + task.title} index={index}>
         {(provided, snapshot) => (
           <div
             {...provided.draggableProps}
@@ -45,19 +45,19 @@ function Card({
                 <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
                   <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
-                <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsCardModal(true)}>
+                <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsTaskModal(true)}>
                   <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
                 </button>
               </div>
             </div>
-            <p className="text-lg py-2">{card.description}</p>
+            <p className="text-lg py-2">{task.description}</p>
           </div>
         )}
       </Draggable>
-      {isCardModal
-        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={card.title} />)}
+      {isTaskModal
+        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.title} />)}
       {isEditModal
-        && (<CardModal onClose={setIsEditModal} mode card={card} setCard={editCard} />)}
+        && (<TaskModal onClose={setIsEditModal} mode task={task} setTask={editTask} />)}
     </>
   );
 }

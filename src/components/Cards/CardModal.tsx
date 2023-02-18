@@ -1,41 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createBoard, updateBoard } from '../../redux/ac/board.ac';
-import { IBoardAPI } from '../../types/IBoard';
+import { createCard, updateCard } from '../../redux/ac/card.ac';
+import { ICardAPI } from '../../types/ICard';
 import TInputTextArea from '../../types/Modals';
 
-interface IBoardModal {
+interface ICardModal {
   mode: 'create' | 'edit'
   onClose: () => void
-  board: IBoardAPI | null
+  card: ICardAPI | null
   // onSubmit: () => void
 }
 
-function BoardModal({ mode, board, onClose }: IBoardModal) {
+function CardModal({ mode, card, onClose }: ICardModal) {
   const dispatch = useAppDispatch();
-  const { boards } = useAppSelector((state) => state.boardSlice);
-  const [boardName, setBoardName] = useState(board ? board.boardTitle : '');
+  const { cards } = useAppSelector((state) => state.cardSlice);
+  const [cardName, setCardName] = useState(card ? card.cardTitle : '');
   const [errorTitle, setErrorTitle] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
-  // const { boards, setBoards } = useGlobalContext();
+  // const { cards, setcards } = useGlobalContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (event: TInputTextArea) => {
     const { value } = event.target;
-    setBoardName(value);
+    setCardName(value);
     setErrorTitle('');
     if (value.trim() === '') {
-      setErrorTitle('Enter board title to continue');
+      setErrorTitle('Enter card title to continue');
     }
   };
 
   const formValidate = () => {
-    if (boardName) {
+    if (cardName) {
       return true;
     }
-    setErrorTitle('Enter board title to continue');
+    setErrorTitle('Enter card title to continue');
     return false;
   };
 
@@ -60,18 +60,18 @@ function BoardModal({ mode, board, onClose }: IBoardModal) {
   const handleAdd = () => {
     if (formValidate()) {
       if (mode === 'create') {
-        dispatch(createBoard({
-          boardTitle: boardName,
+        dispatch(createCard({
+          cardTitle: cardName,
           color: 'dedede',
-          order: boards.length,
+          order: cards.length,
         }));
       } else {
-        dispatch(updateBoard({
-          ...board!,
-          boardTitle: boardName,
+        dispatch(updateCard({
+          ...card!,
+          cardTitle: cardName,
         }));
       }
-      setBoardName(() => '');
+      setCardName(() => '');
       close();
     }
   };
@@ -112,7 +112,7 @@ function BoardModal({ mode, board, onClose }: IBoardModal) {
               placeholder="Board title"
               className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
               required
-              value={boardName}
+              value={cardName}
               onKeyDown={handleKeyDown}
               ref={inputRef}
               onChange={handleInput}
@@ -135,4 +135,4 @@ function BoardModal({ mode, board, onClose }: IBoardModal) {
   );
 }
 
-export default BoardModal;
+export default CardModal;

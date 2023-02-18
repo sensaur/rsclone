@@ -1,13 +1,13 @@
 import { createContext, useContext } from 'react';
-import { IBoard } from '../types/IBoard';
+import { ICard } from '../types/ICard';
 
 export type GlobalContext = {
-  boards: IBoard[]
-  setBoards: (c: IBoard[]) => void
+  cards: ICard[]
+  setBoards: (c: ICard[]) => void
 };
 
 export const BoardsContext = createContext<GlobalContext>({
-  boards: [],
+  cards: [],
   setBoards: () => {},
 });
 
