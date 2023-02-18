@@ -4,7 +4,7 @@ import * as endPoints from '../../config/endPoints';
 import { ICardAPI, ICreateCard } from '../../types/ICard';
 
 const getAllCards = createAsyncThunk(
-  'boards/fetchAll',
+  'сards/fetchAll',
   async (_, thunkAPI) => {
     try {
       const res = await fetch(endPoints.getAllCards(), {

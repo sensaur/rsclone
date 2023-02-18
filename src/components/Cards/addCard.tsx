@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-// import { useGlobalContext } from '../../context';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createBoard } from '../../redux/ac/card.ac';
+import { createCard } from '../../redux/ac/card.ac';
 import TInputTextArea from '../../types/Modals';
 
 function AddBoard() {
   const dispatch = useAppDispatch();
-  const { boards } = useAppSelector((state) => state.boardSlice);
+  const { cards } = useAppSelector((state) => state.cardSlice);
   const [modalShow, setModalShow] = useState(false);
-  const [boardName, setBoardName] = useState('');
+  const [cardName, setCardName] = useState('');
   const [errorTitle, setErrorTitle] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
-  // const { boards, setBoards } = useGlobalContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (event: TInputTextArea) => {
     const { value } = event.target;
-    setBoardName(value);
+    setCardName(value);
     setErrorTitle('');
     if (value.trim() === '') {
       setErrorTitle('Enter board title to continue');
@@ -26,7 +24,7 @@ function AddBoard() {
   };
 
   const formValidate = () => {
-    if (boardName) {
+    if (cardName) {
       return true;
     }
     setErrorTitle('Enter board title to continue');
@@ -53,12 +51,12 @@ function AddBoard() {
 
   const handleAdd = () => {
     if (formValidate()) {
-      dispatch(createBoard({
-        boardTitle: boardName,
-        color: 'dedede',
-        order: boards.length,
+      dispatch(createCard({
+        cardTitle: cardName,
+        color: '#dedede',
+        order: cards.length,
       }));
-      setBoardName(() => '');
+      setCardName(() => '');
       close();
     }
   };
@@ -99,16 +97,16 @@ function AddBoard() {
             </div>
             <hr />
             <form className="py-4">
-              <label htmlFor="board-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
+              <label htmlFor="card-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
                 Board title
                 <input
                   type="text"
-                  id="board-name"
-                  name="board-name"
+                  id="card-name"
+                  name="card-name"
                   placeholder="Board title"
                   className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   required
-                  value={boardName}
+                  value={cardName}
                   onKeyDown={handleKeyDown}
                   ref={inputRef}
                   onChange={handleInput}
