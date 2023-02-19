@@ -55,7 +55,7 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
   const handleAdd = () => {
     if (formValidate()) {
       setColumns((prev) => [...prev, {
-        id: Number(new Date()), title: columnName, cards: [], order: prev.length + 1,
+        id: Number(new Date()), title: columnName, tasks: [], order: prev.length + 1,
       }]);
       setColumnName(() => '');
       close();

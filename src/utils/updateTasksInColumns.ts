@@ -12,7 +12,7 @@ export function changeListOrder<T>(
   return Safecopy;
 }
 
-export function updateCardsInColumns(
+export function updateTasksInColumns(
   columns: IColumn[],
   source: DraggableLocation,
   destination: DraggableLocation,
@@ -31,29 +31,29 @@ export function updateCardsInColumns(
     );
 
   if (source.droppableId === destination.droppableId) {
-    const cardList = changeListOrder(sourceCol.cards, source, destination);
-    sourceCol.cards = cardList.map((card, index) => ({
-      ...card,
+    const cardList = changeListOrder(sourceCol.tasks, source, destination);
+    sourceCol.tasks = cardList.map((task, index) => ({
+      ...task,
       order: index,
     }));
     return [...oldData, sourceCol].sort((a, b) => a.order - b.order);
   }
-  const sourceCardsList = [...sourceCol.cards];
-  const destinationCardsList = [...destinationCol.cards];
-  const [importedCard] = sourceCardsList.splice(source.index, 1);
-  destinationCardsList.splice(destination.index, 0, importedCard);
-  sourceCol.cards = sourceCardsList
-    .map((card, index) => ({
-      ...card,
-      id: card.id,
+  const sourceTasksList = [...sourceCol.tasks];
+  const destinationTasksList = [...destinationCol.tasks];
+  const [importedTask] = sourceTasksList.splice(source.index, 1);
+  destinationTasksList.splice(destination.index, 0, importedTask);
+  sourceCol.tasks = sourceTasksList
+    .map((task, index) => ({
+      ...task,
+      id: task.id,
       order: index,
       columnId: +source.droppableId,
     }))
     .sort((a, b) => a.order - b.order);
-  destinationCol.cards = destinationCardsList
-    .map((card, index) => ({
-      ...card,
-      id: card.id,
+  destinationCol.tasks = destinationTasksList
+    .map((task, index) => ({
+      ...task,
+      id: task.id,
       order: index,
       columnId: +destination.droppableId,
     }))
