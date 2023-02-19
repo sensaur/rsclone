@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
+import Dark from './DarkMode/darkModeBtn';
 
 function NavBarStart() {
   return (
@@ -19,6 +20,7 @@ function NavBarStart() {
             <div className="flex items-center">
               <Link className="btn" to="signup">Sing up</Link>
             </div>
+            <Dark />
           </div>
         </div>
       </nav>
