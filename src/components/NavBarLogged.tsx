@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
 import ava from '../images/avaDefault.jpg';
 import { useAppSelector } from '../hooks/redux';
-import Dark from './DarkMode/darkModeBtn'
+import Dark from './DarkMode/darkModeBtn';
 
 function activateBurger() {
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;

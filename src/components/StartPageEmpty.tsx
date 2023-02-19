@@ -15,7 +15,7 @@ import 'swiper/css/navigation';
 
 function StartPageEmpty() {
   return (
-    <div className='dark:bg-colorD5'>
+    <div className="dark:bg-colorD5">
       <h1 className="md:text-2xl text-base text-center text-color1 dark:text-colorD3">What this app can do?</h1>
       <ul className="text-center pt-1">
         <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Create as many boards as you wish</li>
