@@ -1,64 +1,19 @@
-/* eslint-disable max-len */
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { useParams } from 'react-router-dom';
-import { IColumn } from '../../types/IColumn';
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { IColumn, IColumnTasks } from '../../types/IColumn';
 import { updateTasksInColumns, changeListOrder } from '../../utils/updateTasksInColumns';
 import AddColumn from '../Columns/AddColumn';
 import ColumnsWraper from '../Columns/ColumnsWraper';
 import Column from '../Columns/Column';
-import { useAppSelector } from '../../hooks/redux';
-
-// const columnsArr = [
-//   {
-//     id: 1,
-//     order: 1,
-//     title: 'Первая колонка',
-//     cards: [
-//       {
-//         id: 1, order: 0, columnId: 1, title: 'Задание 1 из первой колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 2, order: 1, columnId: 1, title: 'Задание 2 из первой колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 3, order: 2, columnId: 1, title: 'Задание 3 из первой колонки', isDone: false, description: 'default',
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     order: 2,
-//     title: 'Вторая колонка',
-//     cards: [
-//       {
-//         id: 4, order: 0, columnId: 2, title: 'Задание 1 из второй колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 5, order: 1, columnId: 2, title: 'Задание 2 из второй колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 6, order: 2, columnId: 2, title: 'Задание 3 из второй колонки', isDone: false, description: 'default',
-//       },
-//     ],
-//   },
-//   {
-//     id: 3,
-//     order: 3,
-//     title: 'Третья колонка',
-//     cards: [
-//       {
-//         id: 7, order: 0, columnId: 3, title: 'Задание 1 из третей колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 8, order: 1, columnId: 3, title: 'Задание 2 из третей колонки', isDone: false, description: 'default',
-//       },
-//       {
-//         id: 9, order: 2, columnId: 3, title: 'Задание 3 из третей колонки', isDone: false, description: 'default',
-//       },
-//     ],
-//   },
-// ];
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+// import { getColumnById, getColumns } from '../../redux/ac/column.ac';
+import {
+  createColumn, deleteColumn, getColumns, setColumnsOrder,
+} from '../../redux/ac/column.ac';
+// import Toast from '../UI/toast';
 
 interface UserItemPageParams {
   [n: string]: string;
@@ -66,42 +21,72 @@ interface UserItemPageParams {
 
 function Card() {
   const { cards } = useAppSelector((state) => state.cardSlice);
+  const { columns, error, isLoading } = useAppSelector((state) => state.columnSlice);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const params = useParams<UserItemPageParams>();
   const { cardTitle } = cards.filter((el) => el.id === params.id)[0];
-  const [columns, setColumns] = useState<IColumn[]>([]);
-  const removeColumn = (column: IColumn) => {
-    setColumns((prev): IColumn[] => {
-      const colsArr = [...prev];
-      const colIndex = colsArr.indexOf(column);
-      colsArr.splice(colIndex, 1);
-      return colsArr;
-    });
+  // const [cols, setColumns] = useState<IColumnTasks[]>([]);
+  console.log(columns);
+  useEffect(() => {
+    (async () => {
+      if (params.id) {
+        dispatch(getColumns(params.id));
+      }
+      if (!error) {
+        // columns.Columns.map(async (column) => dispatch(getColumnById(column.id)));
+        console.log('colsArr', columns.Columns);
+        // setColumns(columns.Columns);
+        // Toast.fire({
+        //   icon: 'success',
+        //   title: 'Сolumns loaded successfully',
+        // });
+      } else {
+        await Swal.fire(error);
+        navigate('/');
+      }
+    })();
+  }, []);
+
+  const addColumn = async (title: string) => {
+    const newColumn = {
+      columnTitle: title,
+      order: columns.Columns.length,
+      card_id: params.id!,
+    };
+    dispatch(createColumn(newColumn));
+  };
+
+  const removeColumn = async (column: IColumn) => {
+    dispatch(deleteColumn(column.id));
   };
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
     if (!destination) return;
     if (type === 'tasks') {
-      setColumns(updateTasksInColumns(columns, source, destination));
+      // setColumns(updateTasksInColumns(columns.Columns, source, destination));
     }
     if (type === 'column') {
-      // const initialColumns = [...columns];
-      const reorderedColumns = changeListOrder(columns, source, destination)
+      const initialColumns = [...columns.Columns];
+      const reorderedColumnsReq = changeListOrder(columns.Columns, source, destination)
         .map((elem, index) => ({
-          ...elem, order: index,
-        }))
-        .sort((a, b) => a.order - b.order);
-      setColumns(reorderedColumns);
+          id: elem.id, order: index,
+        }));
+      dispatch(setColumnsOrder(reorderedColumnsReq));
+      if (error) {
+        console.log('error from cards', error);
+        // TODO: вернуть как было, выбросить ошибку
+      }
     }
   };
 
-  const renderColumns = columns.map((col, index) => (
+  const renderColumns = columns.Columns.map((col, index) => (
     <Column
       key={col.id}
       index={index}
       column={col}
       removeColumn={removeColumn}
-      setColumns={setColumns}
     />
   ));
 
@@ -109,7 +94,7 @@ function Card() {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex justify-between items-center py-5">
         <h2 className="text-3xl">{cardTitle}</h2>
-        <AddColumn setColumns={setColumns} />
+        <AddColumn addColumn={addColumn} />
       </div>
       <ColumnsWraper>
         {renderColumns}

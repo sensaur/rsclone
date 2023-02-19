@@ -6,8 +6,14 @@ const signUp = () => `${host}/api/v1/auth/signup`;
 
 const editUser = () => `${host}/api/v1/users/`;
 
-const getAllCards = () => `${host}/api/v1/cards/`;
+const cards = () => `${host}/api/v1/cards/`;
+
+const columns = () => `${host}/api/v1/columns/`;
+
+const tasks = () => `${host}/api/v1/tasks/`;
+
+const setColumnsOrder = () => `${host}/api/v1/columns/setColumnsOrder`;
 
 export {
-  signIn, signUp, editUser, getAllCards,
+  signIn, signUp, editUser, cards, columns, tasks, setColumnsOrder,
 };

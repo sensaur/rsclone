@@ -7,7 +7,7 @@ import TInputTextArea from '../../types/Modals';
 
 interface ITaskModalProps {
   onClose: (e: boolean) => void
-  setTask: (e: ITask) => void
+  setTask: () => void
   mode: boolean
   task: ITask
 }
@@ -15,8 +15,8 @@ interface ITaskModalProps {
 function TaskModal({
   setTask, onClose, mode, task,
 }: ITaskModalProps) {
-  const [taskTitle, setTaskTitle] = useState(mode ? task.title : '');
-  const [taskDescr, setTaskDescr] = useState(mode ? task.description : '');
+  const [taskTitle, setTaskTitle] = useState(mode ? task.taskTitle : '');
+  const [taskDescr, setTaskDescr] = useState(mode ? task.taskTitle : '');
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescr, setErrorDescr] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
@@ -74,15 +74,14 @@ function TaskModal({
 
   const handleAdd = () => {
     if (formValidate()) {
-      const taskInfo = {
-        id: mode ? task.id : Number(new Date()),
-        order: mode ? task.order : 0,
-        title: taskTitle.trim(),
-        description: taskDescr.trim(),
-        isDone: mode ? task.isDone : false,
-        columnId: mode ? task.columnId : 1,
-      };
-      setTask(taskInfo);
+      // const taskInfo = {
+      //   id: mode ? task.id : Number(new Date()),
+      //   order: mode ? task.order : 0,
+      //   taskTitle: taskTitle.trim(),
+      //   description: taskDescr.trim(),
+      //   columnId: mode ? task.id : 1,
+      // };
+      setTask();
       handleClose();
       setTaskTitle('');
       setTaskDescr('');

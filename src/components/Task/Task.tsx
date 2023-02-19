@@ -31,7 +31,7 @@ function Card({
 
   return (
     <>
-      <Draggable draggableId={id.toString() + task.title} index={index}>
+      <Draggable draggableId={id.toString() + task.taskTitle} index={index}>
         {(provided, snapshot) => (
           <div
             {...provided.draggableProps}
@@ -50,14 +50,14 @@ function Card({
                 </button>
               </div>
             </div>
-            <p className="text-lg py-2">{task.description}</p>
+            <p className="text-lg py-2">{task.taskTitle}</p>
           </div>
         )}
       </Draggable>
       {isTaskModal
-        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.title} />)}
+        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.taskTitle} />)}
       {isEditModal
-        && (<TaskModal onClose={setIsEditModal} mode task={task} setTask={editTask} />)}
+        && (<TaskModal onClose={setIsEditModal} mode task={task} setTask={() => console.log('click')} />)}
     </>
   );
 }

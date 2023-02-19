@@ -2,14 +2,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { IColumn } from '../../types/IColumn';
 import TInputTextArea from '../../types/Modals';
 
 interface IAddcolumnProps {
-  setColumns: (value: React.SetStateAction<IColumn[]>) => void
+  addColumn: (value: string) => void
 }
 
-function AddColumn({ setColumns }: IAddcolumnProps) {
+function AddColumn({ addColumn }: IAddcolumnProps) {
   const [modalShow, setModalShow] = useState(false);
   const [columnName, setColumnName] = useState('');
   const [errorTitle, setErrorTitle] = useState('');
@@ -54,9 +53,7 @@ function AddColumn({ setColumns }: IAddcolumnProps) {
 
   const handleAdd = () => {
     if (formValidate()) {
-      setColumns((prev) => [...prev, {
-        id: Number(new Date()), title: columnName, tasks: [], order: prev.length + 1,
-      }]);
+      addColumn(columnName);
       setColumnName(() => '');
       close();
     }

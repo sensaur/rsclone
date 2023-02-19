@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { IColumn } from './IColumn';
 
 export interface ICadsState {
