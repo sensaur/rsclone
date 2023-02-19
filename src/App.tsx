@@ -34,7 +34,7 @@ function App() {
               <ProtectedRoute>
                 <AllBoards />
               </ProtectedRoute>
-              )}
+            )}
           />
           <Route
             path="/editprofile"
@@ -42,7 +42,7 @@ function App() {
               <ProtectedRoute>
                 <EditProfile />
               </ProtectedRoute>
-              )}
+            )}
           />
         </Routes>
       </div>

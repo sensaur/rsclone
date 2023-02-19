@@ -51,14 +51,14 @@ function EditProfile() {
 
   return (
     <div className="w-1/2 py-4 m-auto">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userName">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="userName">
             User name
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD1"
             id="userName"
             name="userName"
             type="text"
@@ -70,11 +70,11 @@ function EditProfile() {
         </div>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="email">
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD1"
             id="email"
             name="email"
             type="text"
@@ -85,13 +85,13 @@ function EditProfile() {
           />
         </div>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="avatar">
+        <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="avatar">
           Avatar
         </label>
         <input
           type="file"
           name="file"
-          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4 dark:text-colorD3 dark:bg-colorD1"
           aria-label="Upload"
           onChange={onFileChange}
         />
