@@ -18,7 +18,7 @@ const cardSlice = createSlice({
     [getAllCards.fulfilled.type]: (state, action: PayloadAction<ICardAPI[]>) => {
       state.isLoading = false;
       state.error = '';
-      state.cards = action.payload;
+      state.cards = Array.isArray(action.payload) ? action.payload : [];
     },
     [getAllCards.pending.type]: (state) => {
       state.isLoading = true;

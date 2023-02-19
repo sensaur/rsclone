@@ -1,5 +1,5 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { IColumn } from '../types/IColumn';
+import { IColumnTasks, ISwap } from '../types/IColumn';
 
 export function changeListOrder<T>(
   list: T[],
@@ -13,36 +13,36 @@ export function changeListOrder<T>(
 }
 
 export function updateTasksInColumns(
-  columns: IColumn[],
+  columns: IColumnTasks[],
   source: DraggableLocation,
   destination: DraggableLocation,
-): IColumn[] {
+): ISwap[] {
   const colsList = [...columns];
   const sourceCol = colsList
-    .filter((col) => (col.id.toString() + col.title) === source.droppableId)[0];
+    .filter((col) => col.id === source.droppableId)[0];
   const destinationCol = colsList
-    .filter((col) => (col.id.toString() + col.title) === destination.droppableId)[0];
+    .filter((col) => col.id === destination.droppableId)[0];
   const oldData = colsList
     .filter(
       (col) => (
-        (col.id.toString() + col.title) !== source.droppableId
-      && (col.id.toString() + col.title) !== destination.droppableId
+        (col.id) !== source.droppableId
+      && (col.id) !== destination.droppableId
       ),
     );
 
   if (source.droppableId === destination.droppableId) {
-    const cardList = changeListOrder(sourceCol.tasks, source, destination);
-    sourceCol.tasks = cardList.map((task, index) => ({
-      ...task,
+    const tasksList = changeListOrder(sourceCol.Tasks, source, destination);
+    const reqParams = tasksList.map((task, index) => ({
       order: index,
+      id: task.id,
     }));
-    return [...oldData, sourceCol].sort((a, b) => a.order - b.order);
+    return reqParams;
   }
-  const sourceTasksList = [...sourceCol.tasks];
-  const destinationTasksList = [...destinationCol.tasks];
+  const sourceTasksList = [...sourceCol.Tasks];
+  const destinationTasksList = [...destinationCol.Tasks];
   const [importedTask] = sourceTasksList.splice(source.index, 1);
   destinationTasksList.splice(destination.index, 0, importedTask);
-  sourceCol.tasks = sourceTasksList
+  sourceCol.Tasks = sourceTasksList
     .map((task, index) => ({
       ...task,
       id: task.id,
@@ -50,7 +50,7 @@ export function updateTasksInColumns(
       columnId: +source.droppableId,
     }))
     .sort((a, b) => a.order - b.order);
-  destinationCol.tasks = destinationTasksList
+  destinationCol.Tasks = destinationTasksList
     .map((task, index) => ({
       ...task,
       id: task.id,
@@ -59,5 +59,5 @@ export function updateTasksInColumns(
     }))
     .sort((a, b) => a.order - b.order);
 
-  return [...oldData, sourceCol, destinationCol].sort((a, b) => a.order - b.order);
+  return [...oldData, sourceCol, destinationCol];
 }
