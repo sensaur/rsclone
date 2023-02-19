@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
+import Dark from './DarkMode/darkModeBtn';
 
 function NavBarStart() {
   return (
-    <div className="my-0 bg-color5 md:px-9 px-2 py-3">
+    <div className="my-0 bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1">
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">
@@ -19,6 +20,7 @@ function NavBarStart() {
             <div className="flex items-center">
               <Link className="btn" to="signup">Sing up</Link>
             </div>
+            <Dark />
           </div>
         </div>
       </nav>

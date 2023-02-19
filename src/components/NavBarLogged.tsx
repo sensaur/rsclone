@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
 import ava from '../images/avaDefault.jpg';
 import { useAppSelector } from '../hooks/redux';
+import Dark from './DarkMode/darkModeBtn'
 
 function activateBurger() {
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
@@ -19,16 +20,16 @@ function NavBarLogged() {
   }, [user]);
 
   return (
-    <nav className="bg-color5 md:px-9 px-2 py-3">
+    <nav className="bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1 dark:text-colorD3">
       <div className="flex justify-between items-center">
         <img id="logoNavBar" src={logo2} alt="" />
         <button
-          className="md:hidden menu-icon"
+          className="md:hidden menu-icon before:dark:bg-colorD3 after:dark:bg-colorD3"
           type="button"
           id="burger"
           onClick={() => activateBurger()}
         >
-          <span />
+          <span className="dark:bg-colorD3 " />
         </button>
         <div className="menu-container menu md:translate-x-0" id="navbarNavAltMarkup">
           <div className="menu-content">
@@ -53,6 +54,7 @@ function NavBarLogged() {
             <div className="flex items-center">
               <Link className="btn" to="logout">Sing out</Link>
             </div>
+            <Dark />
           </div>
         </div>
       </div>

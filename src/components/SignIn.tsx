@@ -39,14 +39,14 @@ function SignIn() {
 
   return (
     <div className="w-1/2 py-4 m-auto">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="email">
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3"
             id="email"
             name="email"
             type="text"
@@ -58,11 +58,11 @@ function SignIn() {
         </div>
         <div className="mb-6">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="password">
             Password
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3"
             id="password"
             name="password"
             type="password"
@@ -81,14 +81,14 @@ function SignIn() {
             Sign In
           </button>
           <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 dark:text-colorD4 dark:hover:text-blue-800"
             href="/"
           >
             Forgot Password?
           </a>
         </div>
       </form>
-      <p className="text-center text-gray-500 text-xs">
+      <p className="text-center text-gray-500 text-xs dark:text-colorD3">
         &copy;2023 RS School. All rights reserved.
       </p>
     </div>
