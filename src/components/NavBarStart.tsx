@@ -3,7 +3,7 @@ import logo2 from '../images/add-file.svg';
 
 function NavBarStart() {
   return (
-    <div className="my-0 bg-color5 md:px-9 px-2 py-3">
+    <div className="my-0 bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1">
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">

@@ -25,7 +25,7 @@ function App() {
     <BoardsContext.Provider value={{ boards, setBoards }}>
       <div className="min-h-screen flex flex-col">
         {!user ? <NavBarStart /> : <NavBarLogged />}
-        <div className="flex-auto px-10 py-4">
+        <div className="flex-auto px-10 py-4 dark:bg-colorD5">
           <Routes>
             <Route path="/" element={<StartPageEmpty />} />
             <Route path="/login" element={<SignIn />} />

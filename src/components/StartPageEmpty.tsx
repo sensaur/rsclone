@@ -15,16 +15,16 @@ import 'swiper/css/navigation';
 
 function StartPageEmpty() {
   return (
-    <div>
-      <h1 className="md:text-2xl text-base text-center text-color1">What this app can do?</h1>
+    <div className='dark:bg-colorD5'>
+      <h1 className="md:text-2xl text-base text-center text-color1 dark:text-colorD3">What this app can do?</h1>
       <ul className="text-center pt-1">
-        <li className="md:text-xl text-xs text-color1">- Create as many boards as you wish</li>
-        <li className="md:text-xl text-xs text-color1">- Create columns with tasks inside the boards</li>
-        <li className="md:text-xl text-xs text-color1">- Drag and drop your task columns</li>
-        <li className="md:text-xl text-xs text-color1">- Add descriptions and titles to tasks</li>
-        <li className="md:text-xl text-xs text-color1">- Drag and drop your tasks both inside and into other columns as you wish</li>
+        <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Create as many boards as you wish</li>
+        <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Create columns with tasks inside the boards</li>
+        <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Drag and drop your task columns</li>
+        <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Add descriptions and titles to tasks</li>
+        <li className="md:text-xl text-xs text-color1 dark:text-colorD3">- Drag and drop your tasks both inside and into other columns as you wish</li>
       </ul>
-      <h2 className="md:text-2xl text-base text-center text-color1 md:pt-4 pt-1">This app is powered by:</h2>
+      <h2 className="md:text-2xl text-base text-center text-color1 md:pt-4 pt-1 dark:text-colorD3">This app is powered by:</h2>
       <div className="max-w-[50%] mx-auto md:pt-4 pt-1">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -40,7 +40,7 @@ function StartPageEmpty() {
               <a href="https://www.typescriptlang.org/">
                 <img className="w-4/12 h-4/12 mx-auto rounded-full" src={Tslogo} alt="TS" />
               </a>
-              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs">TypeScript</p>
+              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs dark:text-colorD3">TypeScript</p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
@@ -48,7 +48,7 @@ function StartPageEmpty() {
               <a href="https://reactjs.org/">
                 <img className="w-4/12 h-4/12 mx-auto rounded-full" src={ReactLogo} alt="React" />
               </a>
-              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs">React</p>
+              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs dark:text-colorD3">React</p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
@@ -56,7 +56,7 @@ function StartPageEmpty() {
               <a href="https://tailwindcss.com">
                 <img className="w-4/12 h-4/12 mx-auto rounded-full" src={TwLogo} alt="TW" />
               </a>
-              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs">TailWind</p>
+              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs dark:text-colorD3">TailWind</p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
@@ -64,7 +64,7 @@ function StartPageEmpty() {
               <a href="https://nodejs.org/en/">
                 <img className="w-4/12 h-4/12 mx-auto rounded-full" src={NodeLogo} alt="Node" />
               </a>
-              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs">NodeJS</p>
+              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs dark:text-colorD3">NodeJS</p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
@@ -72,30 +72,30 @@ function StartPageEmpty() {
               <a href="https://www.postgresql.org/">
                 <img className="w-4/12 h-4/12 mx-auto rounded-full" src={PostLogo} alt="Post" />
               </a>
-              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs">PostgreSQL</p>
+              <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs dark:text-colorD3">PostgreSQL</p>
             </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <h2 className="md:text-2xl text-base text-center text-color1 md:pt-4 pt-1">Developers:</h2>
+      <h2 className="md:text-2xl text-base text-center text-color1 md:pt-4 pt-1 dark:text-colorD3">Developers:</h2>
       <div className="flex justify-center md:pt-5 pt-1">
         <div>
           <a href="https://github.com/sensaur">
             <img className="w-4/12 h-4/12 mx-auto rounded-full" src={IlyaAv} alt="Post" />
           </a>
-          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center">Ilya Zhigarev</p>
+          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center dark:text-colorD3">Ilya Zhigarev</p>
         </div>
         <div>
           <a href="https://github.com/NikolayBalabanov">
             <img className="w-4/12 h-4/12 mx-auto rounded-full" src={KolyaAv} alt="Post" />
           </a>
-          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center">Nikolay Balabanov</p>
+          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center dark:text-colorD3">Nikolay Balabanov</p>
         </div>
         <div>
           <a href="https://github.com/VEKozlov111">
             <img className="w-4/12 h-4/12 mx-auto rounded-full" src={VladAv} alt="Post" />
           </a>
-          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center">Vlad Kozlov</p>
+          <p className="md:pt-4 pt-1 text-color1 md:text-xl text-xs text-center dark:text-colorD3">Vlad Kozlov</p>
         </div>
       </div>
     </div>
