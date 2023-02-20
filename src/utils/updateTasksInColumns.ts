@@ -1,5 +1,5 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { IColumnTasks, ISwap } from '../types/IColumn';
+import { IColumnTasks, ISwap } from '../types/IColumnTasks';
 
 export function changeListOrder<T>(
   list: T[],

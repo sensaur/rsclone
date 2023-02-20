@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { IColumn } from './IColumn';
+import { IColumn } from './IColumnTasks';
 
 export interface ICadsState {
   cards: ICardAPI[]

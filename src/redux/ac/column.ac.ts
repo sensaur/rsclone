@@ -1,7 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import * as endPoints from '../../config/endPoints';
-import { IColumnCreate, IColumnUpdete, ISwap } from '../../types/IColumn';
+import {
+  IColumnAPI, IColumnCreate, IColumnUpdete, ISwap,
+} from '../../types/IColumnTasks';
+
+const getColumnById = async (payload: string) => {
+  try {
+    const res = await fetch(endPoints.columns() + payload, {
+      credentials: 'include',
+    });
+    if (res.ok) {
+      const result = await res.json();
+      return result;
+    }
+    return payload;
+  } catch (error) {
+    throw new TypeError('tasks loading error');
+  }
+};
 
 const getColumns = createAsyncThunk(
   'columns/fetchAll',
@@ -11,30 +28,20 @@ const getColumns = createAsyncThunk(
         credentials: 'include',
       });
       if (res.ok) {
-        const result = await res.json();
-        return result || [];
+        const cols: IColumnAPI = await res.json();
+        // const colsWithTasks = await Promise.all(
+        //   // eslint-disable-next-line @typescript-eslint/return-await
+        //   cols.Columns.map(async (column) => (await getColumnById(column.id))),
+        // );
+        // cols.Columns = colsWithTasks;
+        return cols;
       }
-      throw new Error('error loading columns');
+      throw new TypeError('error loading columns');
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при получении всех колонок борда');
-    }
-  },
-);
-
-const getColumnById = createAsyncThunk(
-  'columns/fetchOne',
-  async (payload: string, thunkAPI) => {
-    try {
-      const res = await fetch(endPoints.columns() + payload, {
-        credentials: 'include',
-      });
-      if (res.ok) {
-        const result = await res.json();
-        return result || [];
+      if (error instanceof TypeError) {
+        return thunkAPI.rejectWithValue(error.message);
       }
-      return [];
-    } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при получении 1го колонки');
+      return thunkAPI.rejectWithValue('Some problem in GetAllColumns');
     }
   },
 );
@@ -54,7 +61,7 @@ const createColumn = createAsyncThunk(
       if (res.ok) {
         const result = await res.json();
         await Swal.fire('The board was successfuly created!');
-        return { ...result, Tasks: [] };
+        return result;
       }
       return await Swal.fire(res.statusText);
     } catch (error) {

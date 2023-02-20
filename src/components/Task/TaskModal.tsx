@@ -2,21 +2,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import { ITask } from '../../types/IColumn';
+import { ITask } from '../../types/IColumnTasks';
 import TInputTextArea from '../../types/Modals';
 
 interface ITaskModalProps {
   onClose: (e: boolean) => void
-  setTask: () => void
+  setTask: (e: string) => void | null
+  editTask: (e: ITask) => void | null
   mode: boolean
-  task: ITask
+  task: ITask | null
 }
 
 function TaskModal({
-  setTask, onClose, mode, task,
+  setTask, onClose, editTask, mode, task,
 }: ITaskModalProps) {
-  const [taskTitle, setTaskTitle] = useState(mode ? task.taskTitle : '');
-  const [taskDescr, setTaskDescr] = useState(mode ? task.taskTitle : '');
+  const [taskTitle, setTaskTitle] = useState(mode ? task!.taskTitle : '');
+  const [taskDescr, setTaskDescr] = useState(mode ? task!.taskTitle : '');
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescr, setErrorDescr] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
@@ -74,14 +75,15 @@ function TaskModal({
 
   const handleAdd = () => {
     if (formValidate()) {
-      // const taskInfo = {
-      //   id: mode ? task.id : Number(new Date()),
-      //   order: mode ? task.order : 0,
-      //   taskTitle: taskTitle.trim(),
-      //   description: taskDescr.trim(),
-      //   columnId: mode ? task.id : 1,
-      // };
-      setTask();
+      if (mode) {
+        editTask({
+          id: task!.id,
+          order: task!.order,
+          taskTitle,
+        });
+      } else {
+        setTask(taskTitle!.trim());
+      }
       handleClose();
       setTaskTitle('');
       setTaskDescr('');

@@ -1,21 +1,24 @@
-// import { useGlobalContext } from '../context';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-// import { useAppSelector } from '../hooks/redux';
 import { getAllCards } from '../redux/ac/card.ac';
+import { deleteUserSlice } from '../redux/slices/userSlice';
 import CardHeader from './Cards/CardHeader';
 import CardItem from './Cards/CardItem';
 import CardModal from './Cards/CardModal';
 
 function AllCards() {
-  // const { boards } = useGlobalContext();
   const [isModalShow, setIsModalShow] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { cards, error } = useAppSelector((store) => store.cardSlice);
   useEffect(() => {
     dispatch(getAllCards());
   }, []);
-  console.log('boards=', cards, 'errors', error);
+  if (error) {
+    dispatch(deleteUserSlice());
+    navigate('/logout');
+  }
 
   const renderedCards = cards.map((card) => (
     <CardItem

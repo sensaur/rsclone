@@ -1,4 +1,4 @@
-import { IColumnTasks, ITask } from '../types/IColumn';
+import { IColumnTasks, ITask } from '../types/IColumnTasks';
 
 export const orderSortCols = (list: IColumnTasks[]) => {
   const sorted = list
