@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   IColumnAPI, IColumnsState, IColumnTasks, IColumnUpdete,
 } from '../../types/IColumn';
+import { orderSortCols } from '../../utils/orderSort';
 import {
   createColumn, deleteColumn, getColumnById, getColumns, setColumnsOrder, updateColumn,
 } from '../ac/column.ac';
@@ -25,12 +26,15 @@ const initialState: IColumnsState = {
 const columnSlice = createSlice({
   name: 'card',
   initialState,
-  reducers: {},
+  reducers: {
+    setColumns: (state, action) => ({ ...state, columns: action.payload }),
+  },
   extraReducers: {
     [getColumns.fulfilled.type]: (state, action: PayloadAction<IColumnAPI>) => {
       state.isLoading = false;
       state.error = '';
-      state.columns = action.payload;
+      const prevArr = action.payload.Columns;
+      state.columns = { ...action.payload, Columns: orderSortCols(prevArr) };
     },
     [getColumns.pending.type]: (state) => {
       state.isLoading = true;
@@ -113,3 +117,4 @@ const columnSlice = createSlice({
 });
 
 export default columnSlice.reducer;
+export const { setColumns } = columnSlice.actions;

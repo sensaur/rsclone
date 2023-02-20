@@ -92,7 +92,7 @@ function Column({
 
   return (
     <>
-      <Draggable draggableId={column.id.toString()} index={index}>
+      <Draggable draggableId={column.id} index={index}>
         {
           (provided, snapshot) => (
             <div

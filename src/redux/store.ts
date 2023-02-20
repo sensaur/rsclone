@@ -6,6 +6,7 @@ export const setupStore = () => configureStore({
   reducer: rootReducer,
   devTools: true,
   preloadedState: getInitState(),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 const store = setupStore();
 

@@ -10,10 +10,12 @@ import ColumnsWraper from '../Columns/ColumnsWraper';
 import Column from '../Columns/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 // import { getColumnById, getColumns } from '../../redux/ac/column.ac';
+import * as endPoints from '../../config/endPoints';
 import {
   createColumn, deleteColumn, getColumns, setColumnsOrder,
 } from '../../redux/ac/column.ac';
-// import Toast from '../UI/toast';
+import { setColumns } from '../../redux/slices/columnSlice';
+import Toast from '../UI/toast';
 
 interface UserItemPageParams {
   [n: string]: string;
@@ -37,10 +39,10 @@ function Card() {
         // columns.Columns.map(async (column) => dispatch(getColumnById(column.id)));
         console.log('colsArr', columns.Columns);
         // setColumns(columns.Columns);
-        // Toast.fire({
-        //   icon: 'success',
-        //   title: 'Сolumns loaded successfully',
-        // });
+        Toast.fire({
+          icon: 'success',
+          title: 'Сolumns loaded successfully',
+        });
       } else {
         await Swal.fire(error);
         navigate('/');
@@ -61,7 +63,7 @@ function Card() {
     dispatch(deleteColumn(column.id));
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source, type } = result;
     if (!destination) return;
     if (type === 'tasks') {
@@ -69,14 +71,22 @@ function Card() {
     }
     if (type === 'column') {
       const initialColumns = [...columns.Columns];
-      const reorderedColumnsReq = changeListOrder(columns.Columns, source, destination)
+      const reorderedColumns = changeListOrder(columns.Columns, source, destination);
+      const reorderReq = reorderedColumns
         .map((elem, index) => ({
           id: elem.id, order: index,
         }));
-      dispatch(setColumnsOrder(reorderedColumnsReq));
+      console.log('в ручную', { ...columns, Columns: reorderedColumns });
+      dispatch(setColumns({ ...columns, Columns: reorderedColumns }));
+      await dispatch(setColumnsOrder(reorderReq));
+      if (!error) await dispatch(getColumns(params.id!));
       if (error) {
+        dispatch(setColumns({ ...columns, Columns: initialColumns }));
         console.log('error from cards', error);
-        // TODO: вернуть как было, выбросить ошибку
+        Toast.fire({
+          icon: 'error',
+          title: 'Сolumns reorder error',
+        });
       }
     }
   };

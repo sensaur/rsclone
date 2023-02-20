@@ -113,20 +113,22 @@ const setColumnsOrder = createAsyncThunk(
       console.log(JSON.stringify(payload));
       const res = await fetch(endPoints.setColumnsOrder(), {
         method: 'PUT',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(payload),
       });
-      if (res.ok) {
-        const result = await res.json();
-        // await Swal.fire(result);
-        console.log('Поменяли', payload, result);
-      }
-      console.log('error', await res.json());
-      throw new Error('Ошибка при реордере');
+      // if (res.ok) {
+        //   const result = await res.json();
+      //   // await Swal.fire(result);
+      //   console.log('Поменяли', payload, result);
+      //   return result;
+      // }
+      return res.statusText;
+      // throw new Error('Ошибка при реордере');
     } catch (error) {
+      console.log('какой-то еррор', error);
       return thunkAPI.rejectWithValue(error);
     }
   },
