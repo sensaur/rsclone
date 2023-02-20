@@ -1,36 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  IColumnAPI, IColumnsState, IColumnTasks, IColumnUpdete,
-} from '../../types/IColumn';
+  IColumn,
+  IColumnAPI, IColumnsState, IColumnUpdete,
+} from '../../types/IColumnTasks';
+import { orderSortCols } from '../../utils/orderSort';
 import {
-  createColumn, deleteColumn, getColumnById, getColumns, setColumnsOrder, updateColumn,
+  createColumn, deleteColumn, getColumns, setColumnsOrder, updateColumn,
 } from '../ac/column.ac';
 
 const initialState: IColumnsState = {
-  columns: {
-    cardTitle: '',
-    color: '#ffffff',
-    Columns: [],
-    id: 'default',
-    order: 1,
-    User: {
-      userName: 'Default User',
-      userUUID: 'Default UUID',
-    },
-  },
+  columns: [],
   isLoading: false,
   error: '',
 };
 
 const columnSlice = createSlice({
-  name: 'card',
+  name: 'column',
   initialState,
-  reducers: {},
+  reducers: {
+    setColumns: (state, action) => ({ ...state, columns: action.payload }),
+  },
   extraReducers: {
     [getColumns.fulfilled.type]: (state, action: PayloadAction<IColumnAPI>) => {
       state.isLoading = false;
       state.error = '';
-      state.columns = action.payload;
+      const prevArr = action.payload.Columns;
+      state.columns = orderSortCols(prevArr);
     },
     [getColumns.pending.type]: (state) => {
       state.isLoading = true;
@@ -39,26 +34,10 @@ const columnSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [getColumnById.fulfilled.type]: (state, action: PayloadAction<IColumnTasks>) => {
+    [createColumn.fulfilled.type]: (state, action: PayloadAction<IColumn>) => {
       state.isLoading = false;
       state.error = '';
-      const columns = [...state.columns.Columns];
-      state.columns.Columns = columns
-        .map((col) => (col.id === action.payload.id
-          ? action.payload
-          : col));
-    },
-    [getColumnById.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [getColumnById.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [createColumn.fulfilled.type]: (state, action: PayloadAction<IColumnTasks>) => {
-      state.isLoading = false;
-      state.error = '';
-      state.columns.Columns.push(action.payload);
+      state.columns.push(action.payload);
     },
     [createColumn.pending.type]: (state) => {
       state.isLoading = true;
@@ -70,10 +49,13 @@ const columnSlice = createSlice({
     [updateColumn.fulfilled.type]: (state, action: PayloadAction<IColumnUpdete>) => {
       state.isLoading = false;
       state.error = '';
-      state.columns.Columns = [...state.columns.Columns]
+      const { columnTitle, id, order } = action.payload;
+      state.columns = [...state.columns]
         .map((column) => {
           if (column.id === action.payload.id) {
-            return { ...column, columnTitle: action.payload.columnTitle };
+            return {
+              ...column, columnTitle, id, order,
+            };
           }
           return column;
         });
@@ -88,7 +70,7 @@ const columnSlice = createSlice({
     [deleteColumn.fulfilled.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = '';
-      state.columns.Columns = [...state.columns.Columns]
+      state.columns = [...state.columns]
         .filter((column) => (column.id !== action.payload));
     },
     [deleteColumn.pending.type]: (state) => {
@@ -113,3 +95,4 @@ const columnSlice = createSlice({
 });
 
 export default columnSlice.reducer;
+export const { setColumns } = columnSlice.actions;

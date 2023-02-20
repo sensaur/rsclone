@@ -11,12 +11,17 @@ const getAllCards = createAsyncThunk(
         credentials: 'include',
       });
       if (res.ok) {
+        console.log(res);
         const result = await res.json();
         return result;
       }
-      return await Swal.fire(res.statusText);
+      await Swal.fire('Oops! There is problem with authorization. Please login again');
+      throw new Error('authorization problem');
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при получении всех бордов');
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error?.message);
+      }
+      return thunkAPI.rejectWithValue('Some problem in GetAllCards');
     }
   },
 );

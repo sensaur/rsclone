@@ -2,30 +2,39 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { ITask } from '../../types/IColumn';
+import { useAppDispatch } from '../../hooks/redux';
+import { updateTask } from '../../redux/ac/tasks.ac';
+import { ITask } from '../../types/IColumnTasks';
 import Confirm from '../Modals/Confirm';
 import TaskModal from './TaskModal';
 
 interface ITaskProps {
-  title: string
+  columnId: string
   index: number
   task: ITask
-  editTask: (e: ITask) => void
-  removeTask: (e: ITask) => void
+  removeTask: (e: string) => void
 }
 
 function Card({
-  title, index, task, removeTask, editTask,
+  columnId, index, task, removeTask,
 }: ITaskProps) {
   const { id } = task;
   const [isTaskModal, setIsTaskModal] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
+  const dispatch = useAppDispatch();
+  const editTask = (editInfo: ITask) => {
+    dispatch(updateTask({
+      id: editInfo.id,
+      order: editInfo.order,
+      taskTitle: editInfo.taskTitle,
+      columnId,
+    }));
+  };
 
   const handleConfirm = () => {
     setIsTaskModal(false);
-    removeTask(task);
+    removeTask(task.id);
   };
   const handleClose = () => setIsTaskModal(false);
 
@@ -40,7 +49,7 @@ function Card({
             className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}
           >
             <div className="flex justify-between w-full items-center">
-              <h3 className="font-semibold text-xl">{title}</h3>
+              <h3 className="font-semibold text-xl">{task.taskTitle}</h3>
               <div className="flex justify-between items-center">
                 <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
                   <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
@@ -57,7 +66,15 @@ function Card({
       {isTaskModal
         && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.taskTitle} />)}
       {isEditModal
-        && (<TaskModal onClose={setIsEditModal} mode task={task} setTask={() => console.log('click')} />)}
+        && (
+        <TaskModal
+          onClose={setIsEditModal}
+          mode
+          task={task}
+          editTask={editTask}
+          setTask={() => {}}
+        />
+        )}
     </>
   );
 }
