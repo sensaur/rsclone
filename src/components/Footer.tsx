@@ -6,11 +6,11 @@ function Footer() {
       <div className="flex justify-between flex-wrap">
         <a className="hover:scale-110 duration-500" href="https://rs.school/js/"><img className="md:w-5/6 w-4/6" src={rsschoolLogo} alt="RSSchool" /></a>
         <ul className="flex md:gap-1 gap-1">
-          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3" href="https://github.com/sensaur">Ilya Zhigarev</a></li>
+          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3 dark:hover:text-colorD4" href="https://github.com/sensaur">Ilya Zhigarev</a></li>
           <li className="flex items-center dark:text-colorD3">|</li>
-          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3" href="https://github.com/NikolayBalabanov">Nikolay Balabanov</a></li>
+          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3 dark:hover:text-colorD4" href="https://github.com/NikolayBalabanov">Nikolay Balabanov</a></li>
           <li className="flex items-center dark:text-colorD3">|</li>
-          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3" href="https://github.com/VEKozlov111">Vladislav Kozlov</a></li>
+          <li className="flex items-center"><a className="hover:text-color2 duration-500 md:text-base text-xs dark:text-colorD3 dark:hover:text-colorD4" href="https://github.com/VEKozlov111">Vladislav Kozlov</a></li>
         </ul>
         <div className="flex items-center">
           <h3 className="md:text-base text-xs dark:text-colorD3">

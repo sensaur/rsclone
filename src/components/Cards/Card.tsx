@@ -94,7 +94,7 @@ function Card() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex justify-between items-center py-5">
-        <h2 className="text-3xl">{cardTitle}</h2>
+        <h2 className="text-3xl dark:text-colorD3">{cardTitle}</h2>
         <AddColumn addColumn={addColumn} />
       </div>
       <ColumnsWraper>

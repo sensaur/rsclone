@@ -90,10 +90,10 @@ function Column({
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
+              <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 dark:bg-colorD1 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
                 <div className="flex justify-between px-2">
                   <EditTitle title={title} updateTitle={setTitle} />
-                  <button type="button" className="text-xl text-black hover:text-color1 transition-colors duration-300" title="Delete column" aria-label="Delete column" onClick={() => setIsColumnModal(true)}>
+                  <button type="button" className="text-xl text-black hover:text-color1 transition-colors duration-300 dark:text-colorD3 dark:hover:text-colorD4" title="Delete column" aria-label="Delete column" onClick={() => setIsColumnModal(true)}>
                     <AiOutlineClose />
                   </button>
                 </div>
@@ -101,7 +101,7 @@ function Column({
                   {
                     (provided, snapshot) => (
                       <div
-                        className={`py-2 rounded ${snapshot.isDraggingOver ? 'bg-color2' : ''}`}
+                        className={`py-2 rounded ${snapshot.isDraggingOver ? 'bg-color2 dark:bg-colorD5' : ''}`}
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
@@ -123,13 +123,13 @@ function Column({
         && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="column" title={column.columnTitle} />)}
       {isAddTaskModal
         && (
-        <TaskModal
-          mode={false}
-          task={null}
-          onClose={setIsAddTaskModal}
-          setTask={addTask}
-          editTask={() => {}}
-        />
+          <TaskModal
+            mode={false}
+            task={null}
+            onClose={setIsAddTaskModal}
+            setTask={addTask}
+            editTask={() => { }}
+          />
         )}
     </>
   );

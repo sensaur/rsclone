@@ -19,7 +19,7 @@ function App() {
   const { user } = useAppSelector((state) => state.userSlice);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-colorD5">
       {!user ? <NavBarStart /> : <NavBarLogged />}
       <div className="flex-auto px-10 py-4">
         <Routes>

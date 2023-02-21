@@ -37,7 +37,7 @@ function EditTitle({ title, updateTitle }: IEditTitle) {
   if (isEdit) {
     return (
       <input
-        className="border-none bg-color2 text-2xl font-semibold rounded-md outline-none transition-colors duration-300"
+        className="border-none bg-color2 text-2xl font-semibold rounded-md outline-none transition-colors duration-300 dark:bg-colorD2"
         ref={inputRef}
         onBlur={save}
         onKeyDown={onKeyDown}
@@ -47,7 +47,7 @@ function EditTitle({ title, updateTitle }: IEditTitle) {
   }
 
   return (
-    <h2 className="cursor-pointer text-2xl font-semibold hover:text-color2 transition-colors duration-300" onClick={edit}>{title.length > 0 ? title : 'Default title'}</h2>
+    <h2 className="cursor-pointer text-2xl font-semibold hover:text-color2 transition-colors duration-300 dark:text-colorD3" onClick={edit}>{title.length > 0 ? title : 'Default title'}</h2>
   );
 }
 
