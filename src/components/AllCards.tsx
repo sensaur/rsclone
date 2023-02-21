@@ -43,10 +43,10 @@ function AllCards() {
       <hr />
       {cards.length === 0
         && (
-        <div className="w-full flex flex-col items-center justify-center p-5">
-          <h2 className="text-3xl">There are no boards</h2>
-          <p className="text-3xl">But you can create as many as you like!</p>
-        </div>
+          <div className="w-full flex flex-col items-center justify-center p-5">
+            <h2 className="text-3xl dark:text-colorD3">There are no boards</h2>
+            <p className="text-3xl dark:text-colorD3">But you can create as many as you like!</p>
+          </div>
         )}
       {cards.length > 0
         && <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 py-5">{renderedCards}</div>}

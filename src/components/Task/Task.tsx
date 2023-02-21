@@ -46,20 +46,20 @@ function Card({
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}
+            className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 dark:bg-colorD2 dark:hover:bg-colorD5 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4 dark:bg-colorD4' : ''}`}
           >
             <div className="flex justify-between w-full items-center">
-              <h3 className="font-semibold text-xl">{task.taskTitle}</h3>
+              <h3 className="font-semibold text-xl dark:text-colorD3 ">{task.taskTitle}</h3>
               <div className="flex justify-between items-center">
                 <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
-                  <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
+                  <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
                 </button>
                 <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsTaskModal(true)}>
-                  <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1" />
+                  <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
                 </button>
               </div>
             </div>
-            <p className="text-lg py-2">{task.taskTitle}</p>
+            <p className="text-lg py-2 dark:text-colorD3">{task.taskTitle}</p>
           </div>
         )}
       </Draggable>
@@ -67,13 +67,13 @@ function Card({
         && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.taskTitle} />)}
       {isEditModal
         && (
-        <TaskModal
-          onClose={setIsEditModal}
-          mode
-          task={task}
-          editTask={editTask}
-          setTask={() => {}}
-        />
+          <TaskModal
+            onClose={setIsEditModal}
+            mode
+            task={task}
+            editTask={editTask}
+            setTask={() => { }}
+          />
         )}
     </>
   );

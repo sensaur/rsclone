@@ -74,19 +74,19 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
       >
         + Add a new column
       </button>
-      { modalShow ? (
+      {modalShow ? (
         <div
           ref={modal}
-          className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300"
+          className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300 dark:bg-colorD5 dark:bg-opacity-80"
         >
           <div
             ref={modalContent}
-            className="w-6/12 flex flex-col rounded-lg relative shadow-md bg-white px-6 py-3 -translate-y-10 duration-300 transition-transform"
+            className="w-6/12 flex flex-col rounded-lg relative shadow-md bg-white px-6 py-3 -translate-y-10 duration-300 transition-transform dark:bg-colorD1"
           >
             <div className="flex flex-col-reverse justify-between items-center  pb-4">
-              <h3 className="text-3xl font-semibold self-start">Add a new column</h3>
+              <h3 className="text-3xl font-semibold self-start dark:text-colorD3">Add a new column</h3>
               <button
-                className="px-1 text-gray-400 text-3xl self-end"
+                className="px-1 text-gray-400 text-3xl self-end dark:text-colorD3"
                 type="button"
                 onClick={() => close()}
               >
@@ -95,14 +95,14 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
             </div>
             <hr />
             <form className="py-4">
-              <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2">
+              <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2 dark:text-colorD3">
                 Column title
                 <input
                   type="text"
                   id="column-name"
                   name="column-name"
                   placeholder="Column title"
-                  className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="w-full bg-gray-200 text-lg text-gray-700 border-gray-400 border rounded py-3 px-4 mt-2 mb-3 leading-tight focus:outline-none focus:bg-white dark:text-colorD3 dark:bg-colorD2 dark:border-colorD3"
                   required
                   value={columnName}
                   onKeyDown={handleKeyDown}
@@ -115,7 +115,7 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
             <hr />
             <div className="self-end">
               <button
-                className="rounded-lg text-purple-100 text-2xl font-semibold bg-blue-500 my-3 p-3 block transition-colors hover:text-black hover:bg-blue-300 duration-300 active:bg-blue-800 active:text-white"
+                className="rounded-lg text-purple-100 text-2xl font-semibold bg-blue-500 my-3 p-3 block transition-colors hover:text-black hover:bg-blue-300 duration-300 active:bg-blue-800 active:text-white dark:text-colorD3 dark:bg-colorD2 dark:hover:bg-colorD4 dark:text-colorD3"
                 type="button"
                 onClick={() => handleAdd()}
               >
