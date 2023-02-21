@@ -13,7 +13,9 @@ const initialState: ICadsState = {
 const cardSlice = createSlice({
   name: 'card',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCardsError: (state) => { state.error = ''; },
+  },
   extraReducers: {
     [getAllCards.fulfilled.type]: (state, action: PayloadAction<ICardAPI[]>) => {
       state.isLoading = false;
@@ -85,3 +87,4 @@ const cardSlice = createSlice({
 });
 
 export default cardSlice.reducer;
+export const { resetCardsError } = cardSlice.actions;

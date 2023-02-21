@@ -29,11 +29,6 @@ const getColumns = createAsyncThunk(
       });
       if (res.ok) {
         const cols: IColumnAPI = await res.json();
-        // const colsWithTasks = await Promise.all(
-        //   // eslint-disable-next-line @typescript-eslint/return-await
-        //   cols.Columns.map(async (column) => (await getColumnById(column.id))),
-        // );
-        // cols.Columns = colsWithTasks;
         return cols;
       }
       throw new TypeError('error loading columns');
@@ -116,8 +111,6 @@ const setColumnsOrder = createAsyncThunk(
   'columns/setOrder',
   async (payload: ISwap[], thunkAPI) => {
     try {
-      console.log(payload);
-      console.log(JSON.stringify(payload));
       const res = await fetch(endPoints.setColumnsOrder(), {
         method: 'PUT',
         headers: {
@@ -126,16 +119,8 @@ const setColumnsOrder = createAsyncThunk(
         credentials: 'include',
         body: JSON.stringify(payload),
       });
-      // if (res.ok) {
-        //   const result = await res.json();
-      //   // await Swal.fire(result);
-      //   console.log('Поменяли', payload, result);
-      //   return result;
-      // }
       return res.statusText;
-      // throw new Error('Ошибка при реордере');
     } catch (error) {
-      console.log('какой-то еррор', error);
       return thunkAPI.rejectWithValue(error);
     }
   },

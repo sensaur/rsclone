@@ -11,7 +11,6 @@ const getAllCards = createAsyncThunk(
         credentials: 'include',
       });
       if (res.ok) {
-        console.log(res);
         const result = await res.json();
         return result;
       }
