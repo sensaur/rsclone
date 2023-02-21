@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { getAllCards } from '../redux/ac/card.ac';
+import { resetCardsError } from '../redux/slices/cardSlice';
 import { deleteUserSlice } from '../redux/slices/userSlice';
 import CardHeader from './Cards/CardHeader';
 import CardItem from './Cards/CardItem';
@@ -18,6 +19,7 @@ function AllCards() {
   if (error) {
     dispatch(deleteUserSlice());
     navigate('/logout');
+    dispatch(resetCardsError());
   }
 
   const renderedCards = cards.map((card) => (

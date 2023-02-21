@@ -13,9 +13,7 @@ const getColumnTasks = createAsyncThunk(
         credentials: 'include',
       });
       if (res.ok) {
-        console.log('таски', res);
         const result: IColumnTasks = await res.json();
-        console.log('айййй доля воровская', result);
         return { col: payload, response: result };
       }
       throw new TypeError('Tasks loading error');
@@ -42,7 +40,6 @@ const createTask = createAsyncThunk(
       });
       if (res.ok) {
         const result: ITask = await res.json();
-        console.log('СОЗДАЕМ', result);
         return result;
       }
       throw new TypeError('Task creating error');

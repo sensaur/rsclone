@@ -75,7 +75,6 @@ function Card() {
       if (!error) await dispatch(getColumns(params.id!));
       if (error) {
         dispatch(setColumns(initialColumns));
-        console.log('error from cards', error);
         Toast.fire({
           icon: 'error',
           title: 'Сolumns reorder error',
