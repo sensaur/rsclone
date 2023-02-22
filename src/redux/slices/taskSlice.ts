@@ -56,12 +56,14 @@ const taskSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       const {
-        id, taskTitle, order, columnId,
+        id, taskTitle, order, columnId, isDone, taskDescription,
       } = action.payload;
       state.tasks[columnId] = [...state.tasks[columnId]]
         .map((task) => {
           if (task.id === id) {
-            return { ...task, taskTitle, order };
+            return {
+              ...task, taskTitle, taskDescription, isDone, order,
+            };
           }
           return task;
         });
