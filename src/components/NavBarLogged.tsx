@@ -8,6 +8,7 @@ import Dark from './DarkMode/darkModeBtn';
 function activateBurger() {
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
   const burgerMenu = document.getElementById('navbarNavAltMarkup') as HTMLButtonElement;
+  document.body.classList.toggle('overflow-hidden');
   burgerBtn.classList.toggle('_active');
   burgerMenu.classList.toggle('menu-active');
 }
