@@ -80,6 +80,9 @@ function CardModal({ mode, card, onClose }: ICardModal) {
     if (key === 'Escape') {
       close();
     }
+    if (key === 'Enter') {
+      handleAdd();
+    }
   };
 
   return (
@@ -102,7 +105,7 @@ function CardModal({ mode, card, onClose }: ICardModal) {
           </button>
         </div>
         <hr />
-        <form className="py-4">
+        <form className="py-4" onSubmit={(e) => { e.preventDefault(); handleAdd(); }}>
           <label htmlFor="board-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2 dark:text-colorD3">
             Board title
             <input

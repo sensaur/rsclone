@@ -50,7 +50,7 @@ function EditProfile() {
   };
 
   return (
-    <div className="w-1/2 py-4 m-auto">
+    <div className="w-full sm:w-1/2 py-4 m-auto ">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
