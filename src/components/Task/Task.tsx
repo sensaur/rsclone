@@ -16,7 +16,7 @@ interface ITaskProps {
   removeTask: (e: string) => void
 }
 
-function Card({
+function Task({
   columnId, index, task, removeTask,
 }: ITaskProps) {
   const { id } = task;
@@ -42,7 +42,7 @@ function Card({
 
   return (
     <>
-      <Draggable draggableId={id.toString() + task.taskTitle} index={index}>
+      <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <div
             {...provided.draggableProps}
@@ -81,4 +81,4 @@ function Card({
   );
 }
 
-export default Card;
+export default Task;
