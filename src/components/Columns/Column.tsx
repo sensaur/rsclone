@@ -5,7 +5,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { updateColumn } from '../../redux/ac/column.ac';
-import { IColumn, ITaskCreate } from '../../types/IColumnTasks';
+import { IColumn, INewTask, ITaskCreate } from '../../types/IColumnTasks';
 import Task from '../Task/Task';
 import TaskModal from '../Task/TaskModal';
 import Confirm from '../Modals/Confirm';
@@ -30,9 +30,7 @@ function Column({
   const [isColumnModal, setIsColumnModal] = useState(false);
   const [isAddTaskModal, setIsAddTaskModal] = useState(false);
   useEffect(() => {
-    (async () => {
-      dispatch(getColumnTasks(column.id));
-    })();
+    dispatch(getColumnTasks(column.id));
   }, []);
   const removeTask = (taskId: string) => {
     dispatch(deleteTask({
@@ -61,17 +59,14 @@ function Column({
     }));
   };
 
-  // useEffect(() => {
-  //   updateColumnTitle(title);
-  // }, [title]);
-
-  const addTask = (newTaskInfo: string) => {
+  const addTask = (newTaskInfo: INewTask) => {
     const newTask: ITaskCreate = {
-      taskTitle: newTaskInfo,
+      taskTitle: newTaskInfo.taskTitle,
       order: tasks[column.id].length,
       column_id: column.id,
+      taskDescription: newTaskInfo.taskDescription,
+      isDone: newTaskInfo.isDone,
     };
-    console.log(newTask);
     dispatch(createTask(newTask));
   };
 
