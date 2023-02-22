@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Skeleton from 'react-loading-skeleton';
 import { IColumn } from '../../types/IColumnTasks';
 import { changeListOrder, updateTasksInColumns } from '../../utils/updateTasksInColumns';
 import AddColumn from '../Columns/AddColumn';
@@ -23,7 +25,7 @@ interface UserItemPageParams {
 
 function Card() {
   const { cards } = useAppSelector((state) => state.cardSlice);
-  const { columns, error } = useAppSelector((state) => state.columnSlice);
+  const { columns, error, isLoading } = useAppSelector((state) => state.columnSlice);
   const { tasks } = useAppSelector((state) => state.taskSlice);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -105,12 +107,27 @@ function Card() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex justify-between items-center py-5">
-        <h2 className="text-3xl dark:text-colorD3">{cardTitle}</h2>
+      <div className="flex flex-wrap  justify-between items-center py-5">
+        <h2 className="text-3xl sm:mb-0 mb-3 dark:text-colorD3">
+          {cardTitle
+          || (
+          <div className="w-12">
+            <Skeleton />
+          </div>
+          )}
+        </h2>
         <AddColumn addColumn={addColumn} />
       </div>
       <ColumnsWraper>
-        {renderColumns}
+        {isLoading && renderColumns.length === 0
+          ? (
+            <>
+              <Skeleton className="w-96 h-20" />
+              <Skeleton className="w-96 h-20" />
+            </>
+          )
+          : renderColumns}
+
       </ColumnsWraper>
     </DragDropContext>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { getAllCards } from '../redux/ac/card.ac';
@@ -12,7 +13,7 @@ function AllCards() {
   const [isModalShow, setIsModalShow] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { cards, error } = useAppSelector((store) => store.cardSlice);
+  const { cards, error, isLoading } = useAppSelector((store) => store.cardSlice);
   useEffect(() => {
     dispatch(getAllCards());
   }, []);
@@ -41,15 +42,23 @@ function AllCards() {
         {isModalShow && <CardModal card={null} onClose={() => setIsModalShow(false)} mode="create" />}
       </CardHeader>
       <hr />
-      {cards.length === 0
-        && (
-          <div className="w-full flex flex-col items-center justify-center p-5">
-            <h2 className="text-3xl dark:text-colorD3">There are no boards</h2>
-            <p className="text-3xl dark:text-colorD3">But you can create as many as you like!</p>
-          </div>
-        )}
-      {cards.length > 0
-        && <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 py-5">{renderedCards}</div>}
+      {isLoading && (
+      <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 py-5">
+        <Skeleton className="h-52" />
+        <Skeleton className="h-52" />
+      </div>
+      )}
+      {!isLoading && (
+        cards.length === 0
+          ? (
+            <div className="w-full flex flex-col items-center justify-center p-5">
+              <h2 className="text-3xl dark:text-colorD3">There are no boards</h2>
+              <p className="text-3xl dark:text-colorD3">But you can create as many as you like!</p>
+            </div>
+          )
+          : (<div className="w-full grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 py-5">{renderedCards}</div>)
+      )}
+
     </div>
   );
 }

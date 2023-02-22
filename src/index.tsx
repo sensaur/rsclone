@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'react-loading-skeleton/dist/skeleton.css';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
