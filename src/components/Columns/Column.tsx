@@ -26,8 +26,8 @@ function Column({
 }: IColumnProps) {
   const dispatch = useAppDispatch();
   const { tasks } = useAppSelector((store) => store.taskSlice);
-  const [isColumnModal, setIsColumnModal] = useState(false);
   const [title, setTitle] = useState(column.columnTitle);
+  const [isColumnModal, setIsColumnModal] = useState(false);
   const [isAddTaskModal, setIsAddTaskModal] = useState(false);
   useEffect(() => {
     (async () => {
@@ -53,6 +53,7 @@ function Column({
     )) : null;
 
   const updateColumnTitle = (newTitle: string) => {
+    setTitle(newTitle);
     dispatch(updateColumn({
       id: column.id,
       columnTitle: newTitle,
@@ -60,9 +61,9 @@ function Column({
     }));
   };
 
-  useEffect(() => {
-    updateColumnTitle(title);
-  }, [title]);
+  // useEffect(() => {
+  //   updateColumnTitle(title);
+  // }, [title]);
 
   const addTask = (newTaskInfo: string) => {
     const newTask: ITaskCreate = {
@@ -91,9 +92,9 @@ function Column({
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <div className={`bg-color5 rounded-md w-96 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 dark:bg-colorD1 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
+              <div className={`bg-color5 rounded-md lg:w-96 md:w-72 sm:w-64 w-64 flex flex-col gap-3 py-2 px-2 transition-colors duration-300 dark:bg-colorD1 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4' : ''}`}>
                 <div className="flex justify-between px-2">
-                  <EditTitle title={title} updateTitle={setTitle} />
+                  <EditTitle title={title} updateTitle={updateColumnTitle} />
                   <button type="button" className="text-xl text-black hover:text-color1 transition-colors duration-300 dark:text-colorD3 dark:hover:text-colorD4" title="Delete column" aria-label="Delete column" onClick={() => setIsColumnModal(true)}>
                     <AiOutlineClose />
                   </button>

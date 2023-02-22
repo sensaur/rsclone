@@ -94,7 +94,7 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
               </button>
             </div>
             <hr />
-            <form className="py-4">
+            <form className="py-4" onSubmit={(e) => { e.preventDefault(); }}>
               <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2 dark:text-colorD3">
                 Column title
                 <input

@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col dark:bg-colorD5">
       {!user ? <NavBarStart /> : <NavBarLogged />}
-      <div className="flex-auto px-10 py-4">
+      <div className="flex-auto lg:px-10 lg:py-4 sm:px-4 sm:py-2 p-3">
         <Routes>
           <Route path="/" element={<StartPageEmpty />} />
           <Route path="/login" element={<SignIn />} />
