@@ -41,7 +41,6 @@ const taskSlice = createSlice({
     [createTask.fulfilled.type]: (state, action: PayloadAction<ITaskCreateRes>) => {
       state.isLoading = false;
       state.error = '';
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       const response = action.payload;
       const prevArr = [...state.tasks[response.column_id]];
       state.tasks[response.column_id] = orderSortTasks([...prevArr, response]);
@@ -57,12 +56,14 @@ const taskSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       const {
-        id, taskTitle, order, columnId,
+        id, taskTitle, order, columnId, isDone, taskDescription,
       } = action.payload;
       state.tasks[columnId] = [...state.tasks[columnId]]
         .map((task) => {
           if (task.id === id) {
-            return { ...task, taskTitle, order };
+            return {
+              ...task, taskTitle, taskDescription, isDone, order,
+            };
           }
           return task;
         });

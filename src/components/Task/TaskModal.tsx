@@ -2,12 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import { ITask } from '../../types/IColumnTasks';
+import { INewTask, ITask } from '../../types/IColumnTasks';
 import TInputTextArea from '../../types/Modals';
 
 interface ITaskModalProps {
   onClose: (e: boolean) => void
-  setTask: (e: string) => void | null
+  setTask: (e: INewTask) => void | null
   editTask: (e: ITask) => void | null
   mode: boolean
   task: ITask | null
@@ -17,7 +17,7 @@ function TaskModal({
   setTask, onClose, editTask, mode, task,
 }: ITaskModalProps) {
   const [taskTitle, setTaskTitle] = useState(mode ? task!.taskTitle : '');
-  const [taskDescr, setTaskDescr] = useState(mode ? task!.taskTitle : '');
+  const [taskDescr, setTaskDescr] = useState(mode ? task!.taskDescription : '');
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescr, setErrorDescr] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
@@ -80,9 +80,15 @@ function TaskModal({
           id: task!.id,
           order: task!.order,
           taskTitle,
+          taskDescription: taskDescr,
+          isDone: false,
         });
       } else {
-        setTask(taskTitle!.trim());
+        setTask({
+          taskTitle,
+          taskDescription: taskDescr,
+          isDone: false,
+        });
       }
       handleClose();
       setTaskTitle('');

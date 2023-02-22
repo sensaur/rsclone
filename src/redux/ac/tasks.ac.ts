@@ -115,9 +115,7 @@ const setTasksOrder = createAsyncThunk(
         credentials: 'include',
         body: JSON.stringify(payload),
       });
-      console.log('1===', res);
       if (!res.ok) {
-        console.log('2===', res);
         throw new TypeError('Task reordering error');
       }
       return res.statusText;

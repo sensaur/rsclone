@@ -16,7 +16,7 @@ interface ITaskProps {
   removeTask: (e: string) => void
 }
 
-function Card({
+function Task({
   columnId, index, task, removeTask,
 }: ITaskProps) {
   const { id } = task;
@@ -29,6 +29,8 @@ function Card({
       order: editInfo.order,
       taskTitle: editInfo.taskTitle,
       columnId,
+      taskDescription: editInfo.taskDescription,
+      isDone: editInfo.isDone,
     }));
   };
 
@@ -40,7 +42,7 @@ function Card({
 
   return (
     <>
-      <Draggable draggableId={id.toString() + task.taskTitle} index={index}>
+      <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <div
             {...provided.draggableProps}
@@ -49,7 +51,7 @@ function Card({
             className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 dark:bg-colorD2 dark:hover:bg-colorD5 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4 dark:bg-colorD4' : ''}`}
           >
             <div className="flex justify-between w-full items-center">
-              <h3 className="font-semibold text-xl dark:text-colorD3 ">{task.taskTitle}</h3>
+              <h3 className="font-semibold text-xl dark:text-colorD3 break-words">{task.taskTitle}</h3>
               <div className="flex justify-between items-center">
                 <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
                   <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
@@ -59,7 +61,7 @@ function Card({
                 </button>
               </div>
             </div>
-            <p className="text-lg py-2 dark:text-colorD3">{task.taskTitle}</p>
+            <p className="text-lg py-2 dark:text-colorD3 break-words">{task.taskDescription}</p>
           </div>
         )}
       </Draggable>
@@ -79,4 +81,4 @@ function Card({
   );
 }
 
-export default Card;
+export default Task;

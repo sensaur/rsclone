@@ -14,9 +14,8 @@ export interface ITask {
   id: string
   taskTitle: string
   order: number
-  // description: string
-  // isDone: boolean
-  // columnId: number
+  taskDescription: string
+  isDone: boolean
 }
 
 export interface ITaskState {
@@ -35,18 +34,30 @@ export interface ITaskRes {
 export interface ITaskUpdate {
   id: string
   taskTitle: string
+  taskDescription: string
+  isDone: boolean
   columnId: string
   order: number
 }
 
+export interface INewTask {
+  taskTitle: string
+  taskDescription: string
+  isDone: boolean
+}
+
 export interface ITaskCreate {
   taskTitle: string
+  taskDescription: string
+  isDone: boolean
   order: number
   column_id: string
 }
 
 export interface ITaskCreateRes {
   taskTitle: string
+  taskDescription: string
+  isDone: boolean
   order: number
   column_id: string
   id: string

@@ -17,15 +17,10 @@ export function updateTasksInColumns(
   source: DraggableLocation,
   destination: DraggableLocation,
 ): ITasksReorderStore {
-  console.log('TASKS', tasks);
-  console.log('source', source);
-  console.log('destination', destination);
   const sourceColumnID = source.droppableId;
   const sourceColTasks = [...tasks[sourceColumnID]];
   const destinationColumnID = destination.droppableId;
   const destinationColTasks = [...tasks[destinationColumnID]];
-  console.log('sourceColTasks', sourceColTasks);
-  console.log('destinationColTasks', destinationColTasks);
 
   if (source.droppableId === destination.droppableId) {
     const tasksList = changeListOrder(sourceColTasks, source, destination);
