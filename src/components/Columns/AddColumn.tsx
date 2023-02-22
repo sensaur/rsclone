@@ -63,6 +63,9 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
     if (key === 'Escape') {
       close();
     }
+    if (key === 'Enter') {
+      handleAdd();
+    }
   };
 
   return (
@@ -94,7 +97,7 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
               </button>
             </div>
             <hr />
-            <form className="py-4" onSubmit={(e) => { e.preventDefault(); }}>
+            <form className="py-4" onSubmit={(e) => { e.preventDefault(); handleAdd(); }}>
               <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2 dark:text-colorD3">
                 Column title
                 <input
