@@ -1,5 +1,5 @@
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { IColumnTasks, ISwap } from '../types/IColumnTasks';
+import { ITask, ITasksReorderStore } from '../types/IColumnTasks';
 
 export function changeListOrder<T>(
   list: T[],
@@ -13,51 +13,75 @@ export function changeListOrder<T>(
 }
 
 export function updateTasksInColumns(
-  columns: IColumnTasks[],
+  tasks: { [n: string]: ITask[]; },
   source: DraggableLocation,
   destination: DraggableLocation,
-): ISwap[] {
-  const colsList = [...columns];
-  const sourceCol = colsList
-    .filter((col) => col.id === source.droppableId)[0];
-  const destinationCol = colsList
-    .filter((col) => col.id === destination.droppableId)[0];
-  const oldData = colsList
-    .filter(
-      (col) => (
-        (col.id) !== source.droppableId
-      && (col.id) !== destination.droppableId
-      ),
-    );
+): ITasksReorderStore {
+  console.log('TASKS', tasks);
+  console.log('source', source);
+  console.log('destination', destination);
+  const sourceColumnID = source.droppableId;
+  const sourceColTasks = [...tasks[sourceColumnID]];
+  const destinationColumnID = destination.droppableId;
+  const destinationColTasks = [...tasks[destinationColumnID]];
+  console.log('sourceColTasks', sourceColTasks);
+  console.log('destinationColTasks', destinationColTasks);
 
   if (source.droppableId === destination.droppableId) {
-    const tasksList = changeListOrder(sourceCol.Tasks, source, destination);
+    const tasksList = changeListOrder(sourceColTasks, source, destination);
     const reqParams = tasksList.map((task, index) => ({
       order: index,
-      id: task.id,
+      taskId: task.id,
+      columnId: sourceColumnID,
     }));
-    return reqParams;
+    const sortData = {
+      columnTasks: tasksList.map((task, index) => ({ ...task, order: index })),
+      columnId: sourceColumnID,
+    };
+    const undoData = [
+      {
+        columnTasks: tasks[sourceColumnID],
+        columnId: sourceColumnID,
+      },
+    ];
+    return { reqParams, sortData: [sortData], undoData };
   }
-  const sourceTasksList = [...sourceCol.Tasks];
-  const destinationTasksList = [...destinationCol.Tasks];
-  const [importedTask] = sourceTasksList.splice(source.index, 1);
-  destinationTasksList.splice(destination.index, 0, importedTask);
-  sourceCol.Tasks = sourceTasksList
+  const [importedTask] = sourceColTasks.splice(source.index, 1);
+  destinationColTasks.splice(destination.index, 0, importedTask);
+  const reqParamsSource = sourceColTasks
     .map((task, index) => ({
-      ...task,
-      id: task.id,
       order: index,
-      columnId: +source.droppableId,
-    }))
-    .sort((a, b) => a.order - b.order);
-  destinationCol.Tasks = destinationTasksList
+      taskId: task.id,
+      columnId: sourceColumnID,
+    }));
+  const reqParamsDest = destinationColTasks
     .map((task, index) => ({
-      ...task,
-      id: task.id,
       order: index,
-      columnId: +destination.droppableId,
-    }))
-    .sort((a, b) => a.order - b.order);
+      taskId: task.id,
+      columnId: destinationColumnID,
+    }));
+  const sortDataSource = {
+    columnTasks: sourceColTasks.map((task, index) => ({ ...task, order: index })),
+    columnId: sourceColumnID,
+  };
+  const sortDataDest = {
+    columnTasks: destinationColTasks.map((task, index) => ({ ...task, order: index })),
+    columnId: destinationColumnID,
+  };
+  const undoData = [
+    {
+      columnTasks: tasks[sourceColumnID],
+      columnId: sourceColumnID,
+    },
+    {
+      columnTasks: tasks[destinationColumnID],
+      columnId: destinationColumnID,
+    },
+  ];
 
-  return [...oldData, sourceCol, destinationCol];
+  return {
+    reqParams: [...reqParamsSource, ...reqParamsDest],
+    sortData: [sortDataSource, sortDataDest],
+    undoData,
+  };
 }

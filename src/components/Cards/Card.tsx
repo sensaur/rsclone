@@ -3,7 +3,7 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { IColumn } from '../../types/IColumnTasks';
-import { changeListOrder } from '../../utils/updateTasksInColumns';
+import { changeListOrder, updateTasksInColumns } from '../../utils/updateTasksInColumns';
 import AddColumn from '../Columns/AddColumn';
 import ColumnsWraper from '../Columns/ColumnsWraper';
 import Column from '../Columns/Column';
@@ -14,6 +14,8 @@ import {
 import { setColumns } from '../../redux/slices/columnSlice';
 import Toast from '../UI/toast';
 import { deleteUserSlice } from '../../redux/slices/userSlice';
+import { setTasks } from '../../redux/slices/taskSlice';
+import { setTasksOrder } from '../../redux/ac/tasks.ac';
 
 interface UserItemPageParams {
   [n: string]: string;
@@ -22,6 +24,7 @@ interface UserItemPageParams {
 function Card() {
   const { cards } = useAppSelector((state) => state.cardSlice);
   const { columns, error } = useAppSelector((state) => state.columnSlice);
+  const { tasks } = useAppSelector((state) => state.taskSlice);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams<UserItemPageParams>();
@@ -61,7 +64,16 @@ function Card() {
     const { destination, source, type } = result;
     if (!destination) return;
     if (type === 'tasks') {
-      // setColumns(updateTasksInColumns(columns.Columns, source, destination));
+      const { reqParams, sortData, undoData } = updateTasksInColumns(tasks, source, destination);
+      dispatch(setTasks(sortData));
+      await dispatch(setTasksOrder(reqParams));
+      if (error) {
+        dispatch(setTasks(undoData));
+        Toast.fire({
+          icon: 'error',
+          title: 'Tasks reorder error',
+        });
+      }
     }
     if (type === 'column') {
       const initialColumns = [...columns];

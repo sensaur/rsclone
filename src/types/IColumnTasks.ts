@@ -57,6 +57,23 @@ export interface ITaskDelete {
   col: string
 }
 
+export interface ITaskReorderParam {
+  order: number
+  taskId: string
+  columnId: string
+}
+
+export interface ITaskSortData {
+  columnTasks: ITask[]
+  columnId: string
+}
+
+export interface ITasksReorderStore {
+  reqParams: ITaskReorderParam[]
+  sortData: ITaskSortData[]
+  undoData: ITaskSortData[]
+}
+
 export interface IColumnTasks extends IColumn {
   Tasks: ITask[]
 }

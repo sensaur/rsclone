@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Toast from '../../components/UI/toast';
 import * as endPoints from '../../config/endPoints';
 import {
-  IColumnTasks, ITask, ITaskCreate, ITaskDelete, ITaskUpdate,
+  IColumnTasks, ITask, ITaskCreate, ITaskDelete, ITaskReorderParam, ITaskUpdate,
 } from '../../types/IColumnTasks';
 
 const getColumnTasks = createAsyncThunk(
@@ -103,6 +103,33 @@ const deleteTask = createAsyncThunk(
   },
 );
 
+const setTasksOrder = createAsyncThunk(
+  'columns/setOrder',
+  async (payload: ITaskReorderParam[], thunkAPI) => {
+    try {
+      const res = await fetch(endPoints.setTasksOrder(), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+      console.log('1===', res);
+      if (!res.ok) {
+        console.log('2===', res);
+        throw new TypeError('Task reordering error');
+      }
+      return res.statusText;
+    } catch (error) {
+      if (error instanceof TypeError) {
+        return thunkAPI.rejectWithValue(error?.message);
+      }
+      return thunkAPI.rejectWithValue('Some problem in setTasksOrder');
+    }
+  },
+);
+
 export {
-  deleteTask, updateTask, createTask, getColumnTasks,
+  deleteTask, updateTask, createTask, getColumnTasks, setTasksOrder,
 };

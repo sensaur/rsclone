@@ -86,6 +86,7 @@ function Column({
         {
           (provided, snapshot) => (
             <div
+              className="h-fit"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
