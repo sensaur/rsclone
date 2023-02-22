@@ -41,7 +41,6 @@ const taskSlice = createSlice({
     [createTask.fulfilled.type]: (state, action: PayloadAction<ITaskCreateRes>) => {
       state.isLoading = false;
       state.error = '';
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       const response = action.payload;
       const prevArr = [...state.tasks[response.column_id]];
       state.tasks[response.column_id] = orderSortTasks([...prevArr, response]);
