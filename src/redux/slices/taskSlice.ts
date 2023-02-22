@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  ITaskCreateRes, ITaskDelete, ITaskRes, ITaskState, ITaskUpdate,
+  ITaskCreateRes, ITaskDelete, ITaskRes, ITaskSortData, ITaskState, ITaskUpdate,
 } from '../../types/IColumnTasks';
 import { orderSortTasks } from '../../utils/orderSort';
 import {
-  createTask, deleteTask, getColumnTasks, updateTask,
+  createTask, deleteTask, getColumnTasks, setTasksOrder, updateTask,
 } from '../ac/tasks.ac';
 
 const initialState: ITaskState = {
@@ -16,7 +16,14 @@ const initialState: ITaskState = {
 const taskSlice = createSlice({
   name: 'task',
   initialState,
-  reducers: {},
+  reducers: {
+    setTasks: (state, action: { payload: ITaskSortData[], type: string }) => {
+      const sortData = action.payload;
+      sortData.forEach((data) => {
+        state.tasks[data.columnId] = data.columnTasks;
+      });
+    },
+  },
   extraReducers: {
     [getColumnTasks.fulfilled.type]: (state, action: PayloadAction<ITaskRes>) => {
       state.isLoading = false;
@@ -82,7 +89,19 @@ const taskSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [setTasksOrder.fulfilled.type]: (state) => {
+      state.isLoading = false;
+      state.error = '';
+    },
+    [setTasksOrder.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [setTasksOrder.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
 export default taskSlice.reducer;
+export const { setTasks } = taskSlice.actions;

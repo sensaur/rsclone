@@ -12,8 +12,10 @@ const columns = () => `${host}/api/v1/columns/`;
 
 const tasks = () => `${host}/api/v1/tasks/`;
 
-const setColumnsOrder = () => `${host}/api/v1/columns/setColumnsOrder`;
+const setColumnsOrder = () => `${columns()}setColumnsOrder`;
+
+const setTasksOrder = () => `${tasks()}setTasksOrder`;
 
 export {
-  signIn, signUp, editUser, cards, columns, tasks, setColumnsOrder,
+  signIn, signUp, editUser, cards, columns, tasks, setColumnsOrder, setTasksOrder,
 };
