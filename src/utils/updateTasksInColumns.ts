@@ -18,9 +18,11 @@ export function updateTasksInColumns(
   destination: DraggableLocation,
 ): ITasksReorderStore {
   const sourceColumnID = source.droppableId;
-  const sourceColTasks = [...tasks[sourceColumnID]];
+  const sourceColTasks = [...JSON
+    .parse(JSON.stringify(tasks[sourceColumnID]))] as ITask[];
   const destinationColumnID = destination.droppableId;
-  const destinationColTasks = [...tasks[destinationColumnID]];
+  const destinationColTasks = [...JSON
+    .parse(JSON.stringify(tasks[destinationColumnID]))] as ITask[];
 
   if (source.droppableId === destination.droppableId) {
     const tasksList = changeListOrder(sourceColTasks, source, destination);
