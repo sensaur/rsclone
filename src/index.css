@@ -17,10 +17,10 @@ code {
     @apply px-3 py-1 bg-color2 rounded-md hover:bg-color1 hover:text-color3 text-color1 duration-500 dark:text-colorD3 dark:bg-colorD2 dark:hover:bg-colorD4;
   }
   .menu-container {
-    @apply flex md:static md:translate-x-0 md:bg-color5 fixed duration-500 bg-color6 top-0 right-0 w-full h-full justify-end z-10 md:dark:bg-colorD1;
+    @apply flex lg:static lg:translate-x-0 lg:bg-color5 fixed duration-500 bg-color6 top-0 right-0 w-full h-full justify-end z-10 lg:dark:bg-colorD1;
   }
   .menu-content {
-    @apply flex md:gap-6 md:flex-row md:bg-color5 md:px-0 md:py-0 gap-3 flex-col bg-color3 px-5 py-5 top-1 right-1 rounded-md dark:bg-colorD1;
+    @apply flex lg:gap-6 lg:flex-row lg:bg-color5 lg:px-0 lg:py-0 gap-3 flex-col bg-color3 px-5 py-5 top-1 right-1 rounded-md dark:bg-colorD1;
   }
 }
 .swiper-button-prev::after,
