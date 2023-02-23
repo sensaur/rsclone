@@ -92,7 +92,7 @@ function CardModal({ mode, card, onClose }: ICardModal) {
     >
       <div
         ref={modalContent}
-        className="w-6/12 flex flex-col rounded-lg z-101 relative shadow-md bg-white px-6 py-3 -translate-y-10 duration-300 transition-transform dark:bg-colorD1"
+        className="w-10/12  md:w-6/12 flex flex-col rounded-lg z-101 relative shadow-md bg-white px-6 py-3 -translate-y-10 duration-300 transition-transform dark:bg-colorD1"
       >
         <div className="flex flex-col-reverse justify-between items-center  pb-4">
           <h3 className="text-3xl font-semibold self-start dark:text-colorD3">{mode === 'edit' ? 'Edit board' : 'Add a new board'}</h3>

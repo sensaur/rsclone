@@ -8,7 +8,7 @@ function NavBarStart() {
       <nav>
         <div className="flex justify-between">
           <Link className="flex items-center" to="/">
-            <img id="logoNavBar" src={logo2} alt="logo" />
+            <img className="md:w-14 w-7" id="logoNavBar" src={logo2} alt="logo" />
             <button type="button">
               <span />
             </button>
