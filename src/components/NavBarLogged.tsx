@@ -8,6 +8,7 @@ import Dark from './DarkMode/darkModeBtn';
 export function disActivateBurger() {
   const burgerMenu = document.getElementById('navbarNavAltMarkup') as HTMLButtonElement;
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
+  document.body.classList.remove('overflow-hidden');
   burgerMenu.classList.remove('menu-active');
   burgerBtn.classList.remove('_active');
 }
@@ -29,7 +30,7 @@ function NavBarLogged() {
   return (
     <nav className="bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1 dark:text-colorD3">
       <div className="flex justify-between items-center">
-        <img id="logoNavBar" src={logo2} alt="" />
+        <img className="md:w-14 w-7" id="logoNavBar" src={logo2} alt="" />
         <button
           className="lg:hidden menu-icon before:dark:bg-colorD3 after:dark:bg-colorD3"
           type="button"
