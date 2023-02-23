@@ -9,7 +9,7 @@ export function disActivateBurger() {
   const burgerMenu = document.getElementById('navbarNavAltMarkup') as HTMLButtonElement;
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
   burgerMenu.classList.remove('menu-active');
-  burgerBtn.classList.toggle('_active');
+  burgerBtn.classList.remove('_active');
 }
 function activateBurger() {
   const burgerBtn = document.getElementById('burger') as HTMLButtonElement;
@@ -28,25 +28,25 @@ function NavBarLogged() {
 
   return (
     <nav className="bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1 dark:text-colorD3">
-      <div className="flex justify-between items-center" >
+      <div className="flex justify-between items-center">
         <img id="logoNavBar" src={logo2} alt="" />
         <button
-          className="md:hidden menu-icon before:dark:bg-colorD3 after:dark:bg-colorD3"
+          className="lg:hidden menu-icon before:dark:bg-colorD3 after:dark:bg-colorD3"
           type="button"
           id="burger"
           onClick={() => activateBurger()}
         >
           <span className="dark:bg-colorD3 " />
         </button>
-        <div className="menu-container menu md:translate-x-0" id="navbarNavAltMarkup" onClick={() => disActivateBurger()}>
-          <div className="menu-content" onClick={(event) => event.stopPropagation()}>
+        <div className="menu-container menu lg:translate-x-0" id="navbarNavAltMarkup" onClick={() => disActivateBurger()} onKeyDown={() => disActivateBurger()} role="presentation">
+          <div className="menu-content" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()} role="presentation">
             <div className="flex items-center">
               <Link className="btn" to="/boards" onClick={() => disActivateBurger()}>
                 All boards
               </Link>
             </div>
             <div className="flex items-center">
-              <Link className="btn" aria-current="page" to="/" onClick={() => disActivateBurger()}>Create board</Link>
+              <Link className="btn" aria-current="page" to="/" onClick={() => disActivateBurger()}>Main page</Link>
             </div>
             <div className="flex items-center">
               <Link className="btn" aria-current="page" to="/editprofile" onClick={() => disActivateBurger()}>Edit profile</Link>
