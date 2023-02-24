@@ -17,8 +17,6 @@ function ColumnsWraper(props: Tprops) {
             gap-4
             overflow-x-scroll
             scrollbar-thin
-            scrollbar-thumb-rounded-md
-            scrollbar-track-rounded-md
           "
           {...provided.droppableProps}
           ref={provided.innerRef}
