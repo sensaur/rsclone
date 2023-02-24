@@ -42,15 +42,15 @@ function NavBarLogged() {
         <div className="menu-container menu lg:translate-x-0" id="navbarNavAltMarkup" onClick={() => disActivateBurger()} onKeyDown={() => disActivateBurger()} role="presentation">
           <div className="menu-content" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()} role="presentation">
             <div className="flex items-center">
-              <Link className="btn" to="/boards" onClick={() => disActivateBurger()}>
+              <Link className="btn boards" to="/boards" onClick={() => disActivateBurger()}>
                 All boards
               </Link>
             </div>
             <div className="flex items-center">
-              <Link className="btn" aria-current="page" to="/" onClick={() => disActivateBurger()}>Main page</Link>
+              <Link className="btn main" aria-current="page" to="/" onClick={() => disActivateBurger()}>Main page</Link>
             </div>
             <div className="flex items-center">
-              <Link className="btn" aria-current="page" to="/editprofile" onClick={() => disActivateBurger()}>Edit profile</Link>
+              <Link className="btn edit" aria-current="page" to="/editprofile" onClick={() => disActivateBurger()}>Edit profile</Link>
             </div>
             <div className="flex items-center md:text-base text-xs">
               Logged as
@@ -60,7 +60,7 @@ function NavBarLogged() {
               <img id="avatar" src={ava} alt="" />
             </div>
             <div className="flex items-center">
-              <Link className="btn" to="logout" onClick={() => disActivateBurger()}>Sing out</Link>
+              <Link className="btn logout" to="logout" onClick={() => disActivateBurger()}>Sing out</Link>
             </div>
             <Dark />
           </div>

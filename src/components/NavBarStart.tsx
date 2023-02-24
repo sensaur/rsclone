@@ -15,10 +15,10 @@ function NavBarStart() {
           </Link>
           <div className="flex gap-7" id="navbarNavAltMarkup">
             <div className="flex items-center">
-              <Link className="btn" to="login">Sing in</Link>
+              <Link className="btn" id="login" to="login">Sing in</Link>
             </div>
             <div className="flex items-center">
-              <Link className="btn" to="signup">Sing up</Link>
+              <Link className="btn" id="signup" to="signup">Sing up</Link>
             </div>
             <Dark />
           </div>

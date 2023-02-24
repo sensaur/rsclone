@@ -9,11 +9,13 @@ const userSlice = createSlice({
   initialState: getInitState() as IState,
   reducers: {
     setUserSlice: (state, action) => ({ ...state, ...action.payload }),
+    removeUserError: (state) => { state.error = ''; },
     deleteUserSlice: (state) => {
       state.isLoading = false;
       state.error = '';
       state.user = null;
     },
+
   },
   extraReducers: {
     [signIn.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
@@ -43,5 +45,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUserSlice, deleteUserSlice } = userSlice.actions;
+export const { setUserSlice, deleteUserSlice, removeUserError } = userSlice.actions;
 export default userSlice.reducer;
