@@ -15,9 +15,7 @@ function ColumnsWraper(props: Tprops) {
           className="
             flex
             gap-4
-            overflow-x-scroll
-            scrollbar-thin
-          "
+            overflow-x-auto scrollbar-thin"
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
