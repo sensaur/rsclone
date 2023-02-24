@@ -15,6 +15,7 @@ function AllCards() {
   const navigate = useNavigate();
   const { cards, error, isLoading } = useAppSelector((store) => store.cardSlice);
   useEffect(() => {
+    document.title = 'Boards';
     dispatch(getAllCards());
   }, []);
   if (error) {

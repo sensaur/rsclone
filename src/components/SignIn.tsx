@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { signIn } from '../redux/ac/user.ac';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { removeUserError } from '../redux/slices/userSlice';
 
 function SignIn() {
   const dispatch = useAppDispatch();
-  const { error } = useAppSelector((state) => state.userSlice);
+  const { error, isLoading, user } = useAppSelector((state) => state.userSlice);
 
   const navigate = useNavigate();
   const initialState = {
@@ -18,28 +19,28 @@ function SignIn() {
   const [toSend, setToSend] = useState(initialState);
   useEffect(() => {
     document.title = 'Sign in';
-    // eslint-disable-next-line
   }, []);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setToSend({ ...toSend, [e.target.name]: e.target.value.trim() });
   };
+  if (error) {
+    Swal.fire(error);
+    dispatch(removeUserError());
+  }
+  if (!isLoading && user) {
+    navigate('/boards');
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (Object.entries(toSend).length) {
-      await dispatch(signIn(toSend));
-      if (error) {
-        Swal.fire(error || 'Wrong login / password');
-      } else {
-        navigate('/boards');
-      }
+      dispatch(signIn(toSend));
     }
   };
 
   return (
     <div className="w-full sm:w-1/2 py-4 m-auto">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
+      <form id="singIn" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="email">
@@ -75,6 +76,7 @@ function SignIn() {
         </div>
         <div className="flex items-center justify-between">
           <button
+            id="confirmLogin"
             className="btn btn-primary"
             type="submit"
           >
