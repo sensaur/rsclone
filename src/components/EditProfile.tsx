@@ -2,8 +2,10 @@ import {
   ChangeEvent, FormEvent, useEffect, useState,
 } from 'react';
 import Swal from 'sweetalert2';
-import { editUser } from '../redux/ac/user.ac';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { editUser } from '../config/endPoints';
+// import { editUser } from '../redux/ac/user.ac';
+// import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { useAppSelector } from '../hooks/redux';
 
 function EditProfile() {
   const formData = new FormData();
@@ -12,34 +14,53 @@ function EditProfile() {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     if (target && file) {
-      // console.log(formData);
       formData.append('file', file);
+      console.log(formData);
     }
   };
 
-  const dispatch = useAppDispatch();
-  const { error, user } = useAppSelector((state) => state.userSlice);
-  console.log(user);
+  // const dispatch = useAppDispatch();
+  const {
+    // error,
+    user,
+  } = useAppSelector((state) => state.userSlice);
+  // console.log(useAppDispatch);
   const initialState = {
     userName: user?.userName,
     email: user?.email,
     id: user?.id,
+    avatar: user?.avatar,
   };
   const [toSend, setToSend] = useState(initialState);
-  console.log(toSend);
   useEffect(() => {
     document.title = 'Edit profile';
   }, []);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (Object.entries(toSend).length) {
-      await dispatch(editUser(toSend));
-      if (error) {
-        await Swal.fire(error || 'Something went wrong');
-      } else {
-        console.log(error);
-      }
-    }
+    formData.append('userName', toSend.userName!);
+    formData.append('email', toSend.email!);
+    formData.append('id', String(toSend.id!));
+    fetch(editUser() + toSend.id, {
+      method: 'PATCH',
+      credentials: 'include',
+      body: formData,
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          Swal.fire('Updated');
+          formData.delete('userName');
+          formData.delete('email');
+          formData.delete('id');
+        }
+      });
+    // if (Object.entries(toSend).length) {
+    //   await dispatch(editUser(toSend));
+    //   if (error) {
+    //     await Swal.fire(error || 'Something went wrong');
+    //   } else {
+    //     console.log(error);
+    //   }
+    // }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,10 +72,16 @@ function EditProfile() {
 
   return (
     <div className="w-full sm:w-1/2 py-4 m-auto ">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1" onSubmit={handleSubmit}>
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-colorD1"
+        onSubmit={handleSubmit}
+      >
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="userName">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3"
+            htmlFor="userName"
+          >
             User name
           </label>
           <input
@@ -70,7 +97,10 @@ function EditProfile() {
         </div>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="email">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3"
+            htmlFor="email"
+          >
             Email
           </label>
           <input
@@ -85,7 +115,10 @@ function EditProfile() {
           />
         </div>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="avatar">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3"
+          htmlFor="avatar"
+        >
           Avatar
         </label>
         <input

@@ -2,6 +2,7 @@ export interface IUser {
   id: number
   userName: string
   email: string
+  avatar: string
 }
 
 export interface IUserInfo {
@@ -10,7 +11,8 @@ export interface IUserInfo {
 }
 
 export interface IUserInfoUpdate {
-  id: number | undefined
-  userName: string | undefined
-  email: string | undefined
+  id?: string | Blob
+  userName?: string | Blob
+  email?: string | Blob
+  avatar?: string | Blob
 }
