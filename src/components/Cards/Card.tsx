@@ -119,15 +119,21 @@ function Card() {
         <AddColumn addColumn={addColumn} />
       </div>
       <ColumnsWraper>
-        {isLoading && renderColumns.length === 0
-          ? (
+        {(isLoading && renderColumns.length === 0)
+          && (
             <>
               <Skeleton className="w-96 h-20" />
               <Skeleton className="w-96 h-20" />
             </>
-          )
-          : renderColumns}
-
+          )}
+        {(!isLoading && renderColumns.length === 0)
+          && (
+            <div className="w-full flex flex-col items-center justify-center p-5">
+              <h2 className="text-3xl dark:text-colorD3">There are no columns and tasks</h2>
+              <p className="text-3xl dark:text-colorD3">But you can create as many as you like!</p>
+            </div>
+          )}
+        {renderColumns.length > 0 && renderColumns}
       </ColumnsWraper>
     </DragDropContext>
   );

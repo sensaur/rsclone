@@ -100,13 +100,12 @@ const deleteCard = createAsyncThunk(
         credentials: 'include',
       });
       if (res.ok) {
-        const result = await res.json();
-        await Swal.fire(result);
+        await Swal.fire('Board deleted');
         return payload;
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при удалении');
+      return thunkAPI.rejectWithValue('Oops! Board delete error');
     }
   },
 );

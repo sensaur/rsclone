@@ -37,7 +37,7 @@ function EditTitle({ title, updateTitle }: IEditTitle) {
   if (isEdit) {
     return (
       <input
-        className="border-none bg-color2 text-2xl font-semibold rounded-md outline-none transition-colors duration-300 dark:bg-colorD2"
+        className="border-none bg-color2 text-2xl font-semibold w-9/12 rounded-md outline-none transition-colors duration-300 dark:bg-colorD2"
         ref={inputRef}
         onBlur={save}
         onKeyDown={onKeyDown}

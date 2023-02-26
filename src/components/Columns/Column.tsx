@@ -5,13 +5,15 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { updateColumn } from '../../redux/ac/column.ac';
-import { IColumn, INewTask, ITaskCreate } from '../../types/IColumnTasks';
+import {
+  IColumn, INewTask, ITaskCreate, ITaskUpdate,
+} from '../../types/IColumnTasks';
 import Task from '../Task/Task';
 import TaskModal from '../Task/TaskModal';
 import Confirm from '../Modals/Confirm';
 import EditTitle from './EditTitle';
 import {
-  createTask, deleteTask, getColumnTasks,
+  createTask, deleteTask, getColumnTasks, updateTask,
 } from '../../redux/ac/tasks.ac';
 
 interface IColumnProps {
@@ -28,7 +30,9 @@ function Column({
   const { tasks } = useAppSelector((store) => store.taskSlice);
   const [title, setTitle] = useState(column.columnTitle);
   const [isColumnModal, setIsColumnModal] = useState(false);
+  const [curTaskInfo, setCurTaskInfo] = useState<ITaskUpdate | null>(null);
   const [isAddTaskModal, setIsAddTaskModal] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
   useEffect(() => {
     dispatch(getColumnTasks(column.id));
   }, []);
@@ -47,6 +51,8 @@ function Column({
         task={task}
         columnId={column.id}
         removeTask={removeTask}
+        setCurTaskInfo={setCurTaskInfo}
+        setIsEditModal={setIsEditModal}
       />
     )) : null;
 
@@ -68,6 +74,12 @@ function Column({
       isDone: newTaskInfo.isDone,
     };
     dispatch(createTask(newTask));
+  };
+
+  const editTask = (editInfo: ITaskUpdate) => {
+    dispatch(updateTask({
+      ...editInfo,
+    }));
   };
 
   const handleClose = () => setIsColumnModal(false);
@@ -126,6 +138,16 @@ function Column({
             onClose={setIsAddTaskModal}
             setTask={addTask}
             editTask={() => { }}
+          />
+        )}
+      {isEditModal
+        && (
+          <TaskModal
+            onClose={setIsEditModal}
+            mode
+            task={curTaskInfo}
+            editTask={editTask}
+            setTask={() => { }}
           />
         )}
     </>

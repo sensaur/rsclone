@@ -13,9 +13,9 @@ export interface ISwap {
 export interface ITask {
   id: string
   taskTitle: string
-  order: number
   taskDescription: string
   isDone: boolean
+  order: number
 }
 
 export interface ITaskState {
@@ -36,8 +36,8 @@ export interface ITaskUpdate {
   taskTitle: string
   taskDescription: string
   isDone: boolean
-  columnId: string
   order: number
+  columnId: string
 }
 
 export interface INewTask {

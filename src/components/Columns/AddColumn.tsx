@@ -80,7 +80,7 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
       {modalShow ? (
         <div
           ref={modal}
-          className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300 dark:bg-colorD5 dark:bg-opacity-80"
+          className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-30 bg-gray-400 bg-opacity-80 opacity-0 transition-opacity duration-300 dark:bg-colorD5 dark:bg-opacity-80"
         >
           <div
             ref={modalContent}
@@ -98,7 +98,7 @@ function AddColumn({ addColumn }: IAddcolumnProps) {
             </div>
             <hr />
             <form className="py-4" onSubmit={(e) => { e.preventDefault(); handleAdd(); }}>
-              <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-xs font-semibold mb-2 dark:text-colorD3">
+              <label htmlFor="column-name" className="block track-wide uppercase text-gray-700 text-sm font-semibold mb-2 dark:text-colorD3">
                 Column title
                 <input
                   type="text"
