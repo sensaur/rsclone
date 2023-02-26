@@ -1,37 +1,42 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import { MdDone } from 'react-icons/md';
 import { useAppDispatch } from '../../hooks/redux';
 import { updateTask } from '../../redux/ac/tasks.ac';
-import { ITask } from '../../types/IColumnTasks';
+import { ITask, ITaskUpdate } from '../../types/IColumnTasks';
 import Confirm from '../Modals/Confirm';
-import TaskModal from './TaskModal';
 
 interface ITaskProps {
   columnId: string
   index: number
   task: ITask
   removeTask: (e: string) => void
+  setCurTaskInfo: (e: ITaskUpdate) => void
+  setIsEditModal: (e: boolean) => void
 }
 
 function Task({
-  columnId, index, task, removeTask,
+  columnId, index, task, removeTask, setCurTaskInfo, setIsEditModal,
 }: ITaskProps) {
   const { id } = task;
   const [isTaskModal, setIsTaskModal] = useState(false);
-  const [isEditModal, setIsEditModal] = useState(false);
   const dispatch = useAppDispatch();
-  const editTask = (editInfo: ITask) => {
+  const setTaskDone = () => {
     dispatch(updateTask({
-      id: editInfo.id,
-      order: editInfo.order,
-      taskTitle: editInfo.taskTitle,
+      ...task,
+      isDone: !task.isDone,
       columnId,
-      taskDescription: editInfo.taskDescription,
-      isDone: editInfo.isDone,
     }));
+  };
+
+  const handleEdit = () => {
+    setCurTaskInfo({
+      ...task,
+      columnId,
+    });
+    setIsEditModal(true);
   };
 
   const handleConfirm = () => {
@@ -50,33 +55,27 @@ function Task({
             ref={provided.innerRef}
             className={`py-3 px-3 bg-color3 rounded-md mt-4 hover:bg-color4 transition-colors duration-300 dark:bg-colorD2 dark:hover:bg-colorD5 ${snapshot.isDragging ? 'shadow-xl shadow-gray-500 bg-color4 dark:bg-colorD4' : ''}`}
           >
-            <div className="flex justify-between w-full items-center">
-              <h3 className="font-semibold text-xl dark:text-colorD3 break-words">{task.taskTitle}</h3>
-              <div className="flex justify-between items-center">
-                <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => setIsEditModal(true)}>
-                  <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
-                </button>
-                <button type="button" title="delete card" aria-label="Delete card" onClick={() => setIsTaskModal(true)}>
-                  <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
-                </button>
-              </div>
+            <div className="flex justify-between w-full lg:items-center">
+              <h3 className={`w-full font-semibold text-xl dark:text-colorD3 break-words text-ellipsis ${task.isDone ? 'line-through' : ''}`}>{task.taskTitle}</h3>
+
             </div>
-            <p className="text-lg py-2 dark:text-colorD3 break-words">{task.taskDescription}</p>
+            <p className={`text-lg py-2 dark:text-colorD3 break-words ${task.isDone ? 'hidden' : ''}`}>{task.taskDescription}</p>
+            <div className="flex justify-between items-center">
+              <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => handleEdit()}>
+                <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
+              </button>
+              <button type="button" title="delete card" aria-label="Delete card" onClick={() => setTaskDone()}>
+                <MdDone className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
+              </button>
+              <button className="mr-3" type="button" title="delete card" aria-label="Delete card" onClick={() => setIsTaskModal(true)}>
+                <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
+              </button>
+            </div>
           </div>
         )}
       </Draggable>
       {isTaskModal
-        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="card" title={task.taskTitle} />)}
-      {isEditModal
-        && (
-          <TaskModal
-            onClose={setIsEditModal}
-            mode
-            task={task}
-            editTask={editTask}
-            setTask={() => { }}
-          />
-        )}
+        && (<Confirm onClose={handleClose} onConfirm={handleConfirm} text="" name="task" title={task.taskTitle} />)}
     </>
   );
 }

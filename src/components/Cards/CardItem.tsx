@@ -23,8 +23,6 @@ function CardItem({ card }: IBoardItemProps) {
     dispatch(deleteCard(card));
   };
   return (
-    // <div className={`p-5 rounded border border-color1 cursor-pointer hover
-    // :bg-color1 hover:text-white transition-colors duration-500 ${board.color}`}>
     <div id={card.id} className={`rounded border h-52 border-color1 dark:border-colorD2  flex flex-col justify-between group cursor-pointer overflow-hidden ${card.color}`}>
       <h2 className="p-5 text-2xl w-full h-14 text-ellipsis dark:text-colorD3 break-words">{card.cardTitle}</h2>
       <div className="flex px-5 pt-8 pb-8 justify-between items-center translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all group-hover:bg-color1 duration-500 dark:group-hover:bg-colorD2">
@@ -61,7 +59,7 @@ function CardItem({ card }: IBoardItemProps) {
       {isEditeModal
         && (<СardModal card={card} onClose={() => setIsEditModal(false)} mode="edit" />)}
       {isDeleteModal
-        && (<Confirm onClose={() => setIsEditModal(false)} onConfirm={handleConfirm} text="" name="board" title={card.cardTitle} />)}
+        && (<Confirm onClose={() => setIsDeleteModal(false)} onConfirm={handleConfirm} text="" name="board" title={card.cardTitle} />)}
     </div>
   );
 }

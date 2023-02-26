@@ -55,12 +55,12 @@ const createColumn = createAsyncThunk(
       });
       if (res.ok) {
         const result = await res.json();
-        await Swal.fire('The board was successfuly created!');
+        await Swal.fire('The column was successfuly created!');
         return result;
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при созадании борды');
+      return thunkAPI.rejectWithValue('Column create error');
     }
   },
 );
@@ -82,7 +82,7 @@ const updateColumn = createAsyncThunk(
       }
       return payload;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при редактировании');
+      return thunkAPI.rejectWithValue('Edit error');
     }
   },
 );
@@ -102,7 +102,7 @@ const deleteColumn = createAsyncThunk(
       }
       return await Swal.fire(res.statusText);
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так при удалении');
+      return thunkAPI.rejectWithValue('Delete error');
     }
   },
 );
