@@ -57,7 +57,7 @@ function NavBarLogged() {
               {` ${user?.userName}`}
             </div>
             <div>
-              <img id="avatar" src={user?.avatar || ava} alt="" />
+              <img id="avatar" src={user?.avatar || ava} alt="user avatar" />
             </div>
             <div className="flex items-center">
               <Link className="btn logout" to="logout" onClick={() => disActivateBurger()}>Sing out</Link>
