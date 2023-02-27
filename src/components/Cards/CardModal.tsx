@@ -9,7 +9,6 @@ interface ICardModal {
   mode: 'create' | 'edit'
   onClose: () => void
   card: ICardAPI | null
-  // onSubmit: () => void
 }
 
 function CardModal({ mode, card, onClose }: ICardModal) {
@@ -19,7 +18,6 @@ function CardModal({ mode, card, onClose }: ICardModal) {
   const [errorTitle, setErrorTitle] = useState('');
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
-  // const { cards, setcards } = useGlobalContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (event: TInputTextArea) => {

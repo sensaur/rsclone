@@ -37,6 +37,7 @@
       }
     ],
     "react/react-in-jsx-scope": 0,
+    "react/prop-types": 0,
     "quotes": 0,
     "semi": 0,
     "no-console": 0,

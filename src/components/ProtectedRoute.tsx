@@ -1,14 +1,15 @@
 import {
   Navigate,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-// eslint-disable-next-line react/prop-types
-// @ts-ignore
-// eslint-disable-next-line react/prop-types
-function ProtectedRoute({ children }) {
-  // @ts-ignore
-  const { user } = useSelector((state) => state.userSlice);
+import { useAppSelector } from '../hooks/redux';
+
+export type ProtectedRouteProps = {
+  children: JSX.Element;
+};
+
+function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { user } = useAppSelector((state) => state.userSlice);
   if (user?.userName === null || !user) {
     return <Navigate to="/" replace />;
   }

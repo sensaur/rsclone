@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo2 from '../images/add-file.svg';
 import ava from '../images/avaDefault.jpg';
@@ -22,11 +21,6 @@ function activateBurger() {
 
 function NavBarLogged() {
   const { user } = useAppSelector((state) => state.userSlice);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <nav className="bg-color5 md:px-9 px-2 py-3 dark:bg-colorD1 dark:text-colorD3">
       <div className="flex justify-between items-center">

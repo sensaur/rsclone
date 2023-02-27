@@ -30,7 +30,6 @@ function SignUp() {
         if (error) {
           await Swal.fire(error || 'Wrong login / password');
         } else {
-          // Swal.fire('Пользователь создан');
           navigate('/login');
         }
       }

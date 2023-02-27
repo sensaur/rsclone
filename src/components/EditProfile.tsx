@@ -13,7 +13,6 @@ function EditProfile() {
     const file: File = (target.files as FileList)[0];
     if (target && file) {
       formData.append('file', file);
-      console.log(formData);
     }
   };
 

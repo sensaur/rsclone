@@ -2,7 +2,6 @@ export interface IColumn {
   id: string
   columnTitle: string
   order: number
-  // tasks: ITask[]
 }
 
 export interface ISwap {

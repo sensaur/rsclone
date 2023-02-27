@@ -32,8 +32,6 @@ function StartPageEmpty() {
           slidesPerView={2}
           navigation
           loop
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
         >
           <SwiperSlide>
             <div className="flex flex-col text-center">

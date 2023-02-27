@@ -18,7 +18,6 @@ export interface ICreateCard {
   cardTitle: string,
   color: string,
   order: number,
-  // columns: []
 }
 
 export interface ICardAPI {
