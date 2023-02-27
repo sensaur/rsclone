@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
+import Toast from '../../components/UI/toast';
 import * as endPoints from '../../config/endPoints';
-import { IUserInfo, IUserInfoUpdate } from '../../types/IUser';
+import { IUserInfo } from '../../types/IUser';
 
 const signIn = createAsyncThunk(
   'user/fetchAll',
@@ -48,24 +49,27 @@ const signUp = createAsyncThunk(
 
 const editUser = createAsyncThunk(
   'user/editUser',
-  async (payload: IUserInfoUpdate, thunkAPI) => {
+  async (payload: FormData, thunkAPI) => {
     try {
-      const res = await fetch(endPoints.editUser() + payload.id, {
+      const res = await fetch(endPoints.editUser() + payload.get('id'), {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         credentials: 'include',
-        body: JSON.stringify(payload),
+        body: payload,
       });
       if (res.ok) {
         const result = await res.json();
-        await Swal.fire(result);
-        return payload;
+        Toast.fire({
+          icon: 'success',
+          title: 'Successfully!',
+        });
+        return result;
       }
-      return await Swal.fire(res.statusText);
+      throw new TypeError('User update error');
     } catch (error) {
-      return thunkAPI.rejectWithValue('Что-то пошло не так');
+      if (error instanceof TypeError) {
+        return thunkAPI.rejectWithValue(error?.message);
+      }
+      return thunkAPI.rejectWithValue('Some problem in editUser');
     }
   },
 );
