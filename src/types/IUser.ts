@@ -10,6 +10,13 @@ export interface IUserInfo {
   password: string
 }
 
+export interface IUserCreate {
+  userName: string
+  email: string
+  password: string
+  password2: string
+}
+
 export interface IUserInfoUpdate {
   id?: string | Blob
   userName?: string | Blob

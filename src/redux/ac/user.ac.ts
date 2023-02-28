@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import Toast from '../../components/UI/toast';
 import * as endPoints from '../../config/endPoints';
-import { IUserInfo } from '../../types/IUser';
+import { IUserCreate, IUserInfo } from '../../types/IUser';
 
 const signIn = createAsyncThunk(
   'user/fetchAll',
@@ -25,7 +25,7 @@ const signIn = createAsyncThunk(
 
 const signUp = createAsyncThunk(
   'user/createNew',
-  async (payload: IUserInfo, thunkAPI) => {
+  async (payload: IUserCreate, thunkAPI) => {
     try {
       const res = await fetch(endPoints.signUp(), {
         method: 'POST',

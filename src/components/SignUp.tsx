@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ChangeEvent, FormEvent, useEffect, useState,
 } from 'react';
@@ -7,40 +8,67 @@ import { signUp } from '../redux/ac/user.ac';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 function SignUp() {
+  const [email, setEmail] = useState<string>('');
+  const [passwordOne, setPasswordOne] = useState<string>('');
+  const [passwordTwo, setPasswordTwo] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [isValidUserName, setIsValidUserName] = useState<boolean>(false);
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
+  const [isValidPasswordOne, setIsValidPasswordOne] = useState<boolean>(false);
+  const [isValidPasswordTwo, setIsValidPasswordTwo] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
-  const { error } = useAppSelector((state) => state.userSlice);
-  const initialState = {
-    userName: '',
-    email: '',
-    password: '',
-    password2: '',
-  };
-  const [toSend, setToSend] = useState(initialState);
   const navigate = useNavigate();
+  const { error } = useAppSelector((state) => state.userSlice);
   useEffect(() => {
     document.title = 'Sign Up';
   }, []);
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (Object.entries(toSend).length) {
-      if (toSend.password !== toSend.password2) {
-        await Swal.fire('Passwords are not equal');
-      } else {
-        await dispatch(signUp(toSend));
-        if (error) {
-          await Swal.fire(error || 'Wrong login / password');
-        } else {
-          navigate('/login');
-        }
-      }
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserName(e.target.value.trim());
+    setIsValidUserName(e.target.value.trim().length > 2);
+  };
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'passwordOne') {
+      setPasswordOne(e.target.value.trim());
+      setIsValidPasswordOne(e.target.value.trim().length > 0);
+    } else {
+      setPasswordTwo(e.target.value.trim());
+      setIsValidPasswordTwo(e.target.value.trim().length > 0);
     }
   };
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setEmail(value);
+    setIsValidEmail(value !== ''
+      // eslint-disable-next-line no-useless-escape
+      && /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i.test(value));
+  };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setToSend({
-      ...toSend,
-      [e.target.name]: e.target.value,
-    });
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (passwordOne !== passwordTwo) {
+      await Swal.fire('Passwords are not equal');
+    } else {
+      console.log(userName, email, passwordOne, passwordTwo);
+      console.log({
+        userName,
+        email,
+        password: passwordOne,
+        password2: passwordTwo,
+      });
+      await dispatch(signUp({
+        userName,
+        email,
+        password: passwordOne,
+        password2: passwordTwo,
+      }));
+      if (error) {
+        await Swal.fire(error || 'Wrong login / password');
+      } else {
+        navigate('/login');
+      }
+    }
   };
 
   return (
@@ -52,15 +80,16 @@ function SignUp() {
             User name
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2"
+            className={`shadow appearance-none border ${isValidUserName ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2`}
             id="userName"
             name="userName"
             type="text"
             placeholder="Name"
             autoComplete="userName"
-            onChange={handleChange}
-            value={toSend.userName}
+            onChange={handleNameChange}
+            value={userName}
           />
+          {!isValidUserName && <p className="text-red-500 text-xs italic">Please enter User name.</p>}
         </div>
         <div className="mb-4">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -68,15 +97,16 @@ function SignUp() {
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2"
+            className={`shadow appearance-none border ${isValidUserName ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2`}
             id="email"
             name="email"
             type="text"
             placeholder="Email"
             autoComplete="email"
-            onChange={handleChange}
-            value={toSend.email}
+            onChange={handleEmailChange}
+            value={email}
           />
+          {!isValidUserName && <p className="text-red-500 text-xs italic">Please enter an email.</p>}
         </div>
         <div className="mb-6">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -84,44 +114,50 @@ function SignUp() {
             Password
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2"
-            id="password"
-            name="password"
+            className={`shadow appearance-none border ${isValidUserName ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2`}
+            id="passwordOne"
+            name="passwordOne"
             type="password"
             placeholder="******************"
             autoComplete="new-password"
-            onChange={handleChange}
-            value={toSend.password}
+            onChange={handlePasswordChange}
+            value={passwordOne}
           />
+          {!isValidUserName && <p className="text-red-500 text-xs italic">Please enter a password</p>}
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-colorD3" htmlFor="password2">
             Password one more time
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2"
-            id="password2"
-            name="password2"
+            className={`shadow appearance-none border ${isValidUserName ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-colorD3 dark:bg-colorD2`}
+            id="passwordTwo"
+            name="passwordTwo"
             type="password"
             placeholder="******************"
             autoComplete="new-password"
-            onChange={handleChange}
-            value={toSend.password2}
+            onChange={handlePasswordChange}
+            value={passwordTwo}
           />
-          <p className="text-red-500 text-xs italic">Please enter a password.</p>
+          <p className="text-red-500 text-xs italic">Please enter the password one more time.</p>
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary disabled:opacity-25"
             type="submit"
+            disabled={!(isValidEmail
+              && isValidPasswordOne
+              && isValidPasswordTwo
+              && isValidUserName)}
           >
             Sign Up
           </button>
-          <a
+          <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 dark:text-colorD4 dark:hover:text-blue-800"
-            href="/"
+            onClick={() => navigate('/login')}
+            type="button"
           >
-            Forgot Password?
-          </a>
+            or Sing in
+          </button>
         </div>
       </form>
       <p className="text-center text-gray-500 text-xs dark:text-colorD3">

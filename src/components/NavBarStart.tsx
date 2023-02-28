@@ -29,4 +29,3 @@ function NavBarStart() {
 }
 
 export default NavBarStart;
-// button style: px-3 py-1 bg-color2 rounded-md hover:bg-color1 hover:text-color3
