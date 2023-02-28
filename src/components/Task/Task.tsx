@@ -61,13 +61,13 @@ function Task({
             </div>
             <p className={`text-lg py-2 dark:text-colorD3 break-words ${task.isDone ? 'hidden' : ''}`}>{task.taskDescription}</p>
             <div className="flex justify-between items-center">
-              <button className="mr-3" title="edit card" aria-label="Edit card" type="button" onClick={() => handleEdit()}>
+              <button className="mr-3" title="edit task" aria-label="Edit task" type="button" onClick={() => handleEdit()}>
                 <AiFillEdit className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
               </button>
-              <button type="button" title="delete card" aria-label="Delete card" onClick={() => setTaskDone()}>
+              <button type="button" title={task.isDone ? 'set done' : 'set undone'} aria-label={task.isDone ? 'set done' : 'set undone'} onClick={() => setTaskDone()}>
                 <MdDone className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
               </button>
-              <button className="mr-3" type="button" title="delete card" aria-label="Delete card" onClick={() => setIsTaskModal(true)}>
+              <button className="mr-3" type="button" title="delete task" aria-label="Delete task" onClick={() => setIsTaskModal(true)}>
                 <AiFillDelete className="w-6 h-6 transition-transform hover:scale-125 hover:text-color1 dark:hover:text-colorD4 dark:text-colorD3" />
               </button>
             </div>

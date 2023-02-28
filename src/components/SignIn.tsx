@@ -8,20 +8,28 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { removeUserError } from '../redux/slices/userSlice';
 
 function SignIn() {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
   const { error, isLoading, user } = useAppSelector((state) => state.userSlice);
-
   const navigate = useNavigate();
-  const initialState = {
-    email: '',
-    password: '',
-  };
-  const [toSend, setToSend] = useState(initialState);
+
   useEffect(() => {
     document.title = 'Sign in';
   }, []);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setToSend({ ...toSend, [e.target.name]: e.target.value.trim() });
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value.trim());
+    setIsValidPassword(e.target.value.trim().length > 0);
+  };
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setEmail(value);
+    setIsValidEmail(value !== ''
+      // eslint-disable-next-line no-useless-escape
+      && /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i.test(value));
   };
   if (error) {
     Swal.fire(error);
@@ -33,9 +41,7 @@ function SignIn() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (Object.entries(toSend).length) {
-      dispatch(signIn(toSend));
-    }
+    dispatch(signIn({ email, password }));
   };
 
   return (
@@ -47,15 +53,16 @@ function SignIn() {
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3"
+            className={`shadow appearance-none border ${isValidEmail ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3`}
             id="email"
             name="email"
             type="text"
             placeholder="Email"
             autoComplete="email"
-            onChange={handleChange}
-            value={toSend.email}
+            onChange={handleEmailChange}
+            value={email}
           />
+          {!isValidEmail && <p className="text-red-500 text-xs italic">Please enter an email.</p>}
         </div>
         <div className="mb-6">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -63,31 +70,33 @@ function SignIn() {
             Password
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3"
+            className={`shadow appearance-none border ${isValidPassword ? '' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-colorD2 dark:text-colorD3`}
             id="password"
             name="password"
             type="password"
             autoComplete="current-password"
             placeholder="******************"
-            onChange={handleChange}
-            value={toSend.password}
+            onChange={handlePasswordChange}
+            value={password}
           />
-          <p className="text-red-500 text-xs italic">Please enter a password.</p>
+          {!isValidPassword && <p className="text-red-500 text-xs italic">Please enter a password.</p>}
         </div>
         <div className="flex items-center justify-between">
           <button
             id="confirmLogin"
-            className="btn btn-primary"
+            className="btn btn-primary disabled:opacity-25"
             type="submit"
+            disabled={!(isValidEmail && isValidPassword)}
           >
             Sign In
           </button>
-          <a
+          <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 dark:text-colorD4 dark:hover:text-blue-800"
-            href="/"
+            onClick={() => navigate('/signup')}
+            type="button"
           >
-            Forgot Password?
-          </a>
+            or Sing up
+          </button>
         </div>
       </form>
       <p className="text-center text-gray-500 text-xs dark:text-colorD3">
